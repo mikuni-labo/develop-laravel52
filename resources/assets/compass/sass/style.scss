@@ -1,0 +1,174 @@
+@charset "UTF-8";
+
+/*
+ * @name Admin CSS
+ */
+
+/* Resets...
+============================================================= */
+@import "Partials/resets";
+
+/* Sass Setting...
+========================================================= */
+@import "compass";
+@import "Partials/settings";
+@import "Partials/mixins";
+@import "Partials/animate";
+
+
+/* Generals...
+============================================================= */
+
+body
+{
+	font: 14px/1.6 "メイリオ", Meiryo, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", Helvetica, Arial, Sans-Serif;
+	color: #333;
+	text-align: left;
+	width: 100%;
+	padding-top: 100px;
+}
+
+#yahoo_category_toggle {
+	cursor: pointer;
+}
+
+.gray_out {
+	background: #bbb;
+}
+.gray_out:hover {
+	background: #aaa;
+}
+/* Override on Bootstrap...
+-------------------------------------*/
+
+/* breadcrumb
+-----------------------------*/
+.page-header {
+	margin: 0 auto 5px;
+	border-bottom: none;
+}
+
+.breadcrumb {
+	background-color: transparent;
+}
+
+/* navbar
+-----------------------------*/
+.navbar-inverse {
+	background-color: #222;
+	border-color: #090909;
+	box-shadow:0px 3px 5px #999; 
+	background: rgba( 0, 0, 0, 0.9);
+	
+	&.navbar-link {
+	color: #eee;
+	}
+	
+	& .navbar-link:hover {
+		color: #eee;
+	}
+	
+	& .btn-link {
+		color: #eee;
+	}
+	
+	& .btn-link:hover,
+	& .btn-link:focus {
+		color: #eee;
+	}
+	
+	& .btn-link[disabled]:hover,
+	& .btn-link[disabled]:focus,
+	fieldset[disabled] & .btn-link:hover,
+	fieldset[disabled] & .btn-link:focus {
+		color: #444;
+	}
+
+	& .navbar-nav > li > a {
+		color: #eee;
+	}
+	
+	& .navbar-nav > li > a:hover,
+	& .navbar-nav > li > a:focus {
+		color: #eee;
+		background-color: #555;
+	}
+	
+	& .navbar-nav > .active > a,
+	& .navbar-nav > .active > a:hover,
+	& .navbar-nav > .active > a:focus {
+		color: #777;
+		background-color: #fff;
+	}
+	
+	& .navbar-nav > .disabled > a,
+	& .navbar-nav > .disabled > a:hover,
+	& .navbar-nav > .disabled > a:focus {
+		color: #444;
+		background-color: transparent;
+	}
+	
+	& .navbar-toggle {
+		border-color: #333;
+	}
+	
+	& .navbar-toggle:hover,
+	& .navbar-toggle:focus {
+		background-color: #333;
+	}
+	
+	& .navbar-toggle .icon-bar {
+		background-color: #fff;
+	}
+	
+	& .navbar-collapse,
+	& .navbar-form {
+		border-color: #111;
+	}
+	
+	& .navbar-nav > .open > a,
+	& .navbar-nav > .open > a:hover,
+	& .navbar-nav > .open > a:focus {
+		color: #777;
+		background-color: #fff;
+	}
+}
+
+@media (max-width: 767px) {
+	.navbar-inverse {
+		& .navbar-nav .open .dropdown-menu > .dropdown-header {
+			border-color: #090909;
+		}
+		& .navbar-nav .open .dropdown-menu .divider {
+			background-color: #090909;
+		}
+		& .navbar-nav .open .dropdown-menu > li > a {
+			color: #eee;
+		}
+		& .navbar-nav .open .dropdown-menu > li > a:hover,
+		& .navbar-nav .open .dropdown-menu > li > a:focus {
+			color: #eee;
+			background-color: #555;
+		}
+		& .navbar-nav .open .dropdown-menu > .active > a,
+		& .navbar-nav .open .dropdown-menu > .active > a:hover,
+		& .navbar-nav .open .dropdown-menu > .active > a:focus {
+			color: #777;
+			background-color: #fff;
+		}
+		& .navbar-nav .open .dropdown-menu > .disabled > a,
+		& .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+		& .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+			color: #444;
+			background-color: transparent;
+		}
+	}
+}
+
+
+
+.footer {
+	color: #887;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
