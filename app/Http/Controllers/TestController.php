@@ -17,7 +17,6 @@ use Illuminate\Contracts\Mail\Mailer;
 use Carbon\Carbon;
 use Mail;
 
-
 class TestController extends Controller
 {
 	/**
@@ -52,6 +51,11 @@ class TestController extends Controller
 	 */
 	public function postTest(Request $request, $id = null)
 	{
+		
+		
+		\Log::debug('error');
+		
+		
 		/**
 		 * バリデーション
 		 */

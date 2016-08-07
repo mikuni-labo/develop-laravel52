@@ -117,5 +117,10 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get( 'test/get_json',                     'TestController@getJSON');
 	Route::get( 'test/show_json',                    'TestController@showJSON');
 	Route::get( 'test/output_xml',                   'TestController@outputXML');
+	
+	/**
+	 * ドットインストールテスト
+	 */
+	Route::get( 'dotinstall/carbon',                 'DotInstallController@testCarbon');
 });
 
