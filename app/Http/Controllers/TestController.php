@@ -685,6 +685,16 @@ if($key == 5){
 	}
 	
 	/**
+	 * JavaScript正規表現テスト
+	 *
+	 * @method GET
+	 */
+	public function testRegExp($number)
+	{
+		return view("test.regexp.{$number}");
+	}
+	
+	/**
 	 * バリデーションオプションをセットしてバリデーションを実行する
 	 * 
 	 * @param  Request $request

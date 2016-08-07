@@ -14,11 +14,6 @@
 // Ajax Tests
 // Route::get("/ajax/{testcode}", function(){
 	
-// 	//dd('test');
-// 	$response = array();
-// 	$response["status"] = "OK";
-// 	$response["message"] = "No problem";
-	
 // 	return Response::json($_POST);
 // });
 /*
@@ -94,7 +89,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('ajax/chkExistsImage',               'AjaxResponseController@chkExistsImage');
 	
 	// test
-	//Route::get( 'ajax/test',                       'AjaxResponseController@test');
+	Route::get( 'ajax/test',                         'AjaxResponseController@test');
 	
 	/**
 	 * API...
@@ -116,7 +111,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get( 'test/testmail',                     'TestController@sendTestMail');
 	Route::get( 'test/get_json',                     'TestController@getJSON');
 	Route::get( 'test/show_json',                    'TestController@showJSON');
-	Route::get( 'test/output_xml',                   'TestController@outputXML');
+	Route::get( 'test/output_xml',                   'TestController@outputXML');   // XML出力テスト
+	
+	Route::get( 'test/regexp/{number}',              'TestController@testRegExp');  // JavaScript正規表現テスト
 	
 	/**
 	 * ドットインストールテスト
