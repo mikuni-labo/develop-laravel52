@@ -1,0 +1,25 @@
+# user確認
+SELECT user, host FROM mysql.user ORDER BY user, host;
+
+# DB作成
+CREATE DATABASE [DB名];
+
+# ユーザ作成
+# CREATE USER '[ユーザ]'@'[ホスト名]' IDENTIFIED BY '[パスワード]';
+
+# ユーザ削除
+DROP USER '[ユーザ]'@'[ホスト名]' IDENTIFIED BY '[パスワード]';
+
+# 権限付与
+GRANT ALL ON [DB名].* TO '[ユーザ]'@'[ホスト名]';
+
+# 指定ユーザの権限を表示
+SHOW GRANTS for '[ユーザ]'@'[ホスト名]';
+
+# 指定ユーザのパスワード変更
+SET PASSWORD FOR '[ユーザ]'@'[ホスト名]' = PASSWORD('[パスワード]');
+
+# 例） MySQLのrootユーザ
+SET PASSWORD FOR 'root'@'::1' = PASSWORD('root');
+SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('root');
+*81F5E21E35407D884A6CD4A731AEBFB6AF209E1B

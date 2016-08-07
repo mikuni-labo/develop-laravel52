@@ -1,0 +1,1165 @@
+<sql>
+# 自宅 Mac 
+
+# binに移動
+cd /Applications/MAMP/Library/bin
+ 
+# ログイン
+./mysql -u root -p
+USE kadai30;
+
+
+# 会社win
+cd C:\xampp\mysql\bin
+mysql -u root -p
+
+
+# DB 作成
+CREATE DATABASE test;
+
+# USER(user_k3) 作成
+CREATE USER user_k3@localhost IDENTIFIED BY 'root';
+
+# USER(ALL) 権限
+GRANT ALL ON kadai30.* TO user_k3@localhost;
+
+# 権限
+GRANT ALL ON kuniyasu_necoshop.* TO kuniyasu_admin@sv810.xserver.jp:54330;
+
+# USER(user_neco) 作成
+CREATE USER user_neco@mysql802a.xserver.jp IDENTIFIED BY 'Hitopon7';
+# 権限
+GRANT ALL ON kuniyasu_necoshop.* TO kuniyasu_admin@localhost;
+
+# DB(kadai30) 指定
+USE kadai30;
+
+
+
++--------------------------+--------------------------------------------+
+| Variable_name            | Value                                      |
++--------------------------+--------------------------------------------+
+| character_set_client     | utf8                                       |
+| character_set_connection | utf8                                       |
+| character_set_database   | utf8                                       |
+| character_set_filesystem | binary                                     |
+| character_set_results    | utf8                                       |
+| character_set_server     | utf8                                       |
+| character_set_system     | utf8                                       |
+| character_sets_dir       | /Applications/MAMP/Library/share/charsets/ |
++--------------------------+--------------------------------------------+
+
+# 文字コード確認
+show variables like 'collation%';
+show variables like 'char%';
+
+# 文字コード セット
+set character_set_client = utf8;
+set character_set_connection = utf8;
+set character_set_database = utf8;
+
+set character_set_results = utf8;
+set character_set_server = utf8;
+set character_set_system = utf8;
+
+
+
+
+# 外部結合による差分表示
+select customer_id from t_customer a
+left outer join t_customer_branch b on (a.customer_id = b.parent)
+where b.parent is null;
+
+
+
+
+
+####   クライアント様へのフォームプログラム           ####
+
+# tbl_admin テーブル 作成
+CREATE TABLE tbl_admin
+(
+login_id
+varchar(64) NOT NULL,
+
+login_pw
+varchar(128) NOT NULL,
+
+update_time
+TIMESTAMP NOT NULL,
+	
+PRIMARY KEY	(login_id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+insert into tbl_admin
+set
+login_id = "admin", login_pass = "e19d5cd5af0378da05f63f891c7467af"
+
+
+
+
+
+# tbl_user テーブル 作成
+CREATE TABLE tbl_user
+(
+id
+int(10) NOT NULL AUTO_INCREMENT,
+
+first_name
+text NOT NULL,
+
+last_name
+text NOT NULL,
+
+first_name_kana
+text NOT NULL,
+
+last_name_kana
+text NOT NULL,
+
+tel
+varchar(13) NOT NULL DEFAULT "00-0000-0000",
+
+email
+varchar(200) NOT NULL,
+
+pref
+int(2) NOT NULL DEFAULT 0,
+
+municipality
+text NOT NULL,
+
+clinic
+text NOT NULL,
+
+super_visor_name
+text NOT NULL,
+
+hotels
+Tinyint DEFAULT 0,
+
+transportation
+text NOT NULL,
+
+create_time
+DATETIME NOT NULL DEFAULT "0000-00-00 00:00:00",
+
+update_time
+TIMESTAMP NOT NULL,
+	
+PRIMARY KEY	(id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
+
+####   enqueteプログラム           ####
+
+# t_enquete テーブル 作成
+CREATE TABLE t_enquete
+(
+id
+int(8) AUTO_INCREMENT NOT NULL,
+
+enquete_id
+int(4) NOT NULL DEFAULT 0,
+
+name
+varchar(200) NOT NULL DEFAULT "",
+
+kana
+varchar(200) NOT NULL DEFAULT "",
+
+pref
+int(2) NOT NULL DEFAULT 0,
+
+municipality
+varchar(200) NOT NULL DEFAULT "",
+	
+tel
+varchar(13) NOT NULL DEFAULT "00-0000-0000",
+
+email
+varchar(200) NOT NULL DEFAULT "",
+
+subject
+varchar(200) NOT NULL DEFAULT "",
+	
+main
+varchar(200) NOT NULL DEFAULT "",
+
+create_time
+DATETIME NOT NULL DEFAULT "0000-00-00 00:00:00",
+
+update_time
+TIMESTAMP NOT NULL,
+	
+PRIMARY KEY	(id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+alter table t_enquete
+add enquete_id int(4) NOT NULL DEFAULT 0
+after code;
+
+alter table t_enquete
+add update_time TIMESTAMP NOT NULL
+after create_time;
+
+alter table t_enquete
+add chk_flg Tinyint(1) NOT NULL DEFAULT 0
+after id;
+
+
+insert into t_enquete
+(enquete_id, name, kana, pref, municipality, tel, email, subject, main)
+values
+(2, "和田", "ワダ", 27, "大阪市北区西天満2-6-8", "06-6363-3800", "aaa@aaa", "subject", "testtesttesttest"),
+(2, "和田", "ワダ", 27, "大阪市北区西天満2-6-8", "06-6363-3800", "aaa@aaa", "subject", "testtesttesttest"),
+(2, "和田", "ワダ", 27, "大阪市北区西天満2-6-8", "06-6363-3800", "aaa@aaa", "subject", "testtesttesttest"),
+(2, "和田", "ワダ", 27, "大阪市北区西天満2-6-8", "06-6363-3800", "aaa@aaa", "subject", "testtesttesttest"),
+(2, "和田", "ワダ", 27, "大阪市北区西天満2-6-8", "06-6363-3800", "aaa@aaa", "subject", "testtesttesttest"),
+(2, "和田", "ワダ", 27, "大阪市北区西天満2-6-8", "06-6363-3800", "aaa@aaa", "subject", "testtesttesttest"),
+(2, "和田", "ワダ", 27, "大阪市北区西天満2-6-8", "06-6363-3800", "aaa@aaa", "subject", "testtesttesttest")
+;
+
+
+
+
+
+
+
+
+
+
+
+# k3w30_user テーブル 作成
+CREATE TABLE k3w30_user
+(
+user_code
+int(8) AUTO_INCREMENT NOT NULL,
+
+user_mail
+varchar(64) NOT NULL DEFAULT "",
+
+user_name
+varchar(24) NOT NULL DEFAULT "",
+
+user_pw
+varchar(64) DEFAULT NULL,
+
+user_icon_url
+varchar(64) DEFAULT NULL,
+	
+user_sei
+varchar(64) DEFAULT NULL,
+
+user_mei
+varchar(64) DEFAULT NULL,
+
+user_sei_kana
+varchar(64) DEFAULT NULL,
+
+user_mei_kana
+varchar(64) DEFAULT NULL,
+	
+user_bd
+DATE DEFAULT NULL,
+
+gender_code
+int(1) DEFAULT NULL,
+
+user_create_time
+TIMESTAMP NOT NULL,
+	
+PRIMARY KEY	(user_code)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+desc k3w30_user;
+select * from k3w30_user;
+
+
+alter table k3w30_user
+add follower_count int(10) DEFAULT 0
+after gender_code;
+
+
+
+
+
+# k3w30_gender テーブル 作成
+CREATE TABLE k3w30_gender
+(
+gender_code
+int(1) NOT NULL DEFAULT '0',
+
+gender_name
+varchar(8) DEFAULT NULL,
+	
+PRIMARY KEY	(gender_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+#インサート文
+insert into k3w30_gender values(1, "女性");
+insert into k3w30_gender values(2, "男性");
+insert into k3w30_gender values(3, "非公開");
+
+
+
+
+
+
+
+# k3w30_category テーブル 作成
+CREATE TABLE k3w30_category
+(
+category_code
+int(3) NOT NULL DEFAULT '0',
+
+category_name
+varchar(64) DEFAULT NULL,
+	
+PRIMARY KEY	(category_code)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+select * from k3w30_category;
+desc k3w30_category;
+
+
+#インサート文
+insert into k3w30_category (category_name) values ("猫");
+insert into k3w30_category (category_name) values ("風景");
+insert into k3w30_category (category_name) values ("アート");
+
+insert into k3w30_category values (1, "猫");
+insert into k3w30_category values (2, "風景");
+insert into k3w30_category values (3, "アート");
+
+
+
+
+# k3w30_photo テーブル 作成
+CREATE TABLE k3w30_photo
+(
+photo_code
+int(12) AUTO_INCREMENT NOT NULL,
+
+user_code
+int(8) DEFAULT NULL,
+
+photo_title
+varchar(32) DEFAULT NULL,
+
+photo_desc
+text DEFAULT NULL,
+
+photo_url
+varchar(128) DEFAULT NULL,
+
+tmb_url
+varchar(128) DEFAULT NULL,
+
+category_code
+int(3) DEFAULT NULL,
+
+photo_up_time
+TIMESTAMP NOT NULL,
+
+PRIMARY KEY	(photo_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+desc k3w30_photo;
+select * from k3w30_photo;
+
+
+
+
+
+alter table k3w30_photo
+add like_count int(12) DEFAULT 0
+after category_code;
+
+
+
+
+
+
+
+
+# k3w30_comment テーブル 作成
+CREATE TABLE k3w30_comment
+(
+comment_code
+int(15) AUTO_INCREMENT NOT NULL,
+
+user_code
+int(8) DEFAULT NULL,
+
+photo_code
+int(12) DEFAULT NULL,
+
+photo_comment
+TEXT DEFAULT NULL,
+
+comment_up_time
+TIMESTAMP NOT NULL,
+
+PRIMARY KEY	(comment_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+desc k3w30_comment;
+select * from k3w30_comment;
+
+
+
+
+
+
+
+
+
+
+# k3w30_like テーブル 作成
+CREATE TABLE k3w30_like
+(
+user_code
+int(8) NOT NULL,
+
+photo_code
+int(12) NOT NULL,
+
+like_create_time
+TIMESTAMP NOT NULL,
+
+PRIMARY KEY	(user_code, photo_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+desc k3w30_like;
+select * from k3w30_like;
+
+
+
+
+
+
+
+
+
+# k3w30_contact テーブル 作成
+CREATE TABLE k3w30_contact
+(
+contact_code
+int(10) AUTO_INCREMENT NOT NULL,
+
+user_name
+VARCHAR(64) DEFAULT NULL,
+
+user_mail
+VARCHAR(64) DEFAULT NULL,
+
+web_site
+VARCHAR(64) DEFAULT NULL,
+
+contact_title
+VARCHAR(64) DEFAULT NULL,
+
+contact_msg
+TEXT DEFAULT NULL,
+
+check_flg
+BOOLEAN NOT NULL DEFAULT FALSE,
+
+contact_time
+TIMESTAMP NOT NULL,
+	
+PRIMARY KEY (contact_code)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
+
+
+
+select
+comment_code, com.user_code, user_name, photo_comment, comment_up_time
+from k3w30_user as user join k3w30_comment as com on user.user_code = com.user_code
+where photo_code = 9
+order by comment_up_time;
+
+
+select
+user_code, photo_title, photo_desc, photo_url, tmb_url, photo.category_code, category_name, photo_up_time
+from k3w30_photo as photo join k3w30_category as cat on photo.category_code = cat.category_code
+where photo_code = ?';
+
+
+
+#インサート文
+insert into k3w30_comment
+(
+photo_code, user_code, photo_comment
+)
+values
+(80, 5, "すごいすごいすごいすごいすごいすごいすごいすごいすごいすごいすごいすごい"),
+(80, 7, "すごいすごいすごいすごいすごいすごいすごいすごいすごいすごいすごいすごい"),
+(80, 5, "すごいすごいすごいすごいすごいすごいすごいすごいすごいすごいすごいすごい");
+
+
+
+
+
+
+select
+	photo.photo_code, count(iine.photo_code) as iine_count, photo.user_code, photo_title, photo_desc, photo_url, tmb_url, category_code, photo_up_time
+from
+	k3w30_photo as photo left OUTER join k3w30_like as iine using(user_code)
+group by iine.photo_code;
+
+
+
+
+
+
+select
+	photo_code, user_code, photo_title, photo_desc, photo_url, tmb_url, category_code, photo_up_time
+from
+	k3w30_photo photo left join k3w30_like like on photo.user_code = like.user_code
+group by photo.photo_code;
+
+
+
+
+
+# いいね数を取り出す(1テーブル)
+select photo_code, count(user_code) from k3w30_like
+group by photo_code;
+
+
+
+
+
+select
+photo.user_code, user.user_name, photo_title, photo_desc, photo_url, tmb_url, photo.category_code, cat.category_name, photo_up_time
+from k3w30_photo as photo join k3w30_category as cat on photo.category_code = cat.category_code
+join k3w30_user as user on user.user_code = photo.user_code
+where photo_code = 13;
+
+select
+photo_code, photo.user_code, user_name, photo_title, photo_desc, photo_url, tmb_url, photo.category_code, category_name, photo_up_time
+from k3w30_photo as photo join k3w30_category as cat on photo.category_code = cat.category_code
+join k3w30_user as user on user.user_code = photo.user_code
+where photo.user_code = 7;
+
+
+
+
+
+# k3w30_follow テーブル 作成
+CREATE TABLE k3w30_follow
+(
+user_code
+int(8) NOT NULL,
+
+follow_code
+int(8) NOT NULL,
+
+follow_time
+TIMESTAMP NOT NULL,
+
+PRIMARY KEY	(user_code, follow_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+# フォロー数を取得
+select follow_code, count(user_code) as follow_count from k3w30_follow
+where follow_code = 7 group by follow_code;
+
+
+
+select follow_code, count(user_code) as follow_count from k3w30_follow
+group by follow_code;
+
+
+
+insert into k3w30_follow (user_code, follow_code)
+values (7, 12);
+
+
+
+select follow_time from k3w30_follow
+where user_code = 7 and follow_code = 12;
+
+
+
+#アップデート文
+UPDATE k3w30_user SET
+user_name = "和田",
+user_pw = "jkjfuwiergek;jin8er7g89nrgew0",
+user_bd = "1999-08-08",
+gender_code = 2
+where user_code = 7;
+
+
+insert into k3w30_follow (user_code, follow_code)
+values (12, 7);
+insert into k3w30_follow (user_code, follow_code)
+values (12, 8);
+
+
+
+select
+photo_code, user_code, user.user_name ,photo_title, photo_desc, photo_url, tmb_url, category_code, photo_up_time
+from
+k3w30_photo join k3w30_user as user using(user_code);
+k3w30_photo join k3w30_category as cat using(category_code);
+
+
+
+
+
+# ここからソート
+
+# 新着
+select
+photo.user_code, user.user_name, photo_code, photo_title, photo_desc, photo_url,
+tmb_url, photo.category_code, category_name, photo_up_time
+from k3w30_photo as photo join k3w30_user user using(user_code)
+join k3w30_category as cat using (category_code)
+order by photo_up_time desc
+;
+
+
+
+# いいね
+SELECT P.photo_code, count( L.user_code ) AS like_count
+from k3w30_photo_code as P left join
+(
+SELECT P.photo_code, count( L.user_code ) AS like_count,
+photo_title, photo_desc, photo_url, tmb_url,
+U.user_code, user_name, P.category_code, category_name, photo_up_time
+FROM k3w30_like as L
+JOIN k3w30_user as U USING ( user_code )
+JOIN k3w30_photo as P USING ( photo_code ) 
+JOIN k3w30_category as C USING ( category_code )
+GROUP BY L.photo_code
+ORDER BY like_count DESC , P.photo_up_time DESC
+) as sub;
+
+
+
+
+
+・件数の多い順に取得する
+
+select L.photo_code, P.photo_up_time, count(L.photo_code) as iine
+from k3w30_photo P join k3w30_like L on P.photo_code = L.photo_code
+group by P.photo_code order by iine desc, T;
+
+
+
+
+
+
+# 番外編　（いいね個数別のランキング）
+SELECT photo_code, count(user_code)
+FROM ( SELECT photo_code, count(user_code) cnt
+FROM k3w30_like GROUP BY photo_code) as sub
+GROUP BY cnt;
+
+
+
+
+######## 退避 ##############
+#	, U.user_name
+#	, P.photo_title
+#	, P.photo_desc
+#	, P.category_code
+#	, C.category_name
+#	, P.photo_url
+#	, P.tmb_url
+#	, P.photo_up_time
+#	, P.user_code
+
+#	, CASE
+#		WHEN F.follow_cnt IS NULL THEN 0
+#		ELSE F.follow_cnt
+#		END follow_cnt
+
+#	LEFT JOIN
+#		(SELECT follow_code, COUNT(*) AS follow_cnt FROM k3w30_follow GROUP BY follow_code) AS F
+#		ON P.user_code = F.follow_code
+
+#	JOIN k3w30_category AS C
+#		ON P.category_code = C.category_code
+#	JOIN k3w30_user AS U
+#		ON P.user_code = U.user_code
+
+#	ORDER BY like_cnt DESC
+#############################
+
+
+
+
+######## ランキング実装 #####################################################
+
+
+# いいね数ランキング
+SELECT 	VP.photo_code, VP.like_cnt,
+		(SELECT COUNT(VP2.like_cnt)
+		FROM view_photos AS VP2
+		WHERE VP2.like_cnt > VP.like_cnt) + 1 AS RANK_like
+
+from view_photos AS VP
+ORDER BY RANK_like;
+
+
+
+
+# フォロワー数ランキング
+SELECT 	VU.user_code, VU.follow_cnt,
+		(SELECT COUNT(VU2.follow_cnt)
+		FROM view_users AS VU2
+		WHERE VU2.follow_cnt > VU.follow_cnt) + 1 AS RANK_follow
+
+from view_users AS VU
+ORDER BY RANK_follow;
+
+
+
+
+# コメント数ランキング
+SELECT 	VP.photo_code, VP.com_cnt,
+		(SELECT COUNT(VP2.com_cnt)
+		FROM view_photos AS VP2
+		WHERE VP2.com_cnt > VP.com_cnt) + 1 AS RANK_com
+
+from view_photos AS VP
+ORDER BY RANK_com;
+
+#-----------------------------------------------------------------
+
+
+
+# いいね数ランキング (詳細版)
+SELECT *, (SELECT COUNT(VP2.like_cnt)
+			FROM view_photos AS VP2
+			WHERE VP2.like_cnt > VP.like_cnt) + 1 AS RANK_like
+		
+FROM view_photos AS VP
+	
+ORDER BY RANK_like;
+
+
+
+
+
+
+
+# フォロワー数ランキング (詳細版)
+SELECT *, (SELECT COUNT(VU2.follow_cnt)
+			FROM view_users AS VU2
+			WHERE VU2.follow_cnt > VU.follow_cnt) + 1 AS RANK_follow
+
+from view_users AS VU
+ORDER BY RANK_follow;
+
+
+
+
+
+
+
+
+# コメント数ランキング (詳細版)
+SELECT 	VP.photo_code, VP.com_cnt,
+		(SELECT COUNT(P2.com_cnt)
+		FROM view_photos AS P2
+		WHERE P2.com_cnt > VP.com_cnt) + 1 AS RANK_com
+
+from view_photos AS VP
+ORDER BY RANK_com;
+
+
+
+##### VIEW 作成 ##########################################################
+
+# view_like_cnt 作成文
+CREATE VIEW view_like_cnt
+AS
+SELECT photo_code, COUNT(*) AS like_cnt FROM k3w30_like GROUP BY photo_code;
+
+
+
+# view_follow_cnt 作成文
+CREATE VIEW view_follow_cnt
+AS
+SELECT follow_code, COUNT(*) AS follow_cnt FROM k3w30_follow GROUP BY follow_code;
+
+
+
+# view_com_cnt 作成文
+CREATE VIEW view_com_cnt
+AS
+SELECT photo_code, COUNT(*) AS com_cnt FROM k3w30_comment GROUP BY photo_code;
+
+
+SELECT * from view_photos;
+
+
+
+
+# view_photos 作成文
+CREATE VIEW view_photos
+AS
+	SELECT
+		P.photo_code
+		, CASE
+			WHEN L.like_cnt IS NULL THEN 0
+			ELSE L.like_cnt
+			END like_cnt
+		, P.user_code
+		, CASE
+			WHEN F.follow_cnt IS NULL THEN 0
+			ELSE F.follow_cnt
+			END follow_cnt
+		, U.user_name
+		, CASE
+			WHEN COM.com_cnt IS NULL THEN 0
+			ELSE COM.com_cnt
+			END com_cnt
+			
+		, P.photo_title
+		, P.photo_desc
+		, P.photo_url
+		, P.tmb_url
+		, P.category_code
+		, C.category_name
+		, P.photo_up_time
+
+		FROM k3w30_photo AS P
+		
+		JOIN k3w30_category AS C
+			ON P.category_code = C.category_code
+		JOIN k3w30_user AS U
+			ON P.user_code = U.user_code		
+		
+		LEFT JOIN view_like_cnt AS L
+			ON P.photo_code = L.photo_code
+			
+		LEFT JOIN view_follow_cnt AS F
+			ON P.user_code = F.follow_code
+			
+		LEFT JOIN view_com_cnt AS COM
+			ON P.photo_code = COM.photo_code		
+		;
+
+
+
+
+# view_users 作成文
+CREATE VIEW view_users
+AS
+	SELECT
+		  U.user_code
+		, CASE
+			WHEN F.follow_cnt IS NULL THEN 0
+			ELSE F.follow_cnt
+			END follow_cnt
+		, U.user_name
+		, U.user_mail
+		, U.user_pw
+		, U.gender_code
+		, G.gender_name
+		, U.user_icon_url
+		, U.user_sei
+		, U.user_mei
+		, U.user_sei_kana
+		, U.user_mei_kana
+		, U.user_bd
+		, U.user_create_time
+
+		FROM k3w30_user AS U
+		JOIN k3w30_gender AS G
+			ON U.gender_code = G.gender_code
+					
+		LEFT JOIN view_follow_cnt AS F
+			ON U.user_code = F.follow_code
+		;
+
+#############################################################################
+
+
+
+
+
+
+		LEFT JOIN
+			(SELECT follow_code, COUNT(*) AS follow_cnt FROM k3w30_follow GROUP BY follow_code) AS F
+			ON P.user_code = F.follow_code
+		LEFT JOIN
+			(SELECT photo_code, COUNT(*) AS com_cnt FROM k3w30_comment GROUP BY photo_code) AS COM
+			ON P.photo_code = COM.photo_code		
+
+
+
+
+		JOIN k3w30_category AS C
+			ON P.category_code = C.category_code
+		JOIN k3w30_user AS U
+			ON P.user_code = U.user_code
+
+		where P.category_code = 1
+		
+		ORDER BY photo_up_time DESC
+		;
+
+
+
+
+
+
+
+
+select P.photo_code, L.photo_code is not null, count( L.user_code ), P.user_code from k3w30_photo
+from k3w30_photo as P left join using(photo_code);
+
+
+
+
+SELECT P.photo_code, count( L.user_code ) AS like_count,
+photo_title, photo_desc, photo_url, tmb_url,
+U.user_code, user_name, P.category_code, category_name, photo_up_time
+FROM k3w30_like as L
+JOIN k3w30_user as U USING ( user_code )
+JOIN k3w30_photo as P USING ( photo_code ) 
+JOIN k3w30_category as C USING ( category_code )
+GROUP BY L.photo_code
+
+
+
+
+SELECT P.photo_code, count( sub.user_code),
+photo_title, photo_desc, photo_url, tmb_url,
+U.user_code, user_name, P.category_code, category_name, photo_up_time
+
+from k3w30_photo as P join k3w30_like as L USING ( photo_code ) 
+JOIN k3w30_category as C USING ( category_code )
+JOIN k3w30_user as U USING ( user_code ) 
+JOIN
+(
+SELECT photo_code, count( user_code ) AS like_count
+from k3w30_like
+GROUP BY photo_code
+ORDER BY like_count DESC;
+) as sub
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# k2_gender テーブル 作成
+CREATE TABLE k2_gender
+(
+	gender_code			int(1) NOT NULL DEFAULT '0',
+	gender_name			varchar(3) DEFAULT NULL,
+	
+ 	PRIMARY KEY	(gender_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# k2_genre テーブル 作成
+CREATE TABLE k2_genre
+(
+	genre_code			int(3) NOT NULL DEFAULT '0',
+	genre_type_code		int(2) DEFAULT NULL,
+	genre_name			varchar(16) DEFAULT NULL,
+	
+ 	PRIMARY KEY	(genre_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# k2_genre_type テーブル 作成
+CREATE TABLE k2_genre_type
+(
+	genre_type_code		int(3) DEFAULT NULL,
+	genre_type_name		varchar(16) DEFAULT NULL,
+	
+ 	PRIMARY KEY	(genre_type_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# k2_area テーブル 作成
+CREATE TABLE k2_area
+(
+	area_code			int(1) NOT NULL,
+	area_name			varchar(8) DEFAULT NULL,
+	
+ 	PRIMARY KEY	(area_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# k2_pref テーブル 作成
+CREATE TABLE k2_pref
+(
+	pref_code			int(2) NOT NULL,
+	pref_name			varchar(8) DEFAULT NULL,
+	
+ 	PRIMARY KEY	(pref_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# k2_page_history テーブル 作成
+CREATE TABLE k2_page_history
+(
+	user_code			int(8) NOT NULL,
+
+
+ 	PRIMARY KEY	(user_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# k2_contact_form テーブル 作成
+CREATE TABLE k2_contact_form
+(
+	contact_code		int(5) NOT NULL,
+	contact_type		int(2) DEFAULT NULL,
+	send_user_code		int(8) DEFAULT NULL,
+	target_user_code	int(8) DEFAULT NULL,
+	target_spot_code	int(5) DEFAULT NULL,
+	send_user_mail		varchar(64) DEFAULT NULL,
+	contact_title		text DEFAULT NULL,
+	contact_main_msg	text DEFAULT NULL,
+	check_flg			boolean DEFAULT FALSE,
+	contact_time		timestamp NOT NULL,
+	
+ 	PRIMARY KEY	(contact_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# k2_contact_type テーブル 作成
+CREATE TABLE k2_contact_type
+(
+	contact_type_code	int(2) NOT NULL,
+	contact_type_name	text DEFAULT NULL,
+
+ 	PRIMARY KEY	(contact_type_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
+# k2_photo_type テーブル 作成
+CREATE TABLE k2_photo_type
+(
+	photo_type_code		int(2) NOT NULL,
+	photo_type_name		text DEFAULT NULL,
+
+ 	PRIMARY KEY	(photo_code)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
+#テーブルデータの読み込み
+
+# k1_option_a テーブル・データ
+	LOAD DATA INFILE 'G:/kadai30/DB/data/k1_option_a.csv' 
+	INTO TABLE k1_option_a FIELDS TERMINATED BY ','
+	ignore 1 lines;  
+
+# k1_option_b テーブル・データ
+	LOAD DATA INFILE 'G:/kadai30/DB/data/k1_option_b.csv' 
+	INTO TABLE k1_option_b FIELDS TERMINATED BY ',';
+
+# k1_quiz テーブル・データ
+	LOAD DATA INFILE 'G:/kadai30/DB/data/k1_quiz_sample.csv' 
+	INTO TABLE k1_quiz FIELDS TERMINATED BY ','
+	ignore 1 lines;
+
+
+
+#インサート文
+insert into k1_quiz values(100, "america", "アメリカ", "en", 22);
+
+
+
+
+# ランダム問題抽出(例として、難易度23以上)
+SELECT answer_jp, quiz_img_url, option_b
+FROM k1_quiz,
+  (SELECT quiz_id FROM k1_quiz
+  WHERE option_b > 23
+  ORDER BY RAND() LIMIT 5) AS SUB1
+WHERE k1_quiz.quiz_id = SUB1.quiz_id;
+
+# ランダム解答抽出
+select answer_jp
+from k1_quiz;
+
+	
+
+
+# DEPTテーブル・データ
+LOAD DATA INFILE 'C:/work/dept_data.csv'     INTO TABLE dept     FIELDS TERMINATED BY ',';  
+
+# EMPテーブル・データ
+LOAD DATA INFILE 'C:/work/emp_data.csv'      INTO TABLE emp      FIELDS TERMINATED BY ',';  
+
+</sql>

@@ -1,0 +1,98 @@
+# 一時的にスーパーユーザー権限を付与
+sudo su
+
+# log確認
+cat /var/log/cron
+
+# ROOTユーザーに切り替え
+su - root
+
+# ステータス確認
+service crond status
+
+# 自動起動設定確認
+chkconfig --list crond
+
+# crontab 確認
+crontab -u root -l
+
+# crontab 編集
+crontab -u root -e
+
+# crontabコマンドで実際に書き込まれるディレクトリ
+cd /var/spool/cron/[各ユーザ]
+
+# 以下、ブライトコーブCCI案件
+# crontab(/var/spool/cron/[各ユーザ]) の内容↓
+#!/bin/sh
+SHELL=/bin/sh
+PATH=/usr/bin:/bin
+MAILTO="wada@n-di.co.jp"
+#MAILTO="esumitomo@brightcove.com"
+0 * * * * /usr/bin/php-5.6 /var/www/html/cron/DeleteS3Files.php 2>&1 >> /var/www/html/test.log
+
+
+
+# 以下、テレ東案件 (テストはCymedix)
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO="wada@n-di.co.jp"
+* * * * * php /var/www/html/laravel schedule:run 1>> /dev/null 2>&1
+
+
+
+chmod 777 /var/www/html/test.log
+
+# （中身はブランクで、ファイルがあるだけで現在未使用）
+vi /etc/cron.d/delete-s3-files
+
+
+# 時間毎バッチ用ディレクトリ（以前調整していたが、未使用）
+vi /etc/cron.hourly/delete-s3-files
+# 内容↓
+#!/bin/sh
+MAILTO="wada@n-di.co.jp"
+* * * * *  root /usr/bin/php-5.6 /var/www/html/cron/DeleteS3Files.php
+
+
+# 参考URL
+https://www.express.nec.co.jp/linux/distributions/knowledge/system/crond.html
+
+# cronの設定ファイル
+ファイル/ディレクトリ名	利用者	主な用途
+/var/spool/cron/user	全ユーザ	ユーザ毎の自動タスク設定ファイル
+/etc/crontab			root	毎時、毎日、毎月、毎週の自動タスクのメイン設定ファイル
+/etc/cron.hourly		root	毎時実行される自動タスク設定ファイルを置くディレクトリ
+/etc/cron.daily			root	毎日実行される自動タスク設定ファイルを置くディレクトリ
+/etc/cron.monthly		root	毎月実行される自動タスク設定ファイルを置くディレクトリ
+/etc/cron.weekly		root	毎週実行される自動タスク設定ファイルを置くディレクトリ
+/etc/cron.d				root	上記以外の自動タスク設定ファイルを置くディレクトリ
+
+
+# cronコマンドの書式
+crontab [- u user] {-l|-r|-e} オプション
+
+# cron -r で設定が全て吹っ飛ぶので、ローカルファイルにバックアップを取っておく
+crontab -l > ~/crontab # 現在の設定をバックアップ
+vi ~/crontab           # ローカルファイルを編集
+crontab < ~/crontab    # ローカルファイルを反映する
+
+
+# オプションの種類
+-e			crontabを対話的に編集します。通常は、viエディタが起動して、設定ファイルの編集を行ないます。
+-l			crontabファイルの内容を表示します。
+-r			crontabファイルを削除します。
+-u user		userで指定したユーザのcrontabファイルを操作の対象とします。なお、このオプションは、rootユーザのみ使用できます。
+
+# 書式
+分	0～59
+時	0～23
+日	1～31
+月	1～12  または jan,feb,mar,apr,may,june,july,aug,sept,oct,nov,dec
+曜日	0～7 [0,7は日曜日] または sun,mon,tue,wed,thu,fri,sat
+コマンド
+
+リスト		0,15,30,45		分フィールドで指定した場合、15分に一度処理を実行します。
+範囲		1-5				曜日フィールドで指定した場合、月曜日～金曜日に処理を実行します。
+共存		1,3,7-9			時間フィールドで指定した場合、1時、3時、7時、8時、9時に処理を実行します。
+間隔値	1-5/2			時間フィールドで指定した場合、1時、3時、5時に処理を実行します。なお、間隔値は、「/」の後ろに指定した値の間隔で処理を実行します。

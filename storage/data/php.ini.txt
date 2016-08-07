@@ -1,0 +1,56 @@
+### php.ini 初期設定変更
+short_open_tag = Off
+↓
+short_open_tag = On ←変更(short_open_tag有効)
+
+max_execution_time = 30
+↓
+max_execution_time = 300 ←変更(スクリプト実行時間)
+
+magic_quotes_gpc = On
+↓
+magic_quotes_gpc = Off ←変更(エスケープ処理)
+
+;default_charset = "iso-8859-1"
+↓
+default_charset = "UTF-8" ←コメント解除&amp;変更(デフォルト文字コード)
+
+post_max_size = 8M
+
+post_max_size = 20M ←変更(最大POSTアップロードサイズ)
+
+upload_max_filesize = 2M
+↓
+upload_max_filesize = 20M ←変更(最大アップロードサイズ)
+
+;date.timezone =
+↓
+date.timezone = Asia/Tokyo ←コメント解除&amp;変更(タイムゾーン指定)
+
+;mbstring.language = Japanese
+↓
+mbstring.language = Japanese ←コメント解除(デフォルト言語)
+
+;mbstring.internal_encoding = EUC-JP
+↓
+mbstring.internal_encoding = UTF-8 ←コメント解除&amp;変更(内部文字エンコーディングのデフォルト値)
+
+;mbstring.http_input = auto
+↓
+mbstring.http_input = UTF-8 ←コメント解除&amp;変更(HTTP入力文字エンコーディング)
+
+;mbstring.http_output = SJIS
+↓
+mbstring.http_output = pass ←コメント解除 & 変更(HTTP出力文字エンコーディング)
+
+;mbstring.encoding_translation = Off
+↓
+mbstring.encoding_translation = On ←コメント解除&amp;変更(内部文字エンコーディングの有効・無効)
+
+;mbstring.detect_order = auto
+↓
+mbstring.detect_order = auto ←コメント解除(文字コード検出のデフォルト値)
+
+;mbstring.substitute_character = none;
+↓
+mbstring.substitute_character = none; ←コメント解除(無効な文字を代替する文字を定義)

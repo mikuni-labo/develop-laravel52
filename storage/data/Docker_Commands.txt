@@ -1,0 +1,57 @@
+### Docker
+
+# Dockerマシンの新規作成
+docker-machine create --driver virtualbox [マシン名]
+docker-machine create --driver virtualbox default
+
+# Dockerマシン削除
+docker-machine rm [マシン名]
+
+# マシン一覧
+docker-machine ls
+
+# マシン起動・停止
+docker-machine start [マシン名]
+docker-machine start default
+docker-machine stop default
+
+# マシン環境
+docker-machine env [マシン名]
+docker-machine env default
+
+
+
+# 環境変数設定
+eval $(docker-machine env default)
+
+# 設定確認
+env | grep DOCKER
+
+# イメージ一覧
+docker images
+
+# イメージ削除
+docker rmi [-f] [イメージ名]
+
+# イメージ取得
+docker pull [イメージ]
+docker pull centos:centos6
+docker pull centos:centos7
+docker pull tianon/centos:5.10
+docker pull ubuntu:12.04
+docker pull ubuntu:14.04
+
+# バックグラウンドでイメージを起動
+docker run -it -d -p 8080:8080 tomcat
+docker run -it -d -p 8888:8888 centos:centos6
+docker run -it -d -p 8888:8888 centos6
+
+# 起動したコンテナに接続
+docker attach [コンテナID]
+
+# コンテナ一覧
+docker ps
+docker ps -a
+
+# コンテナ削除
+docker rm [コンテナID]
