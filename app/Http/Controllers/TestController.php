@@ -685,11 +685,12 @@ if($key == 5){
 	}
 	
 	/**
-	 * JavaScript正規表現テスト
+	 * JavaScript
+	 * 正規表現テスト
 	 *
 	 * @method GET
 	 */
-	public function testRegExp($number)
+	public function javascriptRegExp($number)
 	{
 		return view("test.regexp.{$number}");
 	}

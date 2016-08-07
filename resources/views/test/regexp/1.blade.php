@@ -40,7 +40,7 @@
 	/*
 	メタ文字
 
-	[abc] → かbかcのどれかに当てはまる
+	[abc] → aかbかcのどれかに当てはまる
 	[a-z] → a〜zのどれかに当てはまる
 	[^abc] → aかbかc以外のどれでも
 	. → 任意の1文字
@@ -86,7 +86,5 @@
 	
 	console.log(reg);
 	console.log(RegExp.$1);
-	
-	//コンソール確認のためにoption + command + jで開発者ツール呼出しておく事
 </script>
 @endsection

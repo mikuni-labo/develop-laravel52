@@ -113,7 +113,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get( 'test/show_json',                    'TestController@showJSON');
 	Route::get( 'test/output_xml',                   'TestController@outputXML');   // XML出力テスト
 	
-	Route::get( 'test/regexp/{number}',              'TestController@testRegExp');  // JavaScript正規表現テスト
+	Route::get( 'test/javascript/regexp/{number}',   'TestController@javascriptRegExp');  // JavaScript正規表現テスト
 	
 	/**
 	 * ドットインストールテスト
