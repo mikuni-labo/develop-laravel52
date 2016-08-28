@@ -45,17 +45,6 @@
 										</div>
 									</div>
 									
-									<div class="form-group{{ $errors->has('age') ? ' has-error' : '' }}">
-										<label class="col-md-4 control-label">Age</label>
-										<div class="col-md-6">
-											{!! Form::selectRange('number', 18, 60, ['class' => 'form-control']) !!}
-											
-											@if ($errors->has('age'))
-												<span class="help-block"><strong>{{ $errors->first('age') }}</strong></span>
-											@endif
-										</div>
-									</div>
-									
 									<div class="form-group{{ $errors->has('month') ? ' has-error' : '' }}">
 										<label class="col-md-4 control-label">Month</label>
 										<div class="col-md-6">
@@ -88,25 +77,7 @@
 											@endif
 										</div>
 									</div>
-								@endif
-								
-								<div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}" id="email_response">
-									<label class="col-md-4 control-label" for="email">E-Mail</label>
-									<div class="col-md-6">
-										<div class="input-group">
-											<span class="input-group-addon">@</span>
-											{!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
-										</div>
-										<span id="email-inputicon" class="glyphicon glyphicon-ok form-control-feedback"></span>
-										<span id="email_judge"></span>
-										
-										@if ($errors->has('email'))
-											<span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
-										@endif
-									</div>
-								</div>
-								
-								@if(false)
+									
 									<div class="form-group{{ $errors->has('url') ? ' has-error' : '' }}">
 										<label class="col-md-4 control-label">URL</label>
 										<div class="col-md-6">
@@ -114,17 +85,6 @@
 											
 											@if ($errors->has('url'))
 												<span class="help-block"><strong>{{ $errors->first('url') }}</strong></span>
-											@endif
-										</div>
-									</div>
-									
-									<div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
-										<label class="col-md-4 control-label">Start Date</label>
-										<div class="col-md-6">
-											{!! Form::date('start_date', \Carbon\Carbon::now(), ['class' => 'form-control']) !!}
-											
-											@if ($errors->has('start_date'))
-												<span class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span>
 											@endif
 										</div>
 									</div>
@@ -186,9 +146,36 @@
 									</div>
 								@endif
 								
+								<div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}" id="email_response">
+									<label class="col-md-2 control-label" for="email">E-Mail</label>
+									<div class="col-md-9 form-control-static">
+										<div class="input-group">
+											<span class="input-group-addon">@</span>
+											{!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
+										</div>
+										<span id="email-inputicon" class="glyphicon glyphicon-ok form-control-feedback"></span>
+										<span id="email_judge"></span>
+										
+										@if ($errors->has('email'))
+											<span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
+										@endif
+									</div>
+								</div>
+								
+								<div class="form-group{{ $errors->has('age') ? ' has-error' : '' }}">
+									<label class="col-md-2 control-label">Age</label>
+									<div class="col-md-9 form-control-static">
+										{!! Form::selectRange('number', 18, 60, ['class' => 'form-control']) !!}
+										
+										@if ($errors->has('age'))
+											<span class="help-block"><strong>{{ $errors->first('age') }}</strong></span>
+										@endif
+									</div>
+								</div>
+								
 								<div class="form-group{{ $errors->has('text') ? ' has-error' : '' }}">
-									<label class="col-md-4 control-label">test</label>
-									<div class="col-md-6">
+									<label class="col-md-2 control-label">test</label>
+									<div class="col-md-9 form-control-static">
 										{!! Form::textarea('test', null, ['class' => 'form-control', 'id' => 'test', 'rows' => '3']) !!}
 										<span id="test_judge"></span>
 										
@@ -199,13 +186,14 @@
 								</div>
 								
 								<div class="form-group">
-									<div class="col-md-6 col-md-offset-4">
+									<div class="col-md-9 col-md-offset-2">
 										@if(\App::environment() === 'local')
 											<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-import"></span>&nbsp;送信</button>
 											<a href="/test/testmail" class="btn btn-success"><span class="glyphicon glyphicon-send"></span>&nbsp;Mail送信</a>
 											<a href="/test/get_json" class="btn btn-warning"><span class="glyphicon glyphicon-import"></span>&nbsp;JSON取得</a>
 											<a href="/test/show_json" class="btn btn-warning"><span class="glyphicon glyphicon-import"></span>&nbsp;JSON表示</a>
 											<a href="/test/output_xml" class="btn btn-primary"><span class="glyphicon glyphicon-import"></span>&nbsp;XML生成</a>
+											<a href="/test/hash_test" class="btn btn-default"><span class="glyphicon glyphicon-import"></span>&nbsp;ハッシュテスト</a>
 										@endif
 									</div>
 								</div>

@@ -34,8 +34,8 @@
 									<span class="glyphicon glyphicon-link"></span>&nbsp;テスト&nbsp;<span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="/test_user"><span class="glyphicon glyphicon-user"></span>&nbsp;テスト一覧</a></li>
-									<li><a href="/test_user/add"><span class="glyphicon glyphicon-plus"></span>&nbsp;テスト登録</a></li>
+									<li><a href="/test"><span class="glyphicon glyphicon-user"></span>&nbsp;テスト一覧</a></li>
+									@if(false)<li><a href="/test/add"><span class="glyphicon glyphicon-plus"></span>&nbsp;テスト登録</a></li>@endif
 								</ul>
 							</li>
 						@endif

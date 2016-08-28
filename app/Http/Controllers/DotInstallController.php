@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Mail\Mailer;
 use App\Http\Controllers\Controller;
-use App\Lib\cURL;
 use Carbon\Carbon;
 
 class DotInstallController extends Controller

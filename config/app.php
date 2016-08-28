@@ -12,9 +12,9 @@ return [
 	| services your application utilizes. Set this in your ".env" file.
 	|
 	*/
-
+	
 	'env' => env('APP_ENV', 'local'),
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode
@@ -25,9 +25,9 @@ return [
 	| application. If disabled, a simple generic error page is shown.
 	|
 	*/
-
+	
 	'debug' => env('APP_DEBUG', true),
-
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Application URL
@@ -38,9 +38,9 @@ return [
 	| your application so that it is used when running Artisan tasks.
 	|
 	*/
-
-	'url' => 'http://localhost',
-
+	
+	'url' => env('APP_URL', 'http://localhost/'),
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
@@ -51,9 +51,9 @@ return [
 	| ahead and set this to a sensible default for you out of the box.
 	|
 	*/
-
-	'timezone' => 'Asia/Tokyo',
-
+	
+	'timezone' => env('APP_TIMEZONE', 'Asia/Tokyo'),
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Application Locale Configuration
@@ -65,7 +65,7 @@ return [
 	|
 	*/
 
-	'locale' => 'ja',
+	'locale' => env('APP_LOCALE', 'ja'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -77,9 +77,9 @@ return [
 	| the language folders that are provided through your application.
 	|
 	*/
-
-	'fallback_locale' => 'ja',
-
+	
+	'fallback_locale' => env('APP_FALLBACK_LOCALE', 'ja'),
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Encryption Key
@@ -90,11 +90,10 @@ return [
 	| will not be safe. Please do this before deploying an application!
 	|
 	*/
-
+	
 	'key' => env('APP_KEY'),
-
-	'cipher' => 'AES-256-CBC',
-
+	'cipher' => env('APP_CIPHER', 'AES-256-CBC'),
+	
 	/*
 	|--------------------------------------------------------------------------
 	| Logging Configuration
@@ -108,7 +107,9 @@ return [
 	|
 	*/
 
-	'log' => env('APP_LOG', 'single'),
+	'log'           => env('APP_LOG', 'single'),
+	'log_level'     => env('APP_LOG_LEVEL', 'debug'),
+	'log_max_files' => env('APP_LOG_MAX_FILES', 5),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -120,9 +121,9 @@ return [
 	| this array to grant expanded functionality to your applications.
 	|
 	*/
-
+	
 	'providers' => [
-
+	
 		/*
 	     * Laravel Framework Service Providers...
 	     */
@@ -222,7 +223,7 @@ return [
 		'Hash'      => Illuminate\Support\Facades\Hash::class,
 		'Input'     => Illuminate\Support\Facades\Input::class,
 		'Util'      => App\Lib\Util::class,
-		'Search'    => App\Lib\Search::class,
+		'Carbon'    => Carbon\Carbon::class,
 	],
 
 ];

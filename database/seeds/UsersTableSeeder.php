@@ -75,7 +75,7 @@ class UsersTableSeeder extends Seeder
 				'confirmed_at' => Carbon::now(),
 			],
 		]);
-		
+		/*
 		// テストデータ生成
 		for ($i=0; $i<50000; $i++)
 		{
@@ -91,5 +91,6 @@ class UsersTableSeeder extends Seeder
 					'confirmed_at' => Carbon::now(),
 			]);
 		}
+		*/
 	}
 }

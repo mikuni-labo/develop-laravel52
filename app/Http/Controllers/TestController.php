@@ -143,6 +143,7 @@ class TestController extends Controller
 //			$mail->getSwiftMessage();
 		});
 	/*
+		// swift mailer
 		$mailer->send(
 				'emails.confirm',
 				['user' => $user, 'token' => $user->confirmation_token],
@@ -151,6 +152,8 @@ class TestController extends Controller
 				}
 		);
 	*/
+		\Flash::success('Sent!');
+		return redirect('test');
 	}
 	
 	/**
@@ -672,6 +675,16 @@ if($key == 5){
 		$simpleXML->asXML(base_path('public/data/programs.xml'));
 		
 		dd('ok');
+	}
+	
+	/**
+	 * ハッシュテスト
+	 *
+	 * @method GET
+	 */
+	public function hashTest()
+	{
+		//
 	}
 	
 	/**

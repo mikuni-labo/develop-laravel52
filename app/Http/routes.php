@@ -13,7 +13,6 @@
 
 // Ajax Tests
 // Route::get("/ajax/{testcode}", function(){
-	
 // 	return Response::json($_POST);
 // });
 /*
@@ -27,20 +26,17 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-
+Route::group(['middleware' => ['web']], function()
+{
 	Route::get( '/',                                 'Auth\AuthController@index');
 	Route::get( 'auth/login',                        'Auth\AuthController@getLogin');
 	Route::post('auth/login',                        'Auth\AuthController@postLogin');
 	Route::get( 'auth/logout',                       'Auth\AuthController@getLogout');
-	// ユーザー登録
-	Route::get( 'auth/register',                     'Auth\AuthController@getRegister');
+	Route::get( 'auth/register',                     'Auth\AuthController@getRegister');// ユーザー登録
 	Route::post('auth/register',                     'Auth\AuthController@postRegister');
-	// 確認メール再送信
-	Route::get( 'auth/resend',                       'Auth\AuthController@getResend');
+	Route::get( 'auth/resend',                       'Auth\AuthController@getResend');// 確認メール再送信
 	Route::post('auth/resend',                       'Auth\AuthController@postResend');
-	// 登録確認メール
-	Route::get( 'auth/resend/{token}',               'Auth\AuthController@getConfirm');
+	Route::get( 'auth/resend/{token}',               'Auth\AuthController@getConfirm');// 登録確認メール
 	
 	/**
 	 * パスワードリマインダー関連
@@ -66,29 +62,11 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get( 'user/search/reset',                 'UserController@resetSearch');
 	
 	/**
-	 * テストユーザ管理
-	 */
-	Route::get( 'test_user',                         'TestUserController@index');
-	Route::post('test_user',                         'TestUserController@postIndex');
-	Route::get( 'test_user/add',                     'TestUserController@add');
-	Route::post('test_user/add',                     'TestUserController@modify');
-	Route::get( 'test_user/edit/{id}',               'TestUserController@edit');
-	Route::post('test_user/edit/{id}',               'TestUserController@modify');
-	Route::get( 'test_user/delete/{id}',             'TestUserController@delete');
-	Route::get( 'test_user/restore/{id}',            'TestUserController@restore');
-	Route::get( 'test_user/search',                  'TestUserController@search');
-	Route::post('test_user/search',                  'TestUserController@postIndex');
-	Route::get( 'test_user/search/reset',            'TestUserController@resetSearch');
-	
-	
-	/**
 	 * Ajax...
 	 */
 	Route::post('ajax/chkDuplicateEmail',            'AjaxResponseController@chkDuplicateEmail');
 	Route::post('ajax/isModifiedData',               'AjaxResponseController@isModifiedData');
 	Route::post('ajax/chkExistsImage',               'AjaxResponseController@chkExistsImage');
-	
-	// test
 	Route::get( 'ajax/test',                         'AjaxResponseController@test');
 	
 	/**
@@ -106,12 +84,14 @@ Route::group(['middleware' => ['web']], function () {
 	 * Test
 	 */
 	Route::get( 'phpinfo',                           'TestController@phpinfo');
+	
 	Route::get( 'test',                              'TestController@getTest');
 	Route::post('test',                              'TestController@postTest');
 	Route::get( 'test/testmail',                     'TestController@sendTestMail');
 	Route::get( 'test/get_json',                     'TestController@getJSON');
 	Route::get( 'test/show_json',                    'TestController@showJSON');
-	Route::get( 'test/output_xml',                   'TestController@outputXML');   // XML出力テスト
+	Route::get( 'test/output_xml',                   'TestController@outputXML');
+	Route::get( 'test/hash_test',                    'TestController@hashTest');	
 	
 	Route::get( 'test/javascript/regexp/{number}',   'TestController@javascriptRegExp');  // JavaScript正規表現テスト
 	
