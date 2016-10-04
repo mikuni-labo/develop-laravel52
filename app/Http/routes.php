@@ -74,6 +74,7 @@ Route::group(['middleware' => ['web']], function()
 	 * (API通信時、Tokenを要求されたくない場合は、ミドルウェアのVerifyCsrfTokenクラスにて、Tokenの要求を受けない処理が必要)
 	 */
 	//Route::post('api/{version}/***',               'ApiResponseController@***');
+	Route::get('apis/echo',                          'ApiResponseController@echoTest');
 	
 	/**
 	 * Cron Test...
