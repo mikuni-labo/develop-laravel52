@@ -16,6 +16,11 @@ use App\Models\NicoVideo;
 use Illuminate\Contracts\Mail\Mailer;
 use Carbon\Carbon;
 use Mail;
+use Storage;
+use ZendPdf\PdfDocument;
+use ZendPdf\Font;
+use ZendPdf\Page;
+use ZendPdf\Resource\Extractor;
 
 class TestController extends Controller
 {
@@ -51,15 +56,12 @@ class TestController extends Controller
 	 */
 	public function postTest(Request $request, $id = null)
 	{
-		
-		
-		\Log::debug('error');
-		
-		
 		/**
 		 * バリデーション
 		 */
 		$this->doValidate($request);
+		
+		dd('ok');
 		
 /*
 		$inputs = $request->all();
@@ -685,6 +687,26 @@ if($key == 5){
 	public function hashTest()
 	{
 		//
+	}
+	
+	/**
+	 * 物件概要書取り込みテスト
+	 *
+	 * @method GET
+	 */
+	public function importPDF()
+	{
+		//PDFを読み込む
+		$pdf= PdfDocument::load( storage_path('app/pdf/bukkengaiyousyo.pdf') );
+		//ブラウザに表示
+		header ('Content-Type:', 'application/pdf');
+		header ('Content-Disposition:', 'inline;');
+		echo $pdf->render();
+		
+		$Disk = Storage::disk('local');
+		//$pdf = $Disk->get('pdf/bukkengaiyousyo.pdf');
+		$pdf = readfile('bukkengaiyousyo.pdf', true, file_get_contents( storage_path('app/pdf/bukkengaiyousyo.pdf') ));
+		dd($pdf);
 	}
 	
 	/**
