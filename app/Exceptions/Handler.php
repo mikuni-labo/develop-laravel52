@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler
 	
 	/**
 	 * override
-	 * ステータスコードによってVIEWを振り分けたい場合はオーバーライドする
+	 * ステータスコードに関わらずVIEWを固定したい場合はオーバーライドする
 	 * 
 	 * {@inheritDoc}
 	 * @see \Illuminate\Foundation\Exceptions\Handler::renderHttpException()
