@@ -22,4 +22,13 @@ SET PASSWORD FOR '[ユーザ]'@'[ホスト名]' = PASSWORD('[パスワード]');
 # 例） MySQLのrootユーザ
 SET PASSWORD FOR 'root'@'::1' = PASSWORD('root');
 SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('root');
-*81F5E21E35407D884A6CD4A731AEBFB6AF209E1B
+
+
+# テーブルステータス確認
+SHOW TABLE STATUS FROM [DB_NAME];
+SHOW FULL COLUMNS FROM [TABLE_NAME];
+
+# テーブル照合順序変更
+ALTER TABLE [テーブル名] COLLATE utf8_general_ci;
+
+

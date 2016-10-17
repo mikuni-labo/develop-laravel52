@@ -16,11 +16,6 @@ composer update
 # .envファイル作成後にキー生成
 php artisan key:generate
 
-
-# パーミッション変更(-Rでディレクトリ内も再起処理)
-chmod -R 777 /var/www/html/storage
-chmod -R 777 /var/www/html/uploads
-
 # .htaccessの下層オーバーライドを許可
 # /etc/httpd/conf/httpd.conf に追記
 <Directory "/var/www/html/laravel/public">
@@ -28,6 +23,10 @@ chmod -R 777 /var/www/html/uploads
      AllowOverride All
 </Directory>
 
+
+# パーミッション変更(-Rでディレクトリ内も再起処理)
+sudo chmod -R 777 /var/www/html/storage
+sudo chmod -R 777 /var/www/html/public/uploads
 
 
 # コンフィグキャッシュファイル更新
@@ -81,10 +80,9 @@ php artisan make:migration create_tx_videos_table --create=tx_videos
 php artisan make:migration add_published_at_to_articles_table --table=users
 php artisan make:migration modify_published_at_to_users_table --table=users
 php artisan make:migration add_published_at_to_products_table --table=products
-
 php artisan make:migration add_published_at_to_test_users_table --table=test_users
-
 php artisan make:migration modify_published_at_to_admins_table --table=admins
+php artisan make:migration drop_foreign_key_userid_to_logs_table --table=logs
 
 # その他
 php artisan migrate --force
