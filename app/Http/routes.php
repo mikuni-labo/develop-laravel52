@@ -1,20 +1,4 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-// Ajax Tests
-// Route::get("/ajax/{testcode}", function(){
-// 	return Response::json($_POST);
-// });
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -74,6 +58,7 @@ Route::group(['middleware' => ['web']], function()
 	 * (API通信時、Tokenを要求されたくない場合は、ミドルウェアのVerifyCsrfTokenクラスにて、Tokenの要求を受けない処理が必要)
 	 */
 	//Route::post('api/{version}/***',               'ApiResponseController@***');
+	Route::get('apis/echo',                          'ApiResponseController@echoTest');
 	
 	/**
 	 * Cron Test...
@@ -84,14 +69,14 @@ Route::group(['middleware' => ['web']], function()
 	 * Test
 	 */
 	Route::get( 'phpinfo',                           'TestController@phpinfo');
-	
 	Route::get( 'test',                              'TestController@getTest');
 	Route::post('test',                              'TestController@postTest');
 	Route::get( 'test/testmail',                     'TestController@sendTestMail');
 	Route::get( 'test/get_json',                     'TestController@getJSON');
 	Route::get( 'test/show_json',                    'TestController@showJSON');
 	Route::get( 'test/output_xml',                   'TestController@outputXML');
-	Route::get( 'test/hash_test',                    'TestController@hashTest');	
+	Route::get( 'test/hash_test',                    'TestController@hashTest');
+	Route::get( 'test/bukkengaiyou_pdf',             'TestController@importPDF');
 	
 	Route::get( 'test/javascript/regexp/{number}',   'TestController@javascriptRegExp');  // JavaScript正規表現テスト
 	

@@ -194,6 +194,7 @@
 											<a href="/test/show_json" class="btn btn-warning"><span class="glyphicon glyphicon-import"></span>&nbsp;JSON表示</a>
 											<a href="/test/output_xml" class="btn btn-primary"><span class="glyphicon glyphicon-import"></span>&nbsp;XML生成</a>
 											<a href="/test/hash_test" class="btn btn-default"><span class="glyphicon glyphicon-import"></span>&nbsp;ハッシュテスト</a>
+											<a href="/test/bukkengaiyou_pdf" class="btn btn-default"><span class="glyphicon glyphicon-import"></span>&nbsp;物件概要PDF取り込み</a>
 										@endif
 									</div>
 								</div>

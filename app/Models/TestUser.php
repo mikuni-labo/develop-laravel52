@@ -6,6 +6,47 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
+/**
+ * App\Models\TestUser
+ *
+ * @property integer $id
+ * @property string $role
+ * @property integer $status
+ * @property integer $version
+ * @property integer $modified_user
+ * @property string $name1
+ * @property string $name2
+ * @property string $company
+ * @property string $position
+ * @property string $email
+ * @property string $password
+ * @property string $remember_token
+ * @property string $confirmation_token
+ * @property \Carbon\Carbon $confirmed_at
+ * @property \Carbon\Carbon $confirmation_sent_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereRole($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereVersion($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereModifiedUser($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereName1($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereName2($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereCompany($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser wherePosition($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereConfirmationToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereConfirmedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereConfirmationSentAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\TestUser whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class TestUser extends Model
 {
 	use SoftDeletes;

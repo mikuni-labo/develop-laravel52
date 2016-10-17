@@ -132,3 +132,15 @@ docker build -t kuniyasu/my-first-container /vagrant
 
 
 
+
+
+### MacターミナルでSSH接続 ###
+
+# キーのパーミッションを700に
+sudo chmod 0700 ~/.ssh/kuniyasu.key
+
+# 接続 (ポートとキーを指定)
+ssh -p 10022 -i ~/.ssh/kuniyasu.key kuniyasu@sv810.xserver.jp
+
+# シンボリックリンク
+ln -s $HOME/kuniyasu.xsrv.jp/laravel/public $HOME/kuniyasu.xsrv.jp/public_html
