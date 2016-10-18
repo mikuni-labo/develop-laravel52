@@ -18,9 +18,9 @@ use Carbon\Carbon;
 use Mail;
 use Storage;
 use ZendPdf\PdfDocument;
-use ZendPdf\Font;
-use ZendPdf\Page;
-use ZendPdf\Resource\Extractor;
+// use ZendPdf\Font;
+// use ZendPdf\Page;
+// use ZendPdf\Resource\Extractor;
 
 class TestController extends Controller
 {
@@ -677,6 +677,48 @@ if($key == 5){
 		$simpleXML->asXML(base_path('public/data/programs.xml'));
 		
 		dd('ok');
+	}
+	
+	/**
+	 * OANDA TEST
+	 *
+	 * @method GET
+	 */
+	public function oandaTest(Request $request)
+	{
+		$token = '9f115789328b60354d791744fe939e88-8d55cda34df04882838c53eb37e5d507';
+		$param = [
+				//
+		];
+		
+		$header = [
+				//'Content-type: application/json',
+				'Content-Type: application/x-www-form-urlencoded',
+				"Authorization: Bearer {$token}",
+		];
+		
+		$ch = new cURL();
+		$ch->init();
+		$ch->setUrl("https://api-fxpractice.oanda.com/v1/accounts");
+		$ch->setUserAgent('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1');
+		$ch->setMethod('POST');
+		//$ch->setUserPwd($this->authId, $this->authPass);
+		//$ch->setParameterFromArray($param);
+		$ch->setHeader($header);
+		
+		//$ch->setIsBuildQuery(false);
+		$ch->setIsJson(true);
+		
+		$response = $ch->exec();
+// 		/dd($response);
+		
+		//$ch->getInfo();
+		$ch->getErrorMessage();
+		
+		$ch->close();
+		
+		$result = json_decode($response);
+		dd($result);
 	}
 	
 	/**

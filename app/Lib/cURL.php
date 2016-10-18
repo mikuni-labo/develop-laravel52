@@ -28,6 +28,17 @@ class cURL
 	private $method = 'GET';
 	
 	/**
+	 * JSON形式で送るか?
+	 *
+	 */
+	private $isJson = false;
+	
+	/**
+	 * クエリビルドするかどうか
+	 */
+	private $isBuildQuery = true;
+	
+	/**
 	 * 接続先
 	 * 
 	 */
@@ -80,6 +91,26 @@ class cURL
 		return $this->url;
 	}
 	
+	public function setIsJson($isJson)
+	{
+		$this->isJson = $isJson;
+	}
+	
+	public function getIsJson()
+	{
+		return $this->isJson;
+	}
+	
+	public function setIsBuildQuery($isBuildQuery)
+	{
+		$this->isBuildQuery = $isBuildQuery;
+	}
+	
+	public function getIsBuildQuery()
+	{
+		return $this->isBuildQuery;
+	}
+	
 	public function setUserAgent($user_agent)
 	{
 		$this->user_agent = $user_agent;
@@ -125,7 +156,7 @@ class cURL
 		$this->ssl_verifypeer = $ssl_verifypeer;
 	}
 	
-	public function exec() 
+	public function exec()
 	{
 		try {
 			$this->init();
@@ -145,8 +176,43 @@ class cURL
 			switch($this->method) {
 				
 				case 'POST':
+					if($this->isJson === true)
+						$this->parameter = json_encode($this->parameter);
+					elseif($this->isBuildQuery === true)
+						$this->parameter = http_build_query($this->parameter);
+					
 					curl_setopt($this->ch, CURLOPT_POST, true);
-					curl_setopt($this->ch, CURLOPT_POSTFIELDS, http_build_query($this->parameter));
+					curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
+					break;
+					
+				case 'PUT':
+					if($this->isJson === true)
+						$this->parameter = json_encode($this->parameter);
+					elseif($this->isBuildQuery === true)
+						$this->parameter = http_build_query($this->parameter);
+					
+					curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST , 'PUT');
+					curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
+					break;
+					
+				case 'PATCH':
+					if($this->isJson === true)
+						$this->parameter = json_encode($this->parameter);
+					elseif($this->isBuildQuery === true)
+						$this->parameter = http_build_query($this->parameter);
+							
+					curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST , 'PATCH');
+					curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
+					break;
+					
+				case 'DELETE':
+					if($this->isJson === true)
+						$this->parameter = json_encode($this->parameter);
+					elseif($this->isBuildQuery === true)
+						$this->parameter = http_build_query($this->parameter);
+							
+					curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST , 'DELETE');// DELETEの場合はHTTPメソッド名を直接指定する必要があるかもしれない...
+					curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
 					break;
 				
 				case 'GET':
@@ -157,7 +223,6 @@ class cURL
 				default:
 					curl_setopt($this->ch, CURLOPT_HTTPGET, true);
 					$this->setUrl($this->url . '?' . http_build_query($this->parameter)); 
-					break;
 			}
 			
 			curl_setopt($this->ch, CURLOPT_URL, $this->url);

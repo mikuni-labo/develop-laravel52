@@ -78,6 +78,9 @@ Route::group(['middleware' => ['web']], function()
 	Route::get( 'test/hash_test',                    'TestController@hashTest');
 	Route::get( 'test/bukkengaiyou_pdf',             'TestController@importPDF');
 	
+	// OANDA API
+	Route::get( 'oanda',                              'TestController@oandaTest');
+	
 	Route::get( 'test/javascript/regexp/{number}',   'TestController@javascriptRegExp');  // JavaScript正規表現テスト
 	
 	/**
