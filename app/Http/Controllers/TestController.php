@@ -686,28 +686,99 @@ if($key == 5){
 	 */
 	public function oandaTest(Request $request)
 	{
-		$token = '9f115789328b60354d791744fe939e88-8d55cda34df04882838c53eb37e5d507';
-		$param = [
-				//
-		];
+// 		$url = 'http://www.gaitameonline.com/rateaj/getrate';
+// 		$param = [
+// 				//
+// 		];
 		
+// 		$header = [
+// 				//'Content-type: application/json',
+// // 				'Content-Type: application/x-www-form-urlencoded',
+// // 				"Authorization: Bearer {$token}",
+// 				];
+		
+// 		$ch = new cURL();
+// 		$ch->init();
+// 		$ch->setUrl('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDJPY,EURJPY,JPYJPY%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys');
+// 		$ch->setUserAgent('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1');
+// 		$ch->setMethod('GET');
+// 		//$ch->setSslVerifypeer(false);
+// 		//$ch->setUserPwd($this->authId, $this->authPass);
+// 		//$ch->setParameterFromArray($param);
+// 		$ch->setHeader($header);
+		
+// 		//$ch->setIsBuildQuery(false);
+// 		//$ch->setIsJson(true);
+		
+// 		$response = $ch->exec();
+// 		//dd($response);
+		
+// 		//$ch->getInfo();
+// 		$ch->getErrorMessage();
+		
+// 		$ch->close();
+		
+// 		$result = json_decode($response);
+		
+// 		\Storage::disk('local')->put('app/test/gaitame.json', $response);
+// 		dd($result);
+		
+		
+		
+		
+		
+		
+		
+		
+		/**
+		 * 認証
+		 */
+		$token  = '9f115789328b60354d791744fe939e88-8d55cda34df04882838c53eb37e5d507';
 		$header = [
 				//'Content-type: application/json',
 				'Content-Type: application/x-www-form-urlencoded',
 				"Authorization: Bearer {$token}",
 		];
 		
+		/**
+		 * ベース
+		 */
+		$version = 'v1';
+		
+		$format = 'api';
+// 		$format = 'stream';
+		
+		$base = "http://{$format}-sandbox.oanda.com/{$version}";
+// 		$base = "https://{$format}-fxpractice.oanda.com/{$version}";
+// 		$base = "https://{$format}-fxtrade.oanda.com/{$version}";
+		
+		/**
+		 * エンドポイント
+		 */
+// 		$endPoint = "/accounts"; // アカウント情報
+// 		$endPoint = "/candles";  // レート情報
+		$endPoint = "/prices";   // レート情報 (eTag?)
+		
+		$param = [
+// 				'instrument'  => 'EUR_JPY',
+				'instruments' => 'EUR_USD',
+// 				'start'      => 137849394,
+				'count'      => 1,
+		];
+		
 		$ch = new cURL();
 		$ch->init();
-		$ch->setUrl("https://api-fxpractice.oanda.com/v1/accounts");
+		$ch->setUrl($base.$endPoint);
 		$ch->setUserAgent('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1');
-		$ch->setMethod('POST');
-		//$ch->setUserPwd($this->authId, $this->authPass);
-		//$ch->setParameterFromArray($param);
+		$ch->setMethod('GET');
+		$ch->setSslVerifypeer(false);
+		
+// 		$ch->setUserPwd($this->authId, $this->authPass);
+		$ch->setParameterFromArray($param);
 		$ch->setHeader($header);
 		
-		//$ch->setIsBuildQuery(false);
-		$ch->setIsJson(true);
+// 		$ch->setIsBuildQuery(false);
+// 		$ch->setIsJson(true);
 		
 		$response = $ch->exec();
 // 		/dd($response);
