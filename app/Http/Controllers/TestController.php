@@ -748,20 +748,20 @@ if($key == 5){
 		$format = 'api';
 // 		$format = 'stream';
 		
-		$base = "http://{$format}-sandbox.oanda.com/{$version}";
-// 		$base = "https://{$format}-fxpractice.oanda.com/{$version}";
+// 		$base = "http://{$format}-sandbox.oanda.com/{$version}";
+		$base = "https://{$format}-fxpractice.oanda.com/{$version}";
 // 		$base = "https://{$format}-fxtrade.oanda.com/{$version}";
 		
 		/**
 		 * エンドポイント
 		 */
 // 		$endPoint = "/accounts"; // アカウント情報
-// 		$endPoint = "/candles";  // レート情報
-		$endPoint = "/prices";   // レート情報 (eTag?)
+		$endPoint = "/candles";  // レート情報
+// 		$endPoint = "/prices";   // レート情報 (eTag?)
 		
 		$param = [
-// 				'instrument'  => 'EUR_JPY',
-				'instruments' => 'EUR_USD',
+				'instrument'  => 'EUR_JPY',
+// 				'instruments' => 'EUR_USD',
 // 				'start'      => 137849394,
 				'count'      => 1,
 		];

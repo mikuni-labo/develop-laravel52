@@ -24,7 +24,7 @@ class ApiResponseController extends Controller
 	 */
 	public function test()
 	{
-		//
+		dd('test');
 	}
 	
 	/**

@@ -58,7 +58,9 @@ Route::group(['middleware' => ['web']], function()
 	 * (API通信時、Tokenを要求されたくない場合は、ミドルウェアのVerifyCsrfTokenクラスにて、Tokenの要求を受けない処理が必要)
 	 */
 	//Route::post('api/{version}/***',               'ApiResponseController@***');
-	Route::get('apis/echo',                          'ApiResponseController@echoTest');
+	Route::get('api/echo',                          'ApiResponseController@echoTest');
+	
+	
 	
 	/**
 	 * Cron Test...
@@ -78,8 +80,18 @@ Route::group(['middleware' => ['web']], function()
 	Route::get( 'test/hash_test',                    'TestController@hashTest');
 	Route::get( 'test/bukkengaiyou_pdf',             'TestController@importPDF');
 	
+	/**
+	 * APIテスト
+	 */
+// 	Route::controller('api/',                        'ApiController');
+	
+	/**
+	 * ルーティングテスト
+	 */
+	Route::resource('hello',                         'HelloController');
+	
 	// OANDA API
-	Route::get( 'oanda',                              'TestController@oandaTest');
+	Route::get( 'oanda',                             'TestController@oandaTest');
 	
 	Route::get( 'test/javascript/regexp/{number}',   'TestController@javascriptRegExp');  // JavaScript正規表現テスト
 	
@@ -88,4 +100,3 @@ Route::group(['middleware' => ['web']], function()
 	 */
 	Route::get( 'dotinstall/carbon',                 'DotInstallController@testCarbon');
 });
-
