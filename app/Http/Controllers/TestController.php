@@ -699,7 +699,7 @@ if($key == 5){
 		
 // 		$ch = new cURL();
 // 		$ch->init();
-// 		$ch->setUrl('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDJPY,EURJPY,JPYJPY%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys');
+// 		$ch->setUrl($url);
 // 		$ch->setUserAgent('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1');
 // 		$ch->setMethod('GET');
 // 		//$ch->setSslVerifypeer(false);
@@ -737,14 +737,15 @@ if($key == 5){
 		$header = [
 				//'Content-type: application/json',
 				'Content-Type: application/x-www-form-urlencoded',
+				'Access-Control-Allow-Methods',
 				"Authorization: Bearer {$token}",
 		];
 		
 		/**
 		 * ベース
 		 */
+		$accountId = '9836455';
 		$version = 'v1';
-		
 		$format = 'api';
 // 		$format = 'stream';
 		
@@ -755,15 +756,59 @@ if($key == 5){
 		/**
 		 * エンドポイント
 		 */
-// 		$endPoint = "/accounts"; // アカウント情報
-		$endPoint = "/candles";  // レート情報
-// 		$endPoint = "/prices";   // レート情報 (eTag?)
+// 		$endPoint = "/accounts";   // アカウント情報
+		$endPoint = "/instruments";// 通貨リスト
+// 		$endPoint = "/candles";    // レート情報
+// 		$endPoint = "/prices";     // レート情報 (eTag?)
+// 		$endPoint = '/';
 		
 		$param = [
-				'instrument'  => 'EUR_JPY',
-// 				'instruments' => 'EUR_USD',
-// 				'start'      => 137849394,
-				'count'      => 1,
+				'instrument'  => 'USD_JPY',// 米ドル ok 
+				'instrument'  => 'EUR_JPY',// ユーロ ok 
+				'instrument'  => 'CNY_JPY',// 中国元 ng 
+				
+				'instrument'  => 'TWD_JPY',// 台湾ドル ng
+				'instrument'  => 'HKD_JPY',// 香港ドル ok
+				'instrument'  => 'KRW_JPY',// 韓国ウォン ng
+				
+				'instrument'  => 'GBP_JPY',// 英ポンド ok
+				'instrument'  => 'CHF_JPY',// スイスフラン ok
+				'instrument'  => 'AUD_JPY',// 豪ドル ok
+				
+				'instrument'  => 'CAD_JPY',// 加ドル ok
+				'instrument'  => 'THB_JPY',// タイ・バーツ ok
+				'instrument'  => 'SGD_JPY',// シンガポール・ドル ok
+				
+// 				'start'       => 137849394,
+				'count'       => 1,
+		];
+		
+		$countries = [
+				'USD_JPY',// 米ドル
+				'EUR_JPY',// ユーロ
+				'CNY_JPY',// 中国元
+				
+				'TWD_JPY',// 台湾ドル
+				'HKD_JPY',// 香港ドル
+				'KRW_JPY',// 韓国ウォン ng
+				
+				'GBP_JPY',// 英ポンド
+				'CHF_JPY',// スイスフラン
+				'AUD_JPY',// 豪ドル
+				
+				'CAD_JPY',// 加ドル
+				'THB_JPY',// タイ・バーツ
+				'SGD_JPY',// シンガポール・ドル
+		];
+		
+		$param = [
+				'instruments' => implode(',', $countries),
+// 				'start'       => 137849394,
+				'count'       => 1,
+		];
+		
+		$param = [
+				'accountId'   => $accountId,
 		];
 		
 		$ch = new cURL();
@@ -772,8 +817,8 @@ if($key == 5){
 		$ch->setUserAgent('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1');
 		$ch->setMethod('GET');
 		$ch->setSslVerifypeer(false);
-		
 // 		$ch->setUserPwd($this->authId, $this->authPass);
+		
 		$ch->setParameterFromArray($param);
 		$ch->setHeader($header);
 		
@@ -782,6 +827,7 @@ if($key == 5){
 		
 		$response = $ch->exec();
 // 		/dd($response);
+		\Storage::disk('local')->put('json/oanda.json', $response);
 		
 		//$ch->getInfo();
 		$ch->getErrorMessage();
