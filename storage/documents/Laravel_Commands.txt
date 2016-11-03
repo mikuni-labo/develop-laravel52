@@ -29,6 +29,9 @@ sudo chmod -R 777 /var/www/html/storage
 sudo chmod -R 777 /var/www/html/public/uploads
 
 
+# IDEヘルパーファイル生成
+php artisan ide-helper:generate
+
 # コンフィグキャッシュファイル更新
 php artisan config:cache
 
