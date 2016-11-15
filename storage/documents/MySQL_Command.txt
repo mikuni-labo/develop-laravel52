@@ -10,6 +10,12 @@ CREATE DATABASE [DB名];
 # ユーザ削除
 DROP USER '[ユーザ]'@'[ホスト名]' IDENTIFIED BY '[パスワード]';
 
+# 初期ユーザ削除 (無名ユーザも)
+DROP USER 'root'@'localhost.localdomain';
+DROP USER ''@'localhost.localdomain';
+DROP USER ''@'localhost';
+
+
 # 権限付与
 GRANT ALL ON [DB名].* TO '[ユーザ]'@'[ホスト名]';
 
@@ -22,6 +28,7 @@ SET PASSWORD FOR '[ユーザ]'@'[ホスト名]' = PASSWORD('[パスワード]');
 # 例） MySQLのrootユーザ
 SET PASSWORD FOR 'root'@'::1' = PASSWORD('root');
 SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('root');
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root');
 
 
 # テーブルステータス確認

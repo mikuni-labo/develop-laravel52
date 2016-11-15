@@ -680,7 +680,7 @@ if($key == 5){
 	}
 	
 	/**
-	 * OANDA TEST
+	 * OANDA API TEST
 	 *
 	 * @method GET
 	 */
@@ -831,6 +831,130 @@ if($key == 5){
 		
 		//$ch->getInfo();
 		$ch->getErrorMessage();
+		
+		$ch->close();
+		
+		$result = json_decode($response);
+		dd($result);
+	}
+	
+	/**
+	 * CurrencyLayer API TEST
+	 *
+	 * @method GET
+	 */
+	public function currencyLayerTest(Request $request)
+	{
+		/**
+		 * 認証
+		 */
+		$token  = '03ec93074f83e3574d7ebec844a6e79c';
+		$header = [
+				//'Content-type: application/json',
+				'Content-Type: application/x-www-form-urlencoded',
+// 				'Access-Control-Allow-Methods',
+// 				"Authorization: Bearer {$token}",
+				];
+	
+		/**
+		 * ベース
+		 */
+		$base = "http://apilayer.net/api";
+		
+		/**
+		 * エンドポイント
+		 */
+// 		$endPoint = '/live';
+		$endPoint = '/change';
+		
+		$param = [
+				'access_key' => $token,
+// 				'source' => 'JPY',
+// 				'currencies' => '',
+		];
+		
+		$ch = new cURL();
+		$ch->init();
+		$ch->setUrl($base.$endPoint);
+		$ch->setUserAgent('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1');
+		$ch->setMethod('GET');
+		$ch->setSslVerifypeer(false);
+// 		$ch->setUserPwd($this->authId, $this->authPass);
+		
+		$ch->setParameterFromArray($param);
+		$ch->setHeader($header);
+		
+// 		$ch->setIsBuildQuery(false);
+// 		$ch->setIsJson(true);
+		
+		$response = $ch->exec();
+// 		/dd($response);
+// 		\Storage::disk('local')->put('json/oanda.json', $response);
+		
+// 		$ch->getInfo();
+// 		$ch->getErrorMessage();
+		
+		$ch->close();
+		
+		$result = json_decode($response);
+		dd($result);
+	}
+	
+	/**
+	 * OpenExchangeRates API TEST
+	 *
+	 * @method GET
+	 */
+	public function openExchangeRatesTest(Request $request)
+	{
+		/**
+		 * 認証
+		 */
+		$token  = '694d232043c5483590c2e917eae36445';
+		$header = [
+// 				'Content-type: application/json',
+				'Content-Type: application/x-www-form-urlencoded',
+// 				'Access-Control-Allow-Methods',
+// 				"Authorization: Bearer {$token}",
+		];
+		
+		/**
+		 * ベース
+		 */
+		$base = "https://openexchangerates.org/api";
+		
+		/**
+		 * エンドポイント
+		 */
+		$endPoint = '/latest.json';
+// 		$endPoint = '/currencies.json';
+		
+		$param = [
+				'app_id' => $token,
+				'base' => 'USD',
+// 				'currencies' => '',
+		];
+		
+		$ch = new cURL();
+		$ch->init();
+		$ch->setUrl($base.$endPoint);
+		$ch->setUserAgent('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1');
+		$ch->setMethod('GET');
+		$ch->setSslVerifypeer(false);
+// 		$ch->setUserPwd($this->authId, $this->authPass);
+		
+		$ch->setParameterFromArray($param);
+		$ch->setHeader($header);
+		
+// 		$ch->setIsBuildQuery(false);
+// 		$ch->setIsJson(true);
+		
+		$response = $ch->exec();
+// 		/dd($response);
+// 		\Storage::disk('local')->put('json/oanda.json', $response);
+		
+// 		$ch->getInfo();
+// 		$ch->getErrorMessage();
 		
 		$ch->close();
 		

@@ -84,15 +84,14 @@ Route::group(['middleware' => ['web']], function()
 	 * APIテスト
 	 */
 // 	Route::controller('api/',                        'ApiController');
+	Route::get( 'api/oanda',                         'TestController@oandaTest');
+	Route::get( 'api/currencylayer',                 'TestController@currencyLayerTest');
+	Route::get( 'api/openexchangerates',             'TestController@openExchangeRatesTest');
+	
 	
 	/**
-	 * ルーティングテスト
+	 * JSテスト
 	 */
-	Route::resource('hello',                         'HelloController');
-	
-	// OANDA API
-	Route::get( 'oanda',                             'TestController@oandaTest');
-	
 	Route::get( 'test/javascript/regexp/{number}',   'TestController@javascriptRegExp');  // JavaScript正規表現テスト
 	
 	/**
