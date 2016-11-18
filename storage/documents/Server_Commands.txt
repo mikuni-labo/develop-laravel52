@@ -144,3 +144,19 @@ ssh -p 10022 -i ~/.ssh/kuniyasu.key kuniyasu@sv810.xserver.jp
 
 # シンボリックリンク
 ln -s $HOME/kuniyasu.xsrv.jp/laravel/public $HOME/kuniyasu.xsrv.jp/public_html
+
+
+
+
+### yum -y install で phpMyAdminインストールと設定変更手順（Apache2.4） ###
+# LANから接続出来るように以下のファイルに追記
+sudo vi /etc/httpd/conf.d/phpMyAdmin.conf
+
+ <IfModule mod_authz_core.c>
+     # Apache 2.4
+     <RequireAny>
+       Require ip 127.0.0.1
+       Require ip 192.168. ←これ
+       Require ip ::1
+     </RequireAny>
+   </IfModule>

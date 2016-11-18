@@ -7,13 +7,16 @@ CREATE DATABASE [DB名];
 # ユーザ作成
 # CREATE USER '[ユーザ]'@'[ホスト名]' IDENTIFIED BY '[パスワード]';
 
+CREATE USER 'root'@'192.168.%' IDENTIFIED BY 'kuniyasu1983';
+GRANT ALL ON dollar_ranger.* TO 'root'@'192.168.%';
+
 # ユーザ削除
 DROP USER '[ユーザ]'@'[ホスト名]' IDENTIFIED BY '[パスワード]';
 
 # 初期ユーザ削除 (無名ユーザも)
-DROP USER 'root'@'localhost.localdomain';
-DROP USER ''@'localhost.localdomain';
 DROP USER ''@'localhost';
+DROP USER ''@'localhost.localdomain';
+DROP USER 'root'@'localhost.localdomain';
 
 
 # 権限付与
@@ -26,9 +29,9 @@ SHOW GRANTS for '[ユーザ]'@'[ホスト名]';
 SET PASSWORD FOR '[ユーザ]'@'[ホスト名]' = PASSWORD('[パスワード]');
 
 # 例） MySQLのrootユーザ
-SET PASSWORD FOR 'root'@'::1' = PASSWORD('root');
-SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('root');
-SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root');
+SET PASSWORD FOR 'root'@'::1' = PASSWORD('kuniyasu1983');
+SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('kuniyasu1983');
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('kuniyasu1983');
 
 
 # テーブルステータス確認
