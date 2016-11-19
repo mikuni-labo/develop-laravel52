@@ -2,13 +2,11 @@
 SELECT user, host FROM mysql.user ORDER BY user, host;
 
 # DB作成
-CREATE DATABASE [DB名];
+CREATE DATABASE [DB名] CHARACTER SET 'UTF8' COLLATE 'utf8_general_ci';
+CREATE DATABASE test CHARACTER SET 'UTF8' COLLATE 'utf8_general_ci';
 
 # ユーザ作成
 # CREATE USER '[ユーザ]'@'[ホスト名]' IDENTIFIED BY '[パスワード]';
-
-CREATE USER 'root'@'192.168.%' IDENTIFIED BY 'kuniyasu1983';
-GRANT ALL ON dollar_ranger.* TO 'root'@'192.168.%';
 
 # ユーザ削除
 DROP USER '[ユーザ]'@'[ホスト名]' IDENTIFIED BY '[パスワード]';
@@ -40,5 +38,22 @@ SHOW FULL COLUMNS FROM [TABLE_NAME];
 
 # テーブル照合順序変更
 ALTER TABLE [テーブル名] COLLATE utf8_general_ci;
+
+
+### MySQL構築直後にまずやること ###
+DROP USER ''@'localhost';
+DROP USER ''@'localhost.localdomain';
+DROP USER 'root'@'localhost.localdomain';
+
+SET PASSWORD FOR 'root'@'::1' = PASSWORD('kuniyasu1983');
+SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('kuniyasu1983');
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('kuniyasu1983');
+
+# LANから接続可能なユーザ作成
+CREATE USER 'root'@'192.168.%' IDENTIFIED BY 'kuniyasu1983';
+
+# DB単位で全権限付与
+GRANT ALL ON [DB名].* TO 'root'@'192.168.%';
+
 
 
