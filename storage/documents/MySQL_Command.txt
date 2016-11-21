@@ -39,6 +39,15 @@ SHOW FULL COLUMNS FROM [TABLE_NAME];
 # テーブル照合順序変更
 ALTER TABLE [テーブル名] COLLATE utf8_general_ci;
 
+# DB照合順序変更
+ALTER DATABASE [DB] CHARACTER SET 'UTF8' COLLATE 'utf8_general_ci';
+ALTER DATABASE mysql CHARACTER SET 'UTF8' COLLATE 'utf8_general_ci';
+
+
+# MySQLサーバ情報あれこれ
+SHOW VARIABLES LIKE '%collation%';
+
+
 
 ### MySQL構築直後にまずやること ###
 DROP USER ''@'localhost';
