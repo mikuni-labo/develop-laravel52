@@ -64,6 +64,8 @@ chkconfig mysqld on
 chkconfig | grep mysqld # その確認
 
 
+# インストール直後のランダムパスワード確認
+sudo cat /var/log/mysqld.log
 
 # mysql_secure_installation実行
 cd /usr/bin

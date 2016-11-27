@@ -4,6 +4,7 @@ SELECT user, host FROM mysql.user ORDER BY user, host;
 # DB作成
 CREATE DATABASE [DB名] CHARACTER SET 'UTF8' COLLATE 'utf8_general_ci';
 CREATE DATABASE test CHARACTER SET 'UTF8' COLLATE 'utf8_general_ci';
+CREATE DATABASE laravel53 CHARACTER SET 'UTF8' COLLATE 'utf8_general_ci';
 
 # ユーザ作成
 # CREATE USER '[ユーザ]'@'[ホスト名]' IDENTIFIED BY '[パスワード]';
@@ -32,6 +33,23 @@ SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('kuniyasu1983');
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('kuniyasu1983');
 
 
+### MySQL5.7からパスワードポリシーなる概念があり、レベルなどを調整可能 ###
+# 現在のパスワードの設定を確認
+SHOW VARIABLES LIKE 'validate_password%';
++--------------------------------------+-------+
+| Variable_name                        | Value |
++--------------------------------------+-------+
+| validate_password_dictionary_file    |       |
+| validate_password_length             | 4     |
+| validate_password_mixed_case_count   | 1     |
+| validate_password_number_count       | 1     |
+| validate_password_policy             | LOW   |
+| validate_password_special_char_count | 1     |
++--------------------------------------+-------+
+# 設定変更例
+SET GLOBAL validate_password_length=8;
+SET GLOBAL validate_password_policy=LOW;
+
 # テーブルステータス確認
 SHOW TABLE STATUS FROM [DB_NAME];
 SHOW FULL COLUMNS FROM [TABLE_NAME];
@@ -48,7 +66,6 @@ ALTER DATABASE mysql CHARACTER SET 'UTF8' COLLATE 'utf8_general_ci';
 SHOW VARIABLES LIKE '%collation%';
 
 
-
 ### MySQL構築直後にまずやること ###
 DROP USER ''@'localhost';
 DROP USER ''@'localhost.localdomain';
@@ -62,7 +79,28 @@ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('kuniyasu1983');
 CREATE USER 'root'@'192.168.%' IDENTIFIED BY 'kuniyasu1983';
 
 # DB単位で全権限付与
+GRANT ALL ON *.* TO 'root'@'192.168.%';
 GRANT ALL ON [DB名].* TO 'root'@'192.168.%';
 
 
+### MySQL設定ファイル ###
+sudo cp /etc/my.cnf /etc/my.cnf.bkup
+sudo vi /etc/my.cnf
 
+# 文字コードをutf-8に
+character-set-server=utf8
+
+# 起動ファイル
+datadir=/var/lib/mysql
+
+# ソケット
+socket=/var/lib/mysql/mysql.sock
+
+# デフォルトのストレージエンジン
+default-storage-engine=InnoDB
+
+## 追加設定
+[mysql]
+
+# mysqlの文字コードもutf-8に
+default-character-set=utf8
