@@ -21,6 +21,7 @@ use ZendPdf\PdfDocument;
 // use ZendPdf\Font;
 // use ZendPdf\Page;
 // use ZendPdf\Resource\Extractor;
+use Goutte\Client;
 
 class TestController extends Controller
 {
@@ -990,6 +991,42 @@ if($key == 5){
 		//$pdf = $Disk->get('pdf/bukkengaiyousyo.pdf');
 		$pdf = readfile('bukkengaiyousyo.pdf', true, file_get_contents( storage_path('app/pdf/bukkengaiyousyo.pdf') ));
 		dd($pdf);
+	}
+	
+	/**
+	 * scraping
+	 *
+	 * @method GET
+	 */
+	public function scraping()
+	{
+		// みずほ銀行
+		$this->getWebSite("http://www.mizuhobank.co.jp/rate/market/cash.html", "tbody");
+		
+		// 大黒屋
+		$this->getWebSite("http://gaika.e-daikoku.com/", "tbody");
+		
+		// ドルユーロ
+		$this->getWebSite("https://doru.jp/ex_multi/", "table");
+		$this->getWebSite("https://doru.jp/gaika_kaitori/", "div#conts div.innner");
+	}
+	
+	private function getWebSite($url, $tag)
+	{
+		// Create Goutte Object
+		$client = new Client();
+		
+		// Get Data Source
+		$crawler = $client->request('GET', $url);
+		
+		$crawler->filter($tag)->each(function ($node)
+		{
+			$text = $node->text();
+			$arrText = explode("\n", $text);
+// 			$arrText = explode("\r\n", $text);
+			
+			dd($arrText);
+		});
 	}
 	
 	/**

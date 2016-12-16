@@ -15,7 +15,8 @@
         "laracasts/flash": "^2.0",
         "barryvdh/laravel-debugbar": "^2.2",
         "league/csv": "^8.0",
-        "zendframework/zendpdf": "dev-master"
+        "zendframework/zendpdf": "dev-master",
+        "fabpot/goutte": "2.0.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
