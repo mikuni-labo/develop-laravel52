@@ -80,6 +80,7 @@ Route::group(['middleware' => ['web']], function()
 	Route::get( 'test/hash_test',                    'TestController@hashTest');
 	Route::get( 'test/bukkengaiyou_pdf',             'TestController@importPDF');
 	Route::get( 'test/scraping',                     'TestController@scraping');
+	Route::get( 'test/cart',                         'TestController@cart');
 	
 	/**
 	 * APIテスト

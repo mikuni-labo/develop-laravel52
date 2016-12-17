@@ -166,6 +166,7 @@ return [
 		Intervention\Image\ImageServiceProvider::class,
 		Laracasts\Flash\FlashServiceProvider::class,              // フラッシュメッセージパッケージ
 		App\Providers\LocalServiceProvider::class,                // ローカル環境サービスプロバイダ登録
+		Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,// ショッピングカート
 	],
 
 	/*
@@ -224,6 +225,7 @@ return [
 		'Input'     => Illuminate\Support\Facades\Input::class,
 		'Util'      => App\Lib\Util::class,
 		'Carbon'    => Carbon\Carbon::class,
+		'Cart'      => Gloudemans\Shoppingcart\Facades\Cart::class,
 	],
 
 ];

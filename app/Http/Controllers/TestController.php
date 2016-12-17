@@ -22,6 +22,7 @@ use ZendPdf\PdfDocument;
 // use ZendPdf\Page;
 // use ZendPdf\Resource\Extractor;
 use Goutte\Client;
+use Cart;
 
 class TestController extends Controller
 {
@@ -994,7 +995,7 @@ if($key == 5){
 	}
 	
 	/**
-	 * scraping
+	 * Scraping Test
 	 *
 	 * @method GET
 	 */
@@ -1027,6 +1028,26 @@ if($key == 5){
 			
 			dd($arrText);
 		});
+	}
+	
+	/**
+	 * Cart TEst
+	 *
+	 * @method GET
+	 */
+	public function cart()
+	{
+// 		if (Request::isMethod('post'))
+// 		{
+// 			$product_id = Request::get('product_id');
+// 			$product = Product::find($product_id);
+// 			Cart::add(array('id' => $product_id, 'name' => $product->name, 'qty' => 1, 'price' => $product->price));
+// 		}
+		
+		$cart = Cart::content();
+		dd($cart);
+		
+		return view('cart', array('cart' => $cart, 'title' => 'Welcome', 'description' => '', 'page' => 'home'));
 	}
 	
 	/**

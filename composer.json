@@ -16,7 +16,8 @@
         "barryvdh/laravel-debugbar": "^2.2",
         "league/csv": "^8.0",
         "zendframework/zendpdf": "dev-master",
-        "fabpot/goutte": "2.0.*"
+        "fabpot/goutte": "2.0.*",
+        "gloudemans/shoppingcart": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
