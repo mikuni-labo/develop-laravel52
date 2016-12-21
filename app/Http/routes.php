@@ -82,6 +82,10 @@ Route::group(['middleware' => ['web']], function()
 	Route::get( 'test/scraping',                     'TestController@scraping');
 	Route::get( 'test/cart',                         'TestController@cart');
 	
+	
+	Route::get( 'test/repository',                   'RepositoryController@index');
+	
+	
 	/**
 	 * APIテスト
 	 */
