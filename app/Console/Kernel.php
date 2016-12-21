@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
 	 * @var array
 	 */
 	protected $commands = [
-		Commands\Inspire::class,// 偉人の有り難いお言葉をランダム表示するLaravel5のデフォルトコマンド
+			Commands\Inspire::class,// 偉人の有り難いお言葉をランダム表示するLaravel5のデフォルトコマンド
+			Commands\Refresh::class,
 	];
 
 	/**
