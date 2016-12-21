@@ -158,6 +158,7 @@ return [
 		App\Providers\RouteServiceProvider::class,
 		App\Providers\ComposerServiceProvider::class,             // ビューコンポーザ
 		App\Providers\ValidatorServiceProvider::class,            // カスタムバリデート
+		App\Providers\RepositoryProvider::class,                  // リポジトリ
 		
 		/*
 	     * Add Any Service Providers...
