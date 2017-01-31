@@ -866,8 +866,53 @@ if($key == 5){
 		/**
 		 * エンドポイント
 		 */
-// 		$endPoint = '/live';
-		$endPoint = '/change';
+// 		$endPoint = '/live';        // 最新の為替レート取得
+		/*
+		    ? access_key = YOUR_ACCESS_KEY
+		    & source = GBP
+		    & currencies = USD,AUD,CAD,PLN,MXN
+		    & format = 1
+		 */
+		
+		$endPoint = '/historical';  // 特定の日の履歴レートをリクエストする
+		/*
+		    ? access_key = YOUR_ACCESS_KEY
+		    & date = YYYY-MM-DD
+		    & source = EUR
+		    & currencies = USD,AUD,CAD,PLN,MXN
+		    & format = 1
+		 */
+		
+		
+		$endPoint = '/convert';     // リアルタイム為替レートを使用して、1つの通貨から別の通貨に任意の金額を変換する
+		/*
+		    ? access_key = YOUR_ACCESS_KEY
+		    & from = USD
+		    & to = EUR
+		    & amount = 25
+		    & format = 1
+		 */
+		
+		
+		$endPoint = '/timeframe';   // 特定の期間の為替レートを要求する
+		/*
+		    ? access_key = YOUR_ACCESS_KEY
+		    & start_date = YYYY-MM-DD
+		    & end_date = YYYY-MM-DD
+		    & source = EUR
+		    & currencies = USD,AUD,CAD,PLN,MXN
+		    & format = 1
+		 */
+		
+		
+		$endPoint = '/change';      // 任意の通貨の変更パラメータを要求する（マージンオプションで2つの指定日の間
+		/*
+		    ? access_key = YOUR_ACCESS_KEY
+		    & source = GBP
+		    & currencies = USD,AUD,CAD,PLN,MXN
+		    & format = 1
+		 */
+		
 		
 		$param = [
 				'access_key' => $token,
