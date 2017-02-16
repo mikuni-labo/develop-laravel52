@@ -26,6 +26,80 @@ use Cart;
 
 class TestController extends Controller
 {
+	const SAMPLE_PROGRAMS = [
+			'konno_dance' => [
+					'id'           => 'konno_dance',
+					'title'        => '紺野、今から踊るってよ',
+					'overview'     => 'テレビ東京アナウンサー・紺野あさ美が美女と踊るだけの番組！',// 概要
+					'genre'        => 'バラエティ',
+					'site_url'     => 'http://www.tv-tokyo.co.jp/konno_dance/',
+					'keywords'     => 'アナウンサー,ダンス,テレ東,紺野,紺野、今から踊るってよ,美女,踊るってよ,見逃し配信,無料,動画',
+					'copyright'    => 'Copyright(c)TV TOKYO Corporation All rights reserved.',
+					'vod_url'      => '',
+					'vod_title'    => '',
+					'programImage' => 'http://video.tv-tokyo.co.jp/konno_dance/tver/images/pg.jpg',
+					'logoImage'    => 'http://video.tv-tokyo.co.jp/konno_dance/tver/images/logo.jpg',
+					'vodImage'     => '',
+			],
+			'chimata' => [
+					'id'           => 'chimata',
+					'title'        => 'test2',
+					'overview'     => 'test2',
+					'genre'        => 'test2',
+					'site_url'     => 'test2',
+					'keywords'     => 'test2',
+					'copyright'    => 'test2',
+					'vod_url'      => 'test2',
+					'vod_title'    => 'test2',
+					'programImage' => 'test2',
+					'logoImage'    => 'test2',
+					'vodImage'     => 'test2',
+			],
+	];
+	
+	const SAMPLE_EPISODES = [
+			'konno_dance' => [// 番組と紐付くキー
+					'4719976511001' => [
+							'movie'          => '4719976511001',// 放送回のBC動画ID
+							'thumbnailImage' => 'http://tool03.tv-tokyo.co.jp/video/konno_dance/images/20160127_konno_dance_01_b.jpg?1453700072',
+							'episodeTitle'   => '和紙を使った妖艶な灯りの中で電気グルーヴ「Shangri-La」を京都美人と踊ってみた',
+							'desctiption'    => 'テレビ東京アナウンサー・紺野あさ美が美女と踊るだけの番組！京都らしくて可愛い…和紙を使った照明器具に囲まれながら電気グルーヴ「Shangri-La」を中橋実希と踊ってみた！▽紺野、ドラマに出てきそうな街並みに思わずうっとり…　テレビ東京にて毎週水・木曜深夜1時30分より放送中！',
+							'cast'           => '',
+							'staff'          => '',
+							'broadcastDate'  => '2016-01-27 25:30',// 放送日
+							'publishDate'    => '2016-01-27 25:35',// 公開日
+							'endDate'        => '2016-02-03 25:34',// 終了日
+							'deleteFlg'      => '0',
+					],
+					'000000000001' => [
+							'movie'          => '000000000001',
+							'thumbnailImage' => 'test1',
+							'episodeTitle'   => 'test1',
+							'desctiption'    => 'test1',
+							'cast'           => 'test1',
+							'staff'          => 'test1',
+							'broadcastDate'  => '0000-00-00 00:00',
+							'publishDate'    => '0000-00-00 00:00',
+							'endDate'        => '0000-00-00 00:00',
+							'deleteFlg'      => '1',
+					],
+			],
+			'chimata' => [
+					'4840054864001' => [
+							'movie'          => '4840054864001',
+							'thumbnailImage' => 'test2',
+							'episodeTitle'   => 'スポーツ特集',
+							'desctiption'    => 'test2',
+							'cast'           => 'K.Wada',
+							'staff'          => 'K.Wada',
+							'broadcastDate'  => '0000-00-00 00:00',
+							'publishDate'    => '0000-00-00 00:00',
+							'endDate'        => '0000-00-00 00:00',
+							'deleteFlg'      => '1',
+					],
+			],
+	];
+	
 	/**
 	 * コンストラクタ
 	 */
@@ -509,80 +583,10 @@ if($key == 5){
 		 */
 		
 		// 番組テーブルから取得したデータ配列サンプル
-		$arrProgramData = [
-				'konno_dance' => [
-						'id'           => 'konno_dance',
-						'title'        => '紺野、今から踊るってよ',
-						'overview'     => 'テレビ東京アナウンサー・紺野あさ美が美女と踊るだけの番組！',// 概要
-						'genre'        => 'バラエティ',
-						'site_url'     => 'http://www.tv-tokyo.co.jp/konno_dance/',
-						'keywords'     => 'アナウンサー,ダンス,テレ東,紺野,紺野、今から踊るってよ,美女,踊るってよ,見逃し配信,無料,動画',
-						'copyright'    => 'Copyright(c)TV TOKYO Corporation All rights reserved.',
-						'vod_url'      => '',
-						'vod_title'    => '',
-						'programImage' => 'http://video.tv-tokyo.co.jp/konno_dance/tver/images/pg.jpg',
-						'logoImage'    => 'http://video.tv-tokyo.co.jp/konno_dance/tver/images/logo.jpg',
-						'vodImage'     => '',
-				],
-				'chimata' => [
-						'id'           => 'chimata',
-						'title'        => 'test2',
-						'overview'     => 'test2',
-						'genre'        => 'test2',
-						'site_url'     => 'test2',
-						'keywords'     => 'test2',
-						'copyright'    => 'test2',
-						'vod_url'      => 'test2',
-						'vod_title'    => 'test2',
-						'programImage' => 'test2',
-						'logoImage'    => 'test2',
-						'vodImage'     => 'test2',
-				],
-		];
+		$arrProgramData = self::SAMPLE_PROGRAMS;
 		
 		// 放送テーブルから取得したデータ配列サンプル
-		$arrEpisodeData = [
-				'konno_dance' => [// 番組と紐付くキー
-						'4719976511001' => [
-								'movie'          => '4719976511001',// 放送回のBC動画ID
-								'thumbnailImage' => 'http://tool03.tv-tokyo.co.jp/video/konno_dance/images/20160127_konno_dance_01_b.jpg?1453700072',
-								'episodeTitle'   => '和紙を使った妖艶な灯りの中で電気グルーヴ「Shangri-La」を京都美人と踊ってみた',
-								'desctiption'    => 'テレビ東京アナウンサー・紺野あさ美が美女と踊るだけの番組！京都らしくて可愛い…和紙を使った照明器具に囲まれながら電気グルーヴ「Shangri-La」を中橋実希と踊ってみた！▽紺野、ドラマに出てきそうな街並みに思わずうっとり…　テレビ東京にて毎週水・木曜深夜1時30分より放送中！',
-								'cast'           => '',
-								'staff'          => '',
-								'broadcastDate'  => '2016-01-27 25:30',// 放送日
-								'publishDate'    => '2016-01-27 25:35',// 公開日
-								'endDate'        => '2016-02-03 25:34',// 終了日
-								'deleteFlg'      => '0',
-						],
-						'000000000001' => [
-								'movie'          => '000000000001',
-								'thumbnailImage' => 'test1',
-								'episodeTitle'   => 'test1',
-								'desctiption'    => 'test1',
-								'cast'           => 'test1',
-								'staff'          => 'test1',
-								'broadcastDate'  => '0000-00-00 00:00',
-								'publishDate'    => '0000-00-00 00:00',
-								'endDate'        => '0000-00-00 00:00',
-								'deleteFlg'      => '1',
-						],
-				],
-				'chimata' => [
-						'4840054864001' => [
-								'movie'          => '4840054864001',
-								'thumbnailImage' => 'test2',
-								'episodeTitle'   => 'スポーツ特集',
-								'desctiption'    => 'test2',
-								'cast'           => 'K.Wada',
-								'staff'          => 'K.Wada',
-								'broadcastDate'  => '0000-00-00 00:00',
-								'publishDate'    => '0000-00-00 00:00',
-								'endDate'        => '0000-00-00 00:00',
-								'deleteFlg'      => '1',
-						],
-				],
-		];
+		$arrEpisodeData = self::SAMPLE_EPISODES;
 		
 		$dom = new \DomDocument('1.0');
 		$programs = $dom->appendChild($dom->createElement('programs'));
@@ -1037,6 +1041,83 @@ if($key == 5){
 		//$pdf = $Disk->get('pdf/bukkengaiyousyo.pdf');
 		$pdf = readfile('bukkengaiyousyo.pdf', true, file_get_contents( storage_path('app/pdf/bukkengaiyousyo.pdf') ));
 		dd($pdf);
+	}
+	
+	/**
+	 * XML レスポンステスト
+	 *
+	 * @method GET
+	 */
+	public function responseXML()
+	{
+// 		$json = file_get_contents(base_path('public/data/get.json'));
+// 		dd($json);
+// 		$data = json_decode($json);
+		
+		$data = self::SAMPLE_PROGRAMS;
+		$status = 200;
+		$header = [
+				'Content-Type' => 'application/xml',
+		];
+		
+		/*
+		$xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><response/>');
+		*/
+		
+		$str = $this->array2string4xml('root', $data);
+		$xml = simplexml_load_string($str);
+		
+		return \Response::make($xml->asXML(), 200, $header);
+	}
+	
+	/**
+	 * 配列を再帰的にXML用の文字列に変換
+	 *
+	 * foreachの$valueの値が配列でなくなるまで再帰
+	 * ※ ['key' => array()]という場合も考慮
+	 *
+	 * @param  string $name 要素の名前
+	 * @param  array or string $data 配列もしくは要素の中身
+	 * @return string $str
+	 */
+	private function array2string4xml($name = '', $data)
+	{
+		$str = '';
+		
+		if(!empty($name))
+			$str .= "<".$name.">";
+		
+		if( !is_array($data) )
+		{
+			$str .= $data;
+		}
+		else {
+			foreach ($data as $key => $val)
+			{
+				if(is_numeric($key))
+				{
+					$str .= $this->array2string4xml('', $val);
+				}
+				else
+				{
+					if(is_array($val) && !empty($val))
+					{
+						$str .= $this->array2string4xml($key, $val);
+					}
+					else
+					{
+						$str .= "<".$key.">";
+						$str .= (empty($val)) ? "" : $val;
+						$str .= "</".$key.">";
+					}
+				}
+			}
+		}
+		
+		if(!empty($name))
+			$str .= "</".$name.">";
+		
+		return $str;
 	}
 	
 	/**

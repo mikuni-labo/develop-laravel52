@@ -81,10 +81,8 @@ Route::group(['middleware' => ['web']], function()
 	Route::get( 'test/bukkengaiyou_pdf',             'TestController@importPDF');
 	Route::get( 'test/scraping',                     'TestController@scraping');
 	Route::get( 'test/cart',                         'TestController@cart');
-	
-	
 	Route::get( 'test/repository',                   'RepositoryController@index');
-	
+	Route::get( 'test/response_xml',                 'TestController@responseXML');
 	
 	/**
 	 * APIテスト
