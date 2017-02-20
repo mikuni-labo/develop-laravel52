@@ -79,6 +79,7 @@ Route::group(['middleware' => ['web']], function()
 	Route::get( 'test/output_xml',                   'TestController@outputXML');
 	Route::get( 'test/hash_test',                    'TestController@hashTest');
 	Route::get( 'test/bukkengaiyou_pdf',             'TestController@importPDF');
+	Route::get( 'test/pdf2txt',                      'TestController@pdf2txt');
 	Route::get( 'test/scraping',                     'TestController@scraping');
 	Route::get( 'test/cart',                         'TestController@cart');
 	Route::get( 'test/repository',                   'RepositoryController@index');

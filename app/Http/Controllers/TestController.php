@@ -14,13 +14,12 @@ use App\Models\TxVideo;
 use App\Models\GyaoVideo;
 use App\Models\NicoVideo;
 use Illuminate\Contracts\Mail\Mailer;
-use Carbon\Carbon;
 use Mail;
 use Storage;
 use ZendPdf\PdfDocument;
-// use ZendPdf\Font;
-// use ZendPdf\Page;
-// use ZendPdf\Resource\Extractor;
+use ZendPdf\Font;
+use ZendPdf\Page;
+use ZendPdf\Resource\Extractor;
 use Goutte\Client;
 use Cart;
 
@@ -460,8 +459,7 @@ if($key == 5){
 					 */
 					foreach ($program->episodes as $k => $episode)
 					{
-						$oa_date = new Carbon($episode->oa_date);
-						
+						$oa_date = \Carbon::parse($episode->oa_date);
 						$resultEpisodes = Episode::getEpisode($program->txcms_program_id, $episode->code, $oa_date->format('Y-m-d'), $source[$mode]);
 						$inputs = [];
 						$inputs['source'] = $source[$mode];
@@ -1031,16 +1029,53 @@ if($key == 5){
 	public function importPDF()
 	{
 		//PDFを読み込む
-		$pdf= PdfDocument::load( storage_path('app/pdf/bukkengaiyousyo.pdf') );
+		$pdf = PdfDocument::load( storage_path('app/pdf/sample.pdf') );
+		
+// 		$str = mb_convert_encoding($pdf->render(), 'UTF-8', 'SJIS-WIN');
+		
+		foreach ($pdf->pages as $page)
+		{
+			$str = mb_convert_encoding($page, 'UTF-8', 'SJIS-WIN');
+			dd($str);
+		}
+		
+		
 		//ブラウザに表示
-		header ('Content-Type:', 'application/pdf');
-		header ('Content-Disposition:', 'inline;');
-		echo $pdf->render();
+// 		header ('Content-Type:', 'application/pdf');
+// 		header ('Content-Disposition:', 'inline;');
+// 		echo $pdf->render();
 		
 		$Disk = Storage::disk('local');
 		//$pdf = $Disk->get('pdf/bukkengaiyousyo.pdf');
 		$pdf = readfile('bukkengaiyousyo.pdf', true, file_get_contents( storage_path('app/pdf/bukkengaiyousyo.pdf') ));
-		dd($pdf);
+	}
+	
+	/**
+	 * PDF変換テスト
+	 *
+	 * @method GET
+	 */
+	public function pdf2txt()
+	{
+		$base_name = "tv-tokyo-mitsumori";
+		$now       = \Carbon::now()->format('YmdHis');
+		$from_name = storage_path("app/pdf/{$base_name}.pdf");
+		$to_name   = storage_path("app/pdf/{$base_name}_{$now}.txt");
+		
+// 		$option   = "-layout";
+		$option   = "";
+// 		$command  = "pdftotext {$option} {$from_name} {$to_name}";
+		$command  = "pdfinfo {$option} {$from_name}";
+		
+		$output   = [];
+		exec($command, $output, $return);
+		
+		dd($return);
+		
+		
+		$Disk = Storage::disk('local');
+		//$pdf = $Disk->get('pdf/bukkengaiyousyo.pdf');
+		$pdf = readfile('bukkengaiyousyo.pdf', true, file_get_contents( storage_path('app/pdf/bukkengaiyousyo.pdf') ));
 	}
 	
 	/**

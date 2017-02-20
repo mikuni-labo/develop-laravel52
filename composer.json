@@ -17,7 +17,8 @@
         "league/csv": "^8.0",
         "zendframework/zendpdf": "dev-master",
         "fabpot/goutte": "2.0.*",
-        "gloudemans/shoppingcart": "*"
+        "gloudemans/shoppingcart": "*",
+        "google/apiclient":"^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
