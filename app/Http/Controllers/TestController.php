@@ -1057,15 +1057,15 @@ if($key == 5){
 	 */
 	public function pdf2txt()
 	{
-		$base_name = "tv-tokyo-mitsumori";
+		$base_name = "bukkengaiyousyo";
 		$now       = \Carbon::now()->format('YmdHis');
 		$from_name = storage_path("app/pdf/{$base_name}.pdf");
 		$to_name   = storage_path("app/pdf/{$base_name}_{$now}.txt");
 		
 // 		$option   = "-layout";
 		$option   = "";
-// 		$command  = "pdftotext {$option} {$from_name} {$to_name}";
-		$command  = "pdfinfo {$option} {$from_name}";
+		$command  = "pdftotext {$option} {$from_name} {$to_name}";
+// 		$command  = "pdfinfo {$option} {$from_name}";
 		
 		$output   = [];
 		exec($command, $output, $return);
@@ -1073,9 +1073,9 @@ if($key == 5){
 		dd($return);
 		
 		
-		$Disk = Storage::disk('local');
+// 		$Disk = Storage::disk('local');
 		//$pdf = $Disk->get('pdf/bukkengaiyousyo.pdf');
-		$pdf = readfile('bukkengaiyousyo.pdf', true, file_get_contents( storage_path('app/pdf/bukkengaiyousyo.pdf') ));
+// 		$pdf = readfile('bukkengaiyousyo.pdf', true, file_get_contents( storage_path('app/pdf/bukkengaiyousyo.pdf') ));
 	}
 	
 	/**
