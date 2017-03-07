@@ -38,7 +38,25 @@ class MedistockApiController extends Controller
         $url = "http://{$ip}/{$site}/api/{$version}/{$resource}/{$crud}";
 
         $param = [
-            'order_id'     => 1,
+            /**
+             * Common
+             */
+            'key_id'       => 'k3NEWYug',
+            
+            /**
+             * Order
+             */
+            'created_at_start'  => '2016-03-01 00:00:00',// 注文日開始
+            'create_at_end'     => '2016-04-19 23:59:59',// 注文日終了
+            'updated_at_start'  => '2016-03-01 00:00:00',// 更新日開始
+            'updated_at_end'    => '2016-04-19 23:59:59',// 更新日終了
+//             'limit'             => 1,// 最大取得件数 Default: 20
+//             'offset'            => 2,// オフセット   Default: 0
+//             'sort'              => '',// ソート条件   Default: 更新日 desc
+            
+            /**
+             * Product
+             */
             'product_id'   => 1,
             'product_code' => 'ice-01',
         ];
@@ -65,8 +83,9 @@ class MedistockApiController extends Controller
 //         $ch->setIsJson(true);
         
         $response = $ch->exec();
-        echo $response;exit;
-//         dd($response);
+//         echo $response;exit;
+//         dd( $response );
+//         dd( unserialize($response) );
 
 //         \Storage::disk('local')->put('json/oanda.json', $response);
 
@@ -77,7 +96,7 @@ class MedistockApiController extends Controller
         $ch->close();
 
         $result = json_decode($response);
-        dd($result);
+        dd( $result );
     }
     
     /**
