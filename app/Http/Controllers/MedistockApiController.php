@@ -11,20 +11,20 @@ use App\Http\Controllers\Controller;
  */
 class MedistockApiController extends Controller
 {
-	/**
-	 * コンストラクタ
-	 */
-	public function __construct()
-	{
-		//
-	}
-	
-	/**
-	 * 受注取得
-	 */
-	public function getOrder()
-	{
-		dd('test');
-	}
-	
+    /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        //
+    }
+    
+    /**
+     * 受注取得
+     */
+    public function getOrder()
+    {
+        dd('test');
+    }
+    
 }

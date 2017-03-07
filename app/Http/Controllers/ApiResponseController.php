@@ -11,30 +11,30 @@ use App\Http\Controllers\Controller;
  */
 class ApiResponseController extends Controller
 {
-	/**
-	 * コンストラクタ
-	 */
-	public function __construct()
-	{
-		$this->middleware('web');
-	}
-	
-	/**
-	 * Test...
-	 */
-	public function test()
-	{
-		dd('test');
-	}
-	
-	/**
-	 * phpunit
-	 */
-	public function echoTest()
-	{
-		$res['status'] = "OK";
-		$res['message'] = "No problem";
-		return \Response::json($res);
-	}
-	
+    /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        $this->middleware('web');
+    }
+    
+    /**
+     * Test...
+     */
+    public function test()
+    {
+        dd('test');
+    }
+    
+    /**
+     * phpunit
+     */
+    public function echoTest()
+    {
+        $res['status'] = "OK";
+        $res['message'] = "No problem";
+        return \Response::json($res);
+    }
+    
 }

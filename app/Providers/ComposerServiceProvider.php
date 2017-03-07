@@ -7,28 +7,28 @@ use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
 {
-	/**
-	 * Register bindings in the container.
-	 *
-	 * return void
-	 */
-	public function boot()
-	{
-		// クラスベースのcomposer
-		View::composer('*', 'App\Http\ViewComposers\FixedComposer');
-		//View::composer('view名', '使用するViewComposerへのパス');
-		
-		// クロージャーベースのcomposer
-		View::composer('dashboard', function($view)
-		{
+    /**
+     * Register bindings in the container.
+     *
+     * return void
+     */
+    public function boot()
+    {
+        // クラスベースのcomposer
+        View::composer('*', 'App\Http\ViewComposers\FixedComposer');
+        //View::composer('view名', '使用するViewComposerへのパス');
+        
+        // クロージャーベースのcomposer
+        View::composer('dashboard', function($view)
+        {
 
-		});
-	}
+        });
+    }
 
-	/**
-	 * Register
-	 */
-	public function register() 
-	{
-	}
+    /**
+     * Register
+     */
+    public function register() 
+    {
+    }
 }
