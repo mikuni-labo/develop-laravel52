@@ -586,10 +586,10 @@ if($key == 5){
         // 放送テーブルから取得したデータ配列サンプル
         $arrEpisodeData = self::SAMPLE_EPISODES;
         
-        $dom = new \DomDocument('1.0');
+        $dom = new \DomDocument('1.0', 'UTF-8');
+        $dom->formatOutput = true;
+        $dom->preserveWhiteSpace = false;
         $programs = $dom->appendChild($dom->createElement('programs'));
-        
-        //print_r($arrEpisodeData);exit();
         
         // 番組毎
         foreach ($arrProgramData as $key => $val)
@@ -675,7 +675,15 @@ if($key == 5){
         
         $simpleXML = simplexml_import_dom($dom);
         
-        //print_r($simpleXML);exit();
+        Storage::disk('local')->put('xml/test.xml', $dom->saveXML());
+        
+        return response()->download( storage_path('app/xml/test.xml'), 'test.xml', [
+            'Content-Type' => 'text/xml',
+        ]);
+        dd('here');
+        
+        dd($simpleXML);
+        dd($dom);
         
         // TODO ファイル出力して渡すのか要確認
         $simpleXML->asXML(base_path('public/data/programs.xml'));
