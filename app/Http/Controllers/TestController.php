@@ -673,22 +673,17 @@ if($key == 5){
             }
         }
         
-        $simpleXML = simplexml_import_dom($dom);
-        
-        Storage::disk('local')->put('xml/test.xml', $dom->saveXML());
+        Storage::disk('local')->put('xml/test.xml', chr(239) . chr(187) . chr(191) . $dom->saveXML());
         
         return response()->download( storage_path('app/xml/test.xml'), 'test.xml', [
             'Content-Type' => 'text/xml',
         ]);
+        
         dd('here');
         
-        dd($simpleXML);
-        dd($dom);
-        
-        // TODO ファイル出力して渡すのか要確認
-        $simpleXML->asXML(base_path('public/data/programs.xml'));
-        
-        dd('ok');
+//         $simpleXML = simplexml_import_dom($dom);
+//         Storage::disk('local')->put('xml/test.xml', chr(239) . chr(187) . chr(191) . $simpleXML->asXML());
+//         $simpleXML->asXML(base_path('public/data/programs.xml'));
     }
     
     /**
