@@ -687,6 +687,79 @@ if($key == 5){
     }
     
     /**
+     * AWS S3 Test
+     *
+     * @method GET
+     */
+    public function testAwsS3()
+    {
+        $Disk = Storage::disk('s3');
+        dd($Disk);
+
+        // 指定ディレクトリのディレクトリ一覧
+//         $Disk->directories();
+
+        // ディレクトリ削除
+//         $Disk->makeDirectory($directory_name);
+
+        // ディレクトリ削除（再帰的）（おそらく -R オプション）
+//         $Disk->allDirectories($directory_name);
+
+        // ディレクトリ削除
+//         $Disk->directories($directory_name);
+
+        // 指定ディレクトリのファイル一覧
+//         $Disk->files('tx');
+
+        // 指定ディレクトリの全ファイル一覧（再帰的）※階層は全てスラッシュで表現され、レコード単位で返される
+//         $Disk->allFiles();
+
+        // ファイルの存在確認
+//         $Disk->has('tx/test.txt');
+
+        // ファイルのアップロード
+//         $Disk->put('vr/test.txt', file_get_contents(storage_path('app/vr/test.txt')));
+
+        // ファイルの取得
+//         $Disk->get('vr/test.txt');
+
+        // ファイルのコピー
+//         $Disk->copy('vr/test.txt', 'vr/test2.txt');
+
+        // ファイルの移動・リネーム
+//         $Disk->move('vr/test.txt', 'vr/test2.txt');
+
+        // ファイルのフルURL取得
+//         $Disk->url('tx/test.txt');
+
+        // ファイルのサイズ取得（バイト）
+//         $Disk->size('tx/test.txt');
+
+        // ファイルの最終更新時間（UNIX秒）
+//         $Disk->lastModified('tx/test.txt');
+
+        // ファイルの先頭に挿入
+//         $Disk->prepend('tx/test.txt', 'Prepended Text');
+
+        // ファイルの末尾に挿入
+//         $Disk->append('tx/test.txt', 'Appended Text');
+
+        // ファイルの抽象的視認性確認（?）
+//         $Disk->getVisibility('tx/test.txt');
+
+        // ファイルの抽象的視認性セット（?）
+//         $Disk->setVisibility('tx/test.txt', 'private');
+
+        // ファイルの削除
+//         $Disk->delete([
+//             'vr/test2.txt',
+//         ]);
+
+        \Flash::success('ok!');
+        return redirect()->route('test');
+    }
+
+    /**
      * OANDA API TEST
      *
      * @method GET

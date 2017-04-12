@@ -84,11 +84,11 @@ Route::group(['middleware' => ['web']], function()
     Route::get( 'test/cart',                         'TestController@cart');
     Route::get( 'test/repository',                   'RepositoryController@index');
     Route::get( 'test/response_xml',                 'TestController@responseXML');
+    Route::get( 'test/aws_s3',                       'TestController@testAwsS3');
     
     /**
      * APIテスト
      */
-//     Route::controller('api/',                        'ApiController');
     Route::get( 'api/oanda',                         'TestController@oandaTest');
     Route::get( 'api/currencylayer',                 'TestController@currencyLayerTest');
     Route::get( 'api/openexchangerates',             'TestController@openExchangeRatesTest');
