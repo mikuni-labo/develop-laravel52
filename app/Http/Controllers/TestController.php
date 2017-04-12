@@ -694,7 +694,6 @@ if($key == 5){
     public function testAwsS3()
     {
         $Disk = Storage::disk('s3');
-        dd($Disk);
 
         // 指定ディレクトリのディレクトリ一覧
 //         $Disk->directories();
@@ -755,6 +754,13 @@ if($key == 5){
 //             'vr/test2.txt',
 //         ]);
 
+        foreach ($Disk->files('tx') as $file)
+        {
+            $Disk->delete($file);
+        }
+        
+        dd('here');
+        
         \Flash::success('ok!');
         return redirect()->route('test');
     }
