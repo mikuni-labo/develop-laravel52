@@ -37,7 +37,7 @@ class BcApiService extends VideoCloud
         
         $result = $this->authenticate();
         
-        if ( empty($result->access_token) )
+        if( empty($result->access_token) )
         {
             $this->putLog($this->getCh()->getErrorMessage(), "CURL 認証エラー}");
         }
@@ -50,7 +50,12 @@ class BcApiService extends VideoCloud
      */
     public function test()
     {
-        dd('here!!');
+        
+        
+        dd( $this->getVideos([
+            'limit'   => 20,
+            'offset'  => 0,
+        ]) );
     }
 
     /**

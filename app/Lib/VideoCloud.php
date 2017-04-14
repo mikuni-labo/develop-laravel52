@@ -2,7 +2,7 @@
 
 namespace App\Lib\Api;
 
-use App\Lib\cURL;
+use App\Lib\Api\cURL;
 
 /**
  * VideoCloud操作クラス
@@ -51,6 +51,9 @@ class VideoCloud
     /** @var 動画ID */
     private $videoId;
 
+    /** @var アセットID */
+    private $assetsId;
+
     /** @var フォルダID */
     private $folderId;
 
@@ -73,7 +76,7 @@ class VideoCloud
      * @param  array $param
      * @return mixed
      */
-    public function createFolder($param)
+    public function createFolder($param = array())
     {
         $this->setMethod('POST');
         $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/folders";
@@ -82,7 +85,7 @@ class VideoCloud
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call($param, $header, $url);
+        return $this->call($url, $header, $param);
         
     }
 
@@ -92,7 +95,7 @@ class VideoCloud
      * @param  array $param
      * @return mixed
      */
-    public function moveVideoToFolder($param)
+    public function moveVideoToFolder($param = array())
     {
         $this->setMethod('PUT');
         $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/folders/{$this->folderId}/videos/{$this->videoId}";
@@ -101,7 +104,7 @@ class VideoCloud
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call($param, $header, $url);
+        return $this->call($url, $header, $param);
     }
 
     
@@ -111,7 +114,7 @@ class VideoCloud
      * @param  array $param
      * @return mixed
      */
-    public function createVideo($param)
+    public function createVideo($param = array())
     {
         $this->setMethod('POST');
         $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos";
@@ -120,7 +123,7 @@ class VideoCloud
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call($param, $header, $url);
+        return $this->call($url, $header, $param);
     }
     /**
      * Request to CMS API for Update Video Object...
@@ -128,7 +131,7 @@ class VideoCloud
      * @param  array $param
      * @return mixed
      */
-    public function updateVideo($param)
+    public function updateVideo($param = array())
     {
         $this->setMethod('PATCH');
         $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}";
@@ -137,7 +140,24 @@ class VideoCloud
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call($param, $header, $url);
+        return $this->call($url, $header, $param);
+    }
+
+    /**
+     * Request to CMS API for get video object...
+     * 
+     * @param  array $param
+     * @return mixed
+     */
+    public function getVideos($param = array())
+    {
+        $this->setMethod('GET');
+        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos";
+        $header = [
+            "Authorization: Bearer {$this->accessToken}",
+        ];
+        
+        return $this->call($url, $header, $param);
     }
 
     /**
@@ -153,7 +173,7 @@ class VideoCloud
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call([], $header, $url);
+        return $this->call($url, $header);
     }
 
     /**
@@ -162,16 +182,16 @@ class VideoCloud
      * @param  array $param
      * @return mixed
      */
-    public function disableVideo($param)
+    public function deleteVideo()
     {
-        $this->setMethod('PATCH');
+        $this->setMethod('DELETE');
         $url    = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call($param, $header, $url);
+        return $this->call($url, $header);
     }
 
     /**
@@ -188,7 +208,7 @@ class VideoCloud
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call([], $header, $url);
+        return $this->call($url, $header);
     }
 
     /**
@@ -197,7 +217,7 @@ class VideoCloud
      * @param  array $param
      * @return mixed
      */
-    public function addRemotePoster($param)
+    public function addRemotePoster($param = array())
     {
         $this->setMethod('POST');
         $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/poster";
@@ -206,44 +226,42 @@ class VideoCloud
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call($param, $header, $url);
+        return $this->call($url, $header, $param);
     }
 
     /**
      * ポスター画像更新（リモートアセット）
      * 
      * @param  array  $param
-     * @param  string $assets_id
      * @return mixed
      */
-    public function updateRemotePoster($param, $assets_id)
+    public function updateRemotePoster($param = array())
     {
         $this->setMethod('PATCH');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/poster/{$assets_id}";
+        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/poster/{$this->assetsId}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call($param, $header, $url);
+        return $this->call($url, $header, $param);
     }
 
     /**
      * ポスター画像削除（リモートアセット）
      * 
-     * @param  string $assets_id
      * @return mixed
      */
-    public function deleteRemotePoster($assets_id)
+    public function deleteRemotePoster()
     {
         $this->setMethod('DELETE');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/poster/{$assets_id}";
+        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/poster/{$this->assetsId}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call([], $header, $url);
+        return $this->call($url, $header);
     }
 
     /**
@@ -260,7 +278,7 @@ class VideoCloud
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call([], $header, $url);
+        return $this->call($url, $header);
     }
 
     /**
@@ -269,7 +287,7 @@ class VideoCloud
      * @param  array $param
      * @return mixed
      */
-    public function addRemoteThumbnail($param)
+    public function addRemoteThumbnail($param = array())
     {
         $this->setMethod('POST');
         $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/thumbnail";
@@ -278,44 +296,42 @@ class VideoCloud
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call($param, $header, $url);
+        return $this->call($url, $header, $param);
     }
 
     /**
      * サムネイル更新（リモートアセット）
      * 
      * @param  array  $param
-     * @param  string $assets_id
      * @return mixed
      */
-    public function updateRemoteThumbnail($param, $assets_id)
+    public function updateRemoteThumbnail($param = array())
     {
         $this->setMethod('PATCH');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/thumbnail/{$assets_id}";
+        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/thumbnail/{$this->assetsId}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call($param, $header, $url);
+        return $this->call($url, $header, $param);
     }
 
     /**
      * サムネイル削除（リモートアセット）
      * 
-     * @param string $assets_id
      * @return mixed
      */
-    public function deleteRemoteThumbnail($assets_id)
+    public function deleteRemoteThumbnail()
     {
         $this->setMethod('DELETE');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/thumbnail/{$assets_id}";
+        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/thumbnail/{$this->assetsId}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->accessToken}",
         ];
         
-        return $this->call([], $header, $url);
+        return $this->call($url, $header);
     }
 
     /**
@@ -324,7 +340,7 @@ class VideoCloud
      * @param  array $param
      * @return mixed
      */
-    public function dynamicIngest($param)
+    public function dynamicIngest($param = array())
     {
         $this->setMethod('POST');
         $url = "{$this->diUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/ingest-requests";
@@ -334,7 +350,7 @@ class VideoCloud
         ];
         
         /** XXX APIから原因不明のInternal Server Errorが返される時は、プロファイル設定を要チェック */
-        return $this->call($param, $header, $url);
+        return $this->call($url, $header, $param);
     }
 
     /**
@@ -350,7 +366,7 @@ class VideoCloud
             'Content-type: application/x-www-form-urlencoded',
         ];
         
-        $result = $this->call([], $header, $url);
+        $result = $this->call($url, $header);
         
         if ( !empty($result->access_token) )
         {
@@ -363,13 +379,13 @@ class VideoCloud
 
     /**
      * cURLライブラリで接続後、JSONをパースして返す
-     *
-     * @param  array  $param
-     * @param  array  $header
+     * 
      * @param  string $url
+     * @param  array  $header
+     * @param  array  $param
      * @return mixed
      */
-    private function call($param, $header, $url)
+    private function call($url, $header, $param = array())
     {
         $this->ch->init();
         $this->ch->setUrl($url);
@@ -487,6 +503,12 @@ class VideoCloud
         return $this;
     }
 
+    public function setAssetsId($assetsId)
+    {
+        $this->assetsId = $assetsId;
+        return $this;
+    }
+
     public function setFolderId($folderId)
     {
         $this->folderId = $folderId;
@@ -577,6 +599,11 @@ class VideoCloud
     public function getVideoId()
     {
         return $this->videoId;
+    }
+
+    public function getAssetsId()
+    {
+        return $this->assetsId;
     }
 
     public function getFolderId()
