@@ -50,8 +50,29 @@ class BcApiService extends VideoCloud
      */
     public function test()
     {
+        /**
+         * 動画削除
+         */
+//         $videoIds = [
+            
+//         ];
         
+//         foreach ($videoIds as $videoId)
+//         {
+//             $this->setVideoId($videoId);
+//             $this->deleteVideo();
+//         }
         
+//         dd( 'end' );
+        
+        /**
+         * 動画数
+         */
+        dd( $this->getVideoCount() );
+        
+        /**
+         * 動画リスト
+         */
         dd( $this->getVideos([
             'limit'   => 20,
             'offset'  => 0,

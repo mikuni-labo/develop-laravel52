@@ -177,6 +177,22 @@ class VideoCloud
     }
 
     /**
+     * Request to CMS API for get video object...
+     *
+     * @return mixed
+     */
+    public function getVideoCount()
+    {
+        $this->setMethod('GET');
+        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/counts/videos";
+        $header = [
+            "Authorization: Bearer {$this->accessToken}",
+        ];
+        
+        return $this->call($url, $header);
+    }
+
+    /**
      * Request to CMS API for Disable video object...
      * 
      * @param  array $param
