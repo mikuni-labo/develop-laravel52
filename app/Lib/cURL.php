@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Lib\Api;
+namespace App\Lib;
 
 /**
  * cURLライブラリ...

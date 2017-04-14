@@ -1,13 +1,8 @@
 <?php
 
-namespace App\Services\Submit;
+namespace App\Services;
 
 use App\Lib\Api\VideoCloud;
-use App\Models\Config;
-use App\Models\Episode;
-use App\Models\Program;
-use App\Models\TxVideo;
-use App\Services\Submit\SubmitServiceInterface;
 use App\Traits\Log;
 
 /**
@@ -15,34 +10,10 @@ use App\Traits\Log;
  * 
  * @author Kuniyasu Wada
  */
-class BcApiService extends VideoCloud implements SubmitServiceInterface
+class BcApiService extends VideoCloud
 {
     use Log;
     
-    /** @var 番組データ */
-    private $Program;
-
-    /** @var エピソードデータ */
-    private $Episode;
-
-    /** @var シンジケーションデータ */
-    private $Syndication;
-
-    /** @var 出力用データ */
-    private $Data;
-
-    /** @var 出力モード */
-    private $submitMode;
-
-    /** @var Log オブジェクト */
-    private $Log;
-
-    /** @var 出力時有効/無効ステータス */
-    private $enableStatus;
-
-    /** @var BAMPデータ取得元 */
-    private $bampSource;
-
     /**
      * Create a new class instance.
      * 
@@ -54,15 +25,15 @@ class BcApiService extends VideoCloud implements SubmitServiceInterface
         
         $this->Log = $this->createLogger('VideoCloud', storage_path('logs/videocloud'));
         
-        $this->setAuthUrl( config('BCAPI.BRIGHTCOVE_API.AUTH_URL') );
-        $this->setCmsUrl( config('BCAPI.BRIGHTCOVE_API.CMS_URL') );
-        $this->setDIUrl( config('BCAPI.BRIGHTCOVE_API.DI_URL') );
-        $this->setProxyUrl( config('BCAPI.BRIGHTCOVE_API.BC_PROXY') );
-        $this->setAccountId( config('BCAPI.VIDEOCLOUD.ACCOUNT_ID') );
-        $this->setClientId( config('BCAPI.VIDEOCLOUD.CLIENT_ID') );
-        $this->setClientSecret( config('BCAPI.VIDEOCLOUD.CLIENT_SECRET') );
-        $this->setCallbackUrl( config('BCAPI.BRIGHTCOVE_API.CALLBACK_URL') );
-        $this->setVideoProfile( Config::find(1)->video_cloud_profile );
+        $this->setAccountId(    config('api.videocloud.account_id') );
+        $this->setClientId(     config('api.videocloud.client_id') );
+        $this->setClientSecret( config('api.videocloud.client_secret') );
+        $this->setVideoProfile( config('api.videocloud.video_profile') );
+        $this->setCallbackUrl(  config('api.videocloud.callback_url') );
+        $this->setAuthUrl(      config('api.videocloud.auth_url') );
+        $this->setCmsUrl(       config('api.videocloud.cms_url') );
+        $this->setDIUrl(        config('api.videocloud.di_url') );
+        $this->setProxyUrl(     config('api.videocloud.bc_proxy_url') );
         
         $result = $this->authenticate();
         
@@ -73,95 +44,13 @@ class BcApiService extends VideoCloud implements SubmitServiceInterface
     }
 
     /**
-     * {@inheritDoc}
-     * @see \App\Services\Submit\SubmitServiceInterface::makeSubmitData()
+     * test
+     *
+     * @return mixed
      */
-    public function makeSubmitData()
+    public function test()
     {
-        $this->Data = (object)[];
-        
-        /**
-         * Common
-         */
-        $this->Data->parent_episode_id = $this->Episode->id;
-        $this->Data->tx_unique_id      = $this->Syndication->tx_unique_id;
-        $this->Data->tx_branch_id      = $this->Syndication->tx_branch_id;
-        $this->Data->submit_user_id    = auth()->guard('user')->user()->id;
-        $this->Data->tx_video_id       = $this->Syndication->tx_video_id;
-        $this->Data->submit_mode       = $this->submitMode;
-        $this->Data->enable_status     = $this->enableStatus;
-        
-        if($this->enableStatus === 'off') return $this->Data;
-        
-        $oa_date = \Carbon::parse($this->Episode->oa_date);
-        
-        /**
-         * General...
-         */
-        /* 動画名: {番組名}{放送日} ※登録時必須項目 */
-        $this->Data->name = "{$this->Program->title}{$oa_date->format('Y/m/d')}";
-        
-        /* 公開ステータス: {有効ステータスON時はACTIVE} */
-        $this->Data->state = 'ACTIVE';
-        
-        /* 短い説明: {WEBエピソード詳細} */
-        $this->Data->description = $this->Syndication->tx_web_content;
-        
-        /* 参照ID: {放送日}_{番組キー}_{放送回}_{再配信回数}_{枝番} ※番組キーのNULLを許可する事になったので、有無確認をしておく*/
-        $this->Data->reference_id = !empty($this->Program->official_dir) ? "{$oa_date->format('Ymd')}_{$this->Program->official_dir}_{$this->Episode->number}_{$this->Episode->reprovide_num}_{$this->Syndication->tx_branch_id}" : '';
-        
-        /* リンクテキスト */
-        $this->Data->link_text = $this->Program->title;
-        
-        /* リンクURL */
-        $this->Data->link_url = $this->Program->official_url;
-        
-        /* タグ */
-        $tags = [
-            'txcu',
-            $oa_date->format('Ymd'),
-        ];
-        
-        if( !empty($this->Program->official_dir) ) $tags[] = $this->Program->official_dir;
-        
-        /**
-         * レコメンド対象がOFFの場合は'norec'タグ追加
-         */
-        if( ! $this->Syndication->tx_reccomend_flag) $tags[] = 'norec';
-        
-        $this->Data->tags = implode(',', $tags);
-        
-        /* 公開開始日 (ISO 8601形式) */
-        $this->Data->starts_at = $this->submitMode === 'submit_tx_production' && !empty($this->Episode->tx_oa_starts_at) ? $this->Episode->tx_oa_starts_at : null;
-        
-        /* 公開終了日 (ISO 8601形式) */
-        $this->Data->ends_at = $this->submitMode === 'submit_tx_production' && !empty($this->Episode->tx_oa_ends_at) ? $this->Episode->tx_oa_ends_at : null;
-        
-        /* 国コード */
-        $this->Data->geo_countries = 'jp';
-        
-        /* 国別視聴制限許可 */
-        $this->Data->geo_restricted = true;
-        
-        /* キューポイント [type] */
-        $this->Data->cue_points_type = 'AD';
-        
-        /* キューポイント [time] */
-        $this->Data->cue_points_time = $this->Syndication->tx_cue_point;
-        
-        /* ポスター画像 */
-        $this->Data->poster_url    = $this->Syndication->tx_bc_still_img_url;
-        
-        /* サムネイル画像 */
-        $this->Data->thumbnail_url = $this->Syndication->tx_bc_thumbnail_url;
-        
-        /**
-         * Custom Fields...
-         */
-        /* 番組キー */
-        $this->Data->cf_programKey = $this->Program->official_dir;
-        
-        return $this->Data;
+        dd('here!!');
     }
 
     /**

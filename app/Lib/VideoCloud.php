@@ -2,7 +2,7 @@
 
 namespace App\Lib\Api;
 
-use App\Lib\Api\cURL;
+use App\Lib\cURL;
 
 /**
  * VideoCloud操作クラス
