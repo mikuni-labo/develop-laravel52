@@ -766,6 +766,16 @@ if($key == 5){
     }
 
     /**
+     * VideoCloud Test
+     *
+     * @method GET
+     */
+    public function testVideoCloud()
+    {
+        dd('here');
+    }
+
+    /**
      * OANDA API TEST
      *
      * @method GET

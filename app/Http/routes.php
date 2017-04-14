@@ -85,6 +85,7 @@ Route::group(['middleware' => ['web']], function()
     Route::get( 'test/repository',                   'RepositoryController@index');
     Route::get( 'test/response_xml',                 'TestController@responseXML');
     Route::get( 'test/aws_s3',                       'TestController@testAwsS3');
+    Route::get( 'test/videocloud',                   'TestController@testVideoCloud');
     
     /**
      * APIテスト
