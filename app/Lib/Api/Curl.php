@@ -3,11 +3,11 @@
 namespace App\Lib\Api;
 
 /**
- * cURLライブラリ...
+ * Curlライブラリ...
  * 
  * @author Shinohara
  */
-class cURL
+class Curl
 {
     /** @var curlインスタンス */
     private $ch;

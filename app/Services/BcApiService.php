@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Lib\Api\VideoCloud;
+use App\Lib\Api\VideoCloud\VideoCloud;
 use App\Traits\Log;
 
 /**
@@ -25,17 +25,17 @@ class BcApiService extends VideoCloud
         
         $this->Log = $this->createLogger('VideoCloud', storage_path('logs/videocloud'));
         
-        $this->setAccountId(    config('api.videocloud.account_id') );
-        $this->setClientId(     config('api.videocloud.client_id') );
-        $this->setClientSecret( config('api.videocloud.client_secret') );
-        $this->setVideoProfile( config('api.videocloud.video_profile') );
-        $this->setCallbackUrl(  config('api.videocloud.callback_url') );
-        $this->setAuthUrl(      config('api.videocloud.auth_url') );
-        $this->setCmsUrl(       config('api.videocloud.cms_url') );
-        $this->setDIUrl(        config('api.videocloud.di_url') );
-        $this->setProxyUrl(     config('api.videocloud.bc_proxy_url') );
+        $this->getAuthClient()->setAccountId(      config('api.videocloud.account_id') );
+        $this->getAuthClient()->setClientId(       config('api.videocloud.client_id') );
+        $this->getAuthClient()->setClientSecret(   config('api.videocloud.client_secret') );
+        $this->getVideosClient()->setVideoProfile( config('api.videocloud.video_profile') );
+        $this->getVideosClient()->setCallbackUrl(  config('api.videocloud.callback_url') );
+        $this->getAuthClient()->setAuthUrl(        config('api.videocloud.auth_url') );
+        $this->getAuthClient()->setCmsUrl(         config('api.videocloud.cms_url') );
+        $this->getAuthClient()->setDIUrl(          config('api.videocloud.di_url') );
+        $this->getAuthClient()->setProxyUrl(       config('api.videocloud.bc_proxy_url') );
         
-        $result = $this->authenticate();
+        $result = $this->getAuthClient()->authenticate();
         
         if( empty($result->access_token) )
         {
