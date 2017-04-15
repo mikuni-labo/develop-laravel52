@@ -63,7 +63,7 @@ class BcApiService
         $this->VideoCloud->setFolderId('58f1d9c8d694ee464e122dd3');
         $this->VideoCloud->setPlaylistId('5398944324001');
         
-        $result = $this->VideoCloud->deletePlaylist();
+        $result = $this->VideoCloud->getThumbnail('nhb_tablet_02');
         
         return response()->json($result);
         

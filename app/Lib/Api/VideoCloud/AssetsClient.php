@@ -13,13 +13,21 @@ Trait AssetsClient
     private $assetsId;
 
     /**
-     * ポスター画像リスト取得（リモートアセット）
+     * Get Poster List
      * 
-     * @return mixed
+     * Gets the poster file for a given video.
+     * Note that you can only add one poster for a video.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     * 
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Get_Poster_List
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/poster
+     * @param   string $ref_id
+     * @return  mixed
      */
-    public function getRemotePoster()
+    public function getPosterList($ref_id = '')
     {
-        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/poster";
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/poster";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
@@ -29,14 +37,46 @@ Trait AssetsClient
     }
 
     /**
-     * ポスター画像登録（リモートアセット）
+     * Get Poster
      * 
-     * @param  array $param
-     * @return mixed
+     * Gets a poster file for a given video.
+     * Note that you can only add one poster for a video.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     *
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Get_Poster
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/poster/:asset_id
+     * @param   string $ref_id
+     * @return  mixed
      */
-    public function addRemotePoster($param = array())
+    public function getPoster($ref_id = '')
     {
-        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/poster";
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/poster/{$this->getAssetsId()}";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
+        
+        return $this->call('GET', $url, $header);
+    }
+
+    /**
+     * Add Poster
+     * 
+     * Adds a poster file for a remote asset.
+     * Ingested assets must be added via the Dynamic Ingest API.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     * 
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Add_Poster
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/poster
+     * @param   array $param
+     * @param   string $ref_id
+     * @return  mixed
+     */
+    public function addPoster($param = array(), $ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/poster";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
@@ -46,14 +86,21 @@ Trait AssetsClient
     }
 
     /**
-     * ポスター画像更新（リモートアセット）
+     * Update Poster
      * 
-     * @param  array  $param
-     * @return mixed
+     * Updates the location of a remote poster file for a remote asset.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     * 
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Update_Poster
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/poster/:asset_id
+     * @param   array  $param
+     * @param   string $ref_id
+     * @return  mixed
      */
-    public function updateRemotePoster($param = array())
+    public function updatePoster($param = array(), $ref_id = '')
     {
-        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/poster/{$this->getAssetsId()}";
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/poster/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
@@ -63,13 +110,21 @@ Trait AssetsClient
     }
 
     /**
-     * ポスター画像削除（リモートアセット）
+     * Delete Poster
      * 
-     * @return mixed
+     * Deletes a poster file for a remote asset.
+     * Note that you can only add one poster for a video.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     * 
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Delete_Poster
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/poster/:asset_id
+     * @param   string $ref_id
+     * @return  mixed
      */
-    public function deleteRemotePoster()
+    public function deletePoster($ref_id = '')
     {
-        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/poster/{$this->getAssetsId()}";
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/poster/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
@@ -79,13 +134,21 @@ Trait AssetsClient
     }
 
     /**
-     * サムネイルリスト取得（リモートアセット）
+     * Get Thumbnail List
      * 
-     * @return mixed
+     * Gets the thumbnail for a given video.
+     * Note that you can only add one thumbnail for a video.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     * 
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Get_Thumbnail_List
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/thumbnail
+     * @param   string $ref_id
+     * @return  mixed
      */
-    public function getRemoteThumbnail()
+    public function getThumbnailList($ref_id = '')
     {
-        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail";
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/thumbnail";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
@@ -95,14 +158,46 @@ Trait AssetsClient
     }
 
     /**
-     * サムネイル登録（リモートアセット）
+     * Get Thumbnail
      * 
-     * @param  array $param
-     * @return mixed
+     * Gets a thumbnail file for a given video.
+     * Note that you can only add one thumbnail for a video.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     * 
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Get_Thumbnail
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/thumbnail/:asset_id
+     * @param   string $ref_id
+     * @return  mixed
      */
-    public function addRemoteThumbnail($param = array())
+    public function getThumbnail($ref_id = '')
     {
-        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail";
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/thumbnail/{$this->getAssetsId()}";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
+        
+        return $this->call('GET', $url, $header);
+    }
+
+    /**
+     * Add Thumbnail
+     * 
+     * Adds a thumbnail file for a remote asset.
+     * Ingested assets must be added via the Dynamic Ingest API.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     * 
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Add_Thumbnail
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/thumbnail
+     * @param   array $param
+     * @param   string $ref_id
+     * @return  mixed
+     */
+    public function addThumbnail($param = array(), $ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/thumbnail";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
@@ -112,14 +207,21 @@ Trait AssetsClient
     }
 
     /**
-     * サムネイル更新（リモートアセット）
+     * Update Thumbnail
      * 
-     * @param  array  $param
-     * @return mixed
+     * Updates the location of a remote thumbnail file for a remote asset.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     * 
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Update_Thumbnail
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/thumbnail/:asset_id
+     * @param   array  $param
+     * @param   string $ref_id
+     * @return  mixed
      */
-    public function updateRemoteThumbnail($param = array())
+    public function updateThumbnail($param = array(), $ref_id = '')
     {
-        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail/{$this->getAssetsId()}";
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/thumbnail/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
@@ -129,13 +231,21 @@ Trait AssetsClient
     }
 
     /**
-     * サムネイル削除（リモートアセット）
+     * Delete Thumbnail
      * 
-     * @return mixed
+     * Deletes a thumbnail file for a remote asset.
+     * Note that you can only add one thumbnail for a video.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     * 
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Delete_Thumbnail
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/thumbnail/:asset_id
+     * @param   string $ref_id
+     * @return  mixed
      */
-    public function deleteRemoteThumbnail()
+    public function deleteThumbnail($ref_id = '')
     {
-        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail/{$this->getAssetsId()}";
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/thumbnail/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
