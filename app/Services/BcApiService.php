@@ -40,7 +40,7 @@ class BcApiService
         {
             $this->VideoCloud->authenticate();
             
-            if( empty($result->access_token) ) {
+            if( empty($this->VideoCloud->getAccessToken()) ) {
                 $this->Log->error($this->VideoCloud->getCh()->getErrorMessage(), ["CURL 認証エラー}"]);
             } else {
                 session()->put('videocloud.auth.access_token', $this->VideoCloud->getAccessToken());
@@ -54,7 +54,7 @@ class BcApiService
      * 
      * @return bool
      */
-    public function checkAuth()
+    private function checkAuth()
     {
         if( session()->has('videocloud.auth.access_token')
             && session()->has('videocloud.auth.expires_on')
@@ -77,7 +77,11 @@ class BcApiService
          * test
          */
         $this->VideoCloud->setVideoId('5244105250001');
-        dd( $this->VideoCloud->getVideoSources('20161128_you_20161128_0_3') );
+        
+        $result = $this->VideoCloud->getCustomFields();
+//         $result = $this->VideoCloud->getPlaylists('nhb_slow_motion_drop_hd_stock_video');
+        
+        return response()->json($result);
         
         /**
          * 動画リスト

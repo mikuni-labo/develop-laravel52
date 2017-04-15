@@ -31,7 +31,7 @@ Trait AuthClient
     private $accessToken;
     
     /** @var string API Token Expires */
-    private $expiresIn;
+    private $expiresOn;
 
     /**
      * Authentication for access token...
@@ -42,7 +42,8 @@ Trait AuthClient
     {
         $url = "{$this->getAuthUrl()}/v3/access_token?grant_type=client_credentials";
         $header = [
-            'Content-type: application/x-www-form-urlencoded',
+            'Content-type: application/json',
+//             'Content-type: application/x-www-form-urlencoded',
         ];
         
         $result = $this->call('POST', $url, $header);
@@ -50,7 +51,7 @@ Trait AuthClient
         if ( !empty($result->access_token) )
         {
             $this->setAccessToken($result->access_token);
-            $this->setExpiresIn($result->expires_in);
+            $this->setExpiresOn($result->expires_in + time());
         }
         
         return $result;
@@ -133,15 +134,15 @@ Trait AuthClient
         return $this->accessToken;
     }
 
-    protected function setExpiresIn($expiresIn)
+    public function setExpiresOn($expiresOn)
     {
-        $this->expiresIn = $expiresIn;
+        $this->expiresOn = $expiresOn;
         return $this;
     }
 
-    public function getExpiresIn()
+    public function getExpiresOn()
     {
-        return $this->expiresIn;
+        return $this->expiresOn;
     }
 
 }

@@ -774,7 +774,7 @@ if($key == 5){
      */
     public function testVideoCloud(BcApiService $BcApiService)
     {
-        dd( $BcApiService->test() );
+        return $BcApiService->test();
     }
 
     /**
