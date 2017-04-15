@@ -2,27 +2,15 @@
 
 namespace App\Lib\Api\VideoCloud;
 
-use App\Lib\Api\VideoCloud\VideoCloudConnection;
-
 /**
- * VideoCloud Assets 操作クラス
+ * VideoCloud Asset Resources
  * 
  * @author Kuniyasu Wada
  */
-class AssetsClient extends VideoCloudConnection
+Trait AssetsClient
 {
-    /** @var アセットID */
+    /** @var string The Assets ID */
     private $assetsId;
-
-    /**
-     * Create a new class instance.
-     * 
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * ポスター画像リスト取得（リモートアセット）
@@ -164,18 +152,12 @@ class AssetsClient extends VideoCloudConnection
         return $this->call($url, $header);
     }
 
-    /**
-     * Setter...
-     */
     public function setAssetsId($assetsId)
     {
         $this->assetsId = $assetsId;
         return $this;
     }
 
-    /**
-     * Getter...
-     */
     public function getAssetsId()
     {
         return $this->assetsId;

@@ -2,30 +2,21 @@
 
 namespace App\Lib\Api\VideoCloud;
 
-use App\Lib\Api\VideoCloud\VideoCloudConnection;
-
 /**
- * VideoCloud Videos 操作クラス
+ * VideoCloud Video Resources
  * 
  * @author Kuniyasu Wada
  */
-class VideosClient extends VideoCloudConnection
+Trait VideosClient
 {
-    /** @var VIDEOCLOUD CALLBACK URL */
+    /** @var string Video ID */
+    private $videoId;
+
+    /** @var string Callback URL */
     private $callbackUrl;
 
-    /** @var 動画プロファイル */
+    /** @var string Video Profile */
     private $videoProfile;
-
-    /**
-     * Create a new class instance.
-     * 
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Request to CMS API for Create Video Object...
@@ -149,27 +140,32 @@ class VideosClient extends VideoCloudConnection
         return $this->call($url, $header, $param);
     }
 
-    /**
-     * Setter...
-     */
+    public function setVideoId($videoId)
+    {
+        $this->videoId = $videoId;
+        return $this;
+    }
+
+    public function getVideoId()
+    {
+        return $this->videoId;
+    }
+
     public function setVideoProfile($videoProfile)
     {
         $this->videoProfile = $videoProfile;
         return $this;
     }
 
+    public function getVideoProfile()
+    {
+        return $this->videoProfile;
+    }
+
     public function setCallbackUrl($callbackUrl)
     {
         $this->callbackUrl = $callbackUrl;
         return $this;
-    }
-
-    /**
-     * Getter...
-     */
-    public function getVideoProfile()
-    {
-        return $this->videoProfile;
     }
 
     public function getCallbackUrl()

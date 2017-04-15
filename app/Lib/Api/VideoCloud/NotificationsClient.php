@@ -2,31 +2,11 @@
 
 namespace App\Lib\Api\VideoCloud;
 
-use App\Lib\Api\VideoCloud\VideoCloudConnection;
-
 /**
- * VideoCloud Notifications 操作クラス
+ * VideoCloud Notification Resources
  * 
  * @author Kuniyasu Wada
  */
-class NotificationsClient extends VideoCloudConnection
+Trait NotificationsClient
 {
-    /**
-     * Create a new class instance.
-     * 
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Setter...
-     */
-
-    /**
-     * Getter...
-     */
-
 }

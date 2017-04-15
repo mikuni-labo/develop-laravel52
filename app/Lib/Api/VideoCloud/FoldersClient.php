@@ -2,27 +2,15 @@
 
 namespace App\Lib\Api\VideoCloud;
 
-use App\Lib\Api\VideoCloud\VideoCloudConnection;
-
 /**
- * VideoCloud Folders 操作クラス
+ * VideoCloud Folder Resources
  * 
  * @author Kuniyasu Wada
  */
-class FoldersClient extends VideoCloudConnection
+Trait FoldersClient
 {
-    /** @var フォルダID */
+    /** @var string フォルダID */
     private $folderId;
-    
-    /**
-     * Create a new class instance.
-     * 
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Request to CMS API for Create Folder...
@@ -61,18 +49,12 @@ class FoldersClient extends VideoCloudConnection
         return $this->call($url, $header, $param);
     }
 
-    /**
-     * Setter...
-     */
     public function setFolderId($folderId)
     {
         $this->folderId = $folderId;
         return $this;
     }
 
-    /**
-     * Getter...
-     */
     public function getFolderId()
     {
         return $this->folderId;

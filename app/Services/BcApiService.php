@@ -10,7 +10,7 @@ use App\Traits\Log;
  * 
  * @author Kuniyasu Wada
  */
-class BcApiService extends VideoCloud
+class BcApiService
 {
     use Log;
     
@@ -19,27 +19,25 @@ class BcApiService extends VideoCloud
      * 
      * @return void
      */
-    public function __construct()
+    public function __construct(VideoCloud $VideoCloud)
     {
-        parent::__construct();
-        
         $this->Log = $this->createLogger('VideoCloud', storage_path('logs/videocloud'));
         
-        $this->getAuthClient()->setAccountId(      config('api.videocloud.account_id') );
-        $this->getAuthClient()->setClientId(       config('api.videocloud.client_id') );
-        $this->getAuthClient()->setClientSecret(   config('api.videocloud.client_secret') );
-        $this->getVideosClient()->setVideoProfile( config('api.videocloud.video_profile') );
-        $this->getVideosClient()->setCallbackUrl(  config('api.videocloud.callback_url') );
-        $this->getAuthClient()->setAuthUrl(        config('api.videocloud.auth_url') );
-        $this->getAuthClient()->setCmsUrl(         config('api.videocloud.cms_url') );
-        $this->getAuthClient()->setDIUrl(          config('api.videocloud.di_url') );
-        $this->getAuthClient()->setProxyUrl(       config('api.videocloud.bc_proxy_url') );
+        $VideoCloud->setAccountId(    config('api.videocloud.account_id') );
+        $VideoCloud->setClientId(     config('api.videocloud.client_id') );
+        $VideoCloud->setClientSecret( config('api.videocloud.client_secret') );
+        $VideoCloud->setVideoProfile( config('api.videocloud.video_profile') );
+        $VideoCloud->setCallbackUrl(  config('api.videocloud.callback_url') );
+        $VideoCloud->setAuthUrl(      config('api.videocloud.auth_url') );
+        $VideoCloud->setCmsUrl(       config('api.videocloud.cms_url') );
+        $VideoCloud->setDIUrl(        config('api.videocloud.di_url') );
         
-        $result = $this->getAuthClient()->authenticate();
+        $result = $VideoCloud->authenticate();
+        dd($result);
         
         if( empty($result->access_token) )
         {
-            $this->putLog($this->getCh()->getErrorMessage(), "CURL 認証エラー}");
+            $this->putLog($VideoCloud->getCh()->getErrorMessage(), "CURL 認証エラー}");
         }
     }
 

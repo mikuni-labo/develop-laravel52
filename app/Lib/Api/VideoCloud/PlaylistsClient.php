@@ -2,31 +2,11 @@
 
 namespace App\Lib\Api\VideoCloud;
 
-use App\Lib\Api\VideoCloud\VideoCloudConnection;
-
 /**
- * VideoCloud Playlists 操作クラス
+ * VideoCloud Playlist Resources
  * 
  * @author Kuniyasu Wada
  */
-class PlaylistsClient extends VideoCloudConnection
+Trait PlaylistsClient
 {
-    /**
-     * Create a new class instance.
-     * 
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Setter...
-     */
-
-    /**
-     * Getter...
-     */
-
 }

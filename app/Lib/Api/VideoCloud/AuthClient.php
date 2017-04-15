@@ -2,40 +2,35 @@
 
 namespace App\Lib\Api\VideoCloud;
 
-use App\Lib\Api\VideoCloud\VideoCloudConnection;
-
 /**
- * VideoCloud 認証クラス
+ * VideoCloud Authentication
  * 
  * @author Kuniyasu Wada
  */
-class AuthClient extends VideoCloudConnection
+Trait AuthClient
 {
-    /** @var CMS URL */
+    /** @var string CMS URL */
     private $cmsUrl;
     
-    /** @var DI URL */
+    /** @var string DI URL */
     private $diUrl;
     
-    /** @var API AUTH URL */
+    /** @var string API Auth URL */
     private $authUrl;
     
-    /** @var API PROXY URL */
-    private $proxyUrl;
-    
-    /** @var VIDEOCLOUD ACCOUNT ID */
+    /** @var string Videocloud Account ID */
     private $accountId;
     
-    /** @var VIDEOCLOUD CLIENT ID */
+    /** @var string Videocloud Client ID */
     private $clientId;
     
-    /** @var VIDEOCLOUD CLIENT SECRET */
+    /** @var string Videocloud Client Secret */
     private $clientSecret;
     
-    /** @var ACCESS TOKEN */
+    /** @var string API Access Token */
     private $accessToken;
     
-    /** @var トークン有効期限 */
+    /** @var string API Token Expires */
     private $expiresIn;
     
     /**
@@ -139,16 +134,20 @@ class AuthClient extends VideoCloudConnection
         return $this;
     }
 
+    public function getCmsUrl()
+    {
+        return $this->cmsUrl;
+    }
+
     public function setDIUrl($diUrl)
     {
         $this->diUrl = $diUrl;
         return $this;
     }
 
-    public function setProxyUrl($proxyUrl)
+    public function getDIUrl()
     {
-        $this->proxyUrl = $proxyUrl;
-        return $this;
+        return $this->diUrl;
     }
 
     public function setAuthUrl($authUrl)
@@ -157,10 +156,20 @@ class AuthClient extends VideoCloudConnection
         return $this;
     }
 
+    public function getAuthUrl()
+    {
+        return $this->authUrl;
+    }
+
     public function setAccountId($accountId)
     {
         $this->accountId = $accountId;
         return $this;
+    }
+
+    public function getAccountId()
+    {
+        return $this->accountId;
     }
 
     public function setClientId($clientId)
@@ -169,10 +178,20 @@ class AuthClient extends VideoCloudConnection
         return $this;
     }
 
+    public function getClientId()
+    {
+        return $this->clientId;
+    }
+
     public function setClientSecret($clientSecret)
     {
         $this->clientSecret = $clientSecret;
         return $this;
+    }
+
+    public function getClientSecret()
+    {
+        return $this->clientSecret;
     }
 
     public function setAccessToken($accessToken)
@@ -181,47 +200,15 @@ class AuthClient extends VideoCloudConnection
         return $this;
     }
 
-    /**
-     * Getter...
-     */
-    public function getCmsUrl()
-    {
-        return $this->cmsUrl;
-    }
-
-    public function getDIUrl()
-    {
-        return $this->diUrl;
-    }
-
-    public function getProxyUrl()
-    {
-        return $this->proxyUrl;
-    }
-
-    public function getAuthUrl()
-    {
-        return $this->authUrl;
-    }
-
-    public function getAccountId()
-    {
-        return $this->accountId;
-    }
-
-    public function getClientId()
-    {
-        return $this->clientId;
-    }
-
-    public function getClientSecret()
-    {
-        return $this->clientSecret;
-    }
-
     public function getAccessToken()
     {
         return $this->accessToken;
+    }
+
+    protected function setExpiresIn($expiresIn)
+    {
+        $this->expiresIn = $expiresIn;
+        return $this;
     }
 
     public function getExpiresIn()
