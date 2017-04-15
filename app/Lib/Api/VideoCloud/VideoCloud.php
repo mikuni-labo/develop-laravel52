@@ -11,10 +11,18 @@ use App\Lib\Api\VideoCloud\PlaylistsClient as Playlists;
 use App\Lib\Api\VideoCloud\VideosClient as Videos;
 
 /**
- * VideoCloud操作クラス
- * ※対応バージョン: v1
+ * Operation for VideoCloud
  * 
- * @author Kuniyasu Wada
+ * Support OAuth Version: v3
+ * Support CMS Version: v1
+ * Support Dynamic Injest Version: v1
+ * 
+ * @name    VideoCloudy
+ * @version 1.0.0
+ * @license MIT
+ * @author  Kuniyasu Wada @mikuni_labo
+ * @link    https://github.com/mikuni-labo
+ * @since   Sat, 15 Apr 2017 09:47:32 +0900
  */
 class VideoCloud extends Connection
 {

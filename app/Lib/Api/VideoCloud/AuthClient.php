@@ -32,16 +32,6 @@ Trait AuthClient
     
     /** @var string API Token Expires */
     private $expiresIn;
-    
-    /**
-     * Create a new class instance.
-     * 
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Authentication for access token...
@@ -51,7 +41,7 @@ Trait AuthClient
     public function authenticate()
     {
         $this->setMethod('POST');
-        $url = "{$this->authUrl}/v3/access_token?grant_type=client_credentials";
+        $url = "{$this->getAuthUrl()}/v3/access_token?grant_type=client_credentials";
         $header = [
             'Content-type: application/x-www-form-urlencoded',
         ];
@@ -60,74 +50,13 @@ Trait AuthClient
         
         if ( !empty($result->access_token) )
         {
-            $this->accessToken = $result->access_token;
-            $this->expiresIn   = $result->expires_in;
+            $this->setAccessToken($result->access_token);
+            $this->setExpiresIn($result->expires_in);
         }
         
         return $result;
     }
 
-    /**
-     * CMS API (プロキシ経由方式 )
-     * 
-     * @param  array $param
-     * @param  string $url
-     * @return mixed
-     */
-    protected function legacyCreateObject($param, $url)
-    {
-        $request_url  = "{$this->cmsUrl}/v1/accounts/{$this->accountId}$url";
-        $request_body = json_encode($param);
-        
-        $post_fields = "client_id=" . $this->clientId     . "&" .
-                "client_secret="    . $this->clientSecret . "&" .
-                "url="              . $request_url  . "&" .
-                "requestBody="      . $request_body . "&" .
-                "requestType="      . "POST";
-        
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->proxyUrl);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        
-        return json_decode($response);
-    }
-
-    /**
-     * DI API (プロキシ経由方式 )
-     * 
-     * @param  array $param
-     * @param  string $url
-     * @return mixed
-     */
-    protected function legacyDynamicIngest($param, $url)
-    {
-        $request_url  = urlencode("{$this->diUrl}/v1/accounts/{$this->accountId}$url");
-        $request_body = json_encode($param);
-        
-        $post_fields = "client_id=" . $this->clientId     . "&" .
-                "client_secret="    . $this->clientSecret . "&" .
-                "url="              . $request_url  . "&" .
-                "requestBody="      . $request_body . "&" .
-                "requestType="      . "POST";
-            
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->proxyUrl);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        
-        return json_decode($response);
-    }
-
-    /**
-     * Setter...
-     */
     public function setCmsUrl($cmsUrl)
     {
         $this->cmsUrl = $cmsUrl;

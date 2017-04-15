@@ -19,14 +19,13 @@ Trait AssetsClient
      */
     public function getRemotePoster()
     {
-        $this->setMethod('GET');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/poster";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/poster";
         $header = [
             'Content-type: application/json',
-            "Authorization: Bearer {$this->accessToken}",
+            "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
-        return $this->call($url, $header);
+        return $this->call('GET', $url, $header);
     }
 
     /**
@@ -38,10 +37,10 @@ Trait AssetsClient
     public function addRemotePoster($param = array())
     {
         $this->setMethod('POST');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/poster";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/poster";
         $header = [
             'Content-type: application/json',
-            "Authorization: Bearer {$this->accessToken}",
+            "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
         return $this->call($url, $header, $param);
@@ -56,10 +55,10 @@ Trait AssetsClient
     public function updateRemotePoster($param = array())
     {
         $this->setMethod('PATCH');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/poster/{$this->assetsId}";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/poster/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
-            "Authorization: Bearer {$this->accessToken}",
+            "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
         return $this->call($url, $header, $param);
@@ -73,10 +72,10 @@ Trait AssetsClient
     public function deleteRemotePoster()
     {
         $this->setMethod('DELETE');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/poster/{$this->assetsId}";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/poster/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
-            "Authorization: Bearer {$this->accessToken}",
+            "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
         return $this->call($url, $header);
@@ -90,10 +89,10 @@ Trait AssetsClient
     public function getRemoteThumbnail()
     {
         $this->setMethod('GET');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/thumbnail";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail";
         $header = [
             'Content-type: application/json',
-            "Authorization: Bearer {$this->accessToken}",
+            "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
         return $this->call($url, $header);
@@ -108,10 +107,10 @@ Trait AssetsClient
     public function addRemoteThumbnail($param = array())
     {
         $this->setMethod('POST');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/thumbnail";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail";
         $header = [
             'Content-type: application/json',
-            "Authorization: Bearer {$this->accessToken}",
+            "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
         return $this->call($url, $header, $param);
@@ -126,10 +125,10 @@ Trait AssetsClient
     public function updateRemoteThumbnail($param = array())
     {
         $this->setMethod('PATCH');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/thumbnail/{$this->assetsId}";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
-            "Authorization: Bearer {$this->accessToken}",
+            "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
         return $this->call($url, $header, $param);
@@ -143,10 +142,10 @@ Trait AssetsClient
     public function deleteRemoteThumbnail()
     {
         $this->setMethod('DELETE');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/videos/{$this->videoId}/assets/thumbnail/{$this->assetsId}";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
-            "Authorization: Bearer {$this->accessToken}",
+            "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
         return $this->call($url, $header);
@@ -154,13 +153,13 @@ Trait AssetsClient
 
     public function setAssetsId($assetsId)
     {
-        $this->assetsId = $assetsId;
+        $this->getAssetsId() = $assetsId;
         return $this;
     }
 
     public function getAssetsId()
     {
-        return $this->assetsId;
+        return $this->getAssetsId();
     }
 
 }

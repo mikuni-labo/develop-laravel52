@@ -5,17 +5,14 @@ namespace App\Lib\Api\VideoCloud;
 use App\Lib\Api\Curl;
 
 /**
- * VideoCloud接続クラス
+ * Connection for VideoCloud
  * 
  * @author Kuniyasu Wada
  */
 class Connection
 {
-    /** @var cURLインスタンス */
+    /** @var Curl $ch */
     private $ch;
-
-    /** @var REQUEST METHOD */
-    private $method;
 
     /**
      * Create a new class instance.
@@ -31,16 +28,17 @@ class Connection
      * cURLライブラリで接続後、JSONをパースして返す
      * 
      * @param  string $url
+     * @param  string $method
      * @param  array  $header
      * @param  array  $param
      * @return mixed
      */
-    protected function call($url, $header, $param = array())
+    protected function call($url, $method, $header = array(), $param = array())
     {
         $this->ch->init();
         $this->ch->setUrl($url);
         $this->ch->setIsJson(true);
-        $this->ch->setMethod($this->getMethod());
+        $this->ch->setMethod($method);
         $this->ch->setUserPwd($this->getClientId(), $this->getClientSecret());
         $this->ch->setHeader($header);
         $this->ch->setParameterFromArray($param);
@@ -48,21 +46,15 @@ class Connection
         $response = $this->ch->exec();
         $this->ch->close();
         
-        return json_decode($response);// 第2引数trueで配列型
+        return json_decode($response);
     }
 
     /**
      * Setter...
      */
-    public function setCh($ch)
+    protected function setCh($ch)
     {
         $this->ch = $ch;
-        return $this;
-    }
-
-    public function setMethod($method)
-    {
-        $this->method = $method;
         return $this;
     }
 
@@ -72,11 +64,6 @@ class Connection
     public function getCh()
     {
         return $this->ch;
-    }
-
-    public function getMethod()
-    {
-        return $this->method;
     }
 
 }

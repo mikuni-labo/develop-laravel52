@@ -21,10 +21,10 @@ Trait FoldersClient
     public function createFolder($param = array())
     {
         $this->setMethod('POST');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/folders";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/folders";
         $header = [
             'Content-type: application/json',
-            "Authorization: Bearer {$this->accessToken}",
+            "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
         return $this->call($url, $header, $param);
@@ -40,10 +40,10 @@ Trait FoldersClient
     public function moveVideoToFolder($param = array())
     {
         $this->setMethod('PUT');
-        $url = "{$this->cmsUrl}/v1/accounts/{$this->accountId}/folders/{$this->folderId}/videos/{$this->videoId}";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/folders/{$this->getFolderId()}/videos/{$this->getVideoId()}";
         $header = [
             'Content-type: application/json',
-            "Authorization: Bearer {$this->accessToken}",
+            "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
         return $this->call($url, $header, $param);
