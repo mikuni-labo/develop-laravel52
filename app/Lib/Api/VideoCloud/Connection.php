@@ -27,13 +27,13 @@ class Connection
     /**
      * cURLライブラリで接続後、JSONをパースして返す
      * 
-     * @param  string $url
      * @param  string $method
+     * @param  string $url
      * @param  array  $header
      * @param  array  $param
      * @return mixed
      */
-    protected function call($url, $method, $header = array(), $param = array())
+    protected function call($method, $url, $header = array(), $param = array())
     {
         $this->ch->init();
         $this->ch->setUrl($url);

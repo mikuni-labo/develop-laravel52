@@ -36,14 +36,13 @@ Trait AssetsClient
      */
     public function addRemotePoster($param = array())
     {
-        $this->setMethod('POST');
         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/poster";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
-        return $this->call($url, $header, $param);
+        return $this->call('POST', $url, $header, $param);
     }
 
     /**
@@ -54,14 +53,13 @@ Trait AssetsClient
      */
     public function updateRemotePoster($param = array())
     {
-        $this->setMethod('PATCH');
         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/poster/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
-        return $this->call($url, $header, $param);
+        return $this->call('PATCH', $url, $header, $param);
     }
 
     /**
@@ -71,14 +69,13 @@ Trait AssetsClient
      */
     public function deleteRemotePoster()
     {
-        $this->setMethod('DELETE');
         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/poster/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
-        return $this->call($url, $header);
+        return $this->call('DELETE', $url, $header);
     }
 
     /**
@@ -88,14 +85,13 @@ Trait AssetsClient
      */
     public function getRemoteThumbnail()
     {
-        $this->setMethod('GET');
         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
-        return $this->call($url, $header);
+        return $this->call('GET', $url, $header);
     }
 
     /**
@@ -106,14 +102,13 @@ Trait AssetsClient
      */
     public function addRemoteThumbnail($param = array())
     {
-        $this->setMethod('POST');
         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
-        return $this->call($url, $header, $param);
+        return $this->call('POST', $url, $header, $param);
     }
 
     /**
@@ -124,14 +119,13 @@ Trait AssetsClient
      */
     public function updateRemoteThumbnail($param = array())
     {
-        $this->setMethod('PATCH');
         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
-        return $this->call($url, $header, $param);
+        return $this->call('PATCH', $url, $header, $param);
     }
 
     /**
@@ -141,25 +135,24 @@ Trait AssetsClient
      */
     public function deleteRemoteThumbnail()
     {
-        $this->setMethod('DELETE');
         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/assets/thumbnail/{$this->getAssetsId()}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
         
-        return $this->call($url, $header);
+        return $this->call('DELETE', $url, $header);
     }
 
     public function setAssetsId($assetsId)
     {
-        $this->getAssetsId() = $assetsId;
+        $this->assetsId = $assetsId;
         return $this;
     }
 
     public function getAssetsId()
     {
-        return $this->getAssetsId();
+        return $this->assetsId;
     }
 
 }

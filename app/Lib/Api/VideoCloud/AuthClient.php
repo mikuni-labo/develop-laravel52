@@ -40,13 +40,12 @@ Trait AuthClient
      */
     public function authenticate()
     {
-        $this->setMethod('POST');
         $url = "{$this->getAuthUrl()}/v3/access_token?grant_type=client_credentials";
         $header = [
             'Content-type: application/x-www-form-urlencoded',
         ];
         
-        $result = $this->call($url, $header);
+        $result = $this->call('POST', $url, $header);
         
         if ( !empty($result->access_token) )
         {
