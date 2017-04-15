@@ -9,7 +9,7 @@ namespace App\Lib\Api\VideoCloud;
  */
 Trait FoldersClient
 {
-    /** @var string フォルダID */
+    /** @var string Folder ID */
     private $folderId;
 
     /**
