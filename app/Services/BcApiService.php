@@ -61,8 +61,9 @@ class BcApiService
          */
         $this->VideoCloud->setVideoId('5085975185001');
         $this->VideoCloud->setFolderId('58f1d9c8d694ee464e122dd3');
+        $this->VideoCloud->setPlaylistId('5398944324001');
         
-        $result = $this->VideoCloud->deleteSubscription();
+        $result = $this->VideoCloud->deletePlaylist();
         
         return response()->json($result);
         

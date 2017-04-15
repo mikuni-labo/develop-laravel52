@@ -156,7 +156,7 @@ Trait VideosClient
      * @param   string $ref_id
      * @return  mixed
      */
-    public function getPlaylists($ref_id = '')
+    public function getPlaylistsForVideo($ref_id = '')
     {
         $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/references";
