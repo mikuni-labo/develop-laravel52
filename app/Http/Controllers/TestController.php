@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\TxVideo;
 use App\Models\GyaoVideo;
 use App\Models\NicoVideo;
+use App\Services\BcApiService;
 use Illuminate\Contracts\Mail\Mailer;
 use Mail;
 use Storage;
@@ -767,12 +768,13 @@ if($key == 5){
 
     /**
      * VideoCloud Test
-     *
+     * 
+     * @param  BcApiService $BcApiService
      * @method GET
      */
-    public function testVideoCloud()
+    public function testVideoCloud(BcApiService $BcApiService)
     {
-        dd('here');
+        return $BcApiService->test();
     }
 
     /**

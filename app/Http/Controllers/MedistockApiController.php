@@ -169,19 +169,12 @@ class MedistockApiController extends Controller
         ];
         
         $properties = [
-            'order_detail_id',
-            'order_id',
-            'product_id',
-            'product_class_id',
-            'product_name',
-            'product_code',
-            'classcategory_name1',
-            'classcategory_name2',
-            'price',
-            'quantity',
-            'point_rate',
-            'tax_rate',
-            'tax_rule',
+            'authClient',
+            'videosClient',
+            'playlistsClient',
+            'assetsClient',
+            'foldersClient',
+            'notificationsClient',
         ];
         
         foreach ($properties as $val)
