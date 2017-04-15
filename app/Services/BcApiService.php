@@ -50,8 +50,55 @@ class BcApiService
     }
 
     /**
+     * test
+     *
+     * @return mixed
+     */
+    public function test()
+    {
+        /**
+         * test
+         */
+        $this->VideoCloud->setVideoId('5085975185001');
+        $this->VideoCloud->setFolderId('58f1d9c8d694ee464e122dd3');
+        
+        $result = $this->VideoCloud->deleteVideo();
+        
+        return response()->json($result);
+        
+        
+//         $result = $this->VideoCloud->getVideos([
+//             'q' => 'name:summer-sun',
+//         ]);
+        
+        
+        /**
+         * 動画リスト
+         */
+        dd( $this->VideoCloud->getVideos([
+            'limit'   => 20,
+            'offset'  => 0,
+            'q'       => 'name:所さん',
+        ]) );
+        
+        /**
+         * 動画削除
+         */
+//         $arr = [
+            
+//         ];
+            
+//         foreach ($arr as $videoId)
+//         {
+//             $this->VideoCloud->setVideoId($videoId);
+//             $this->VideoCloud->deleteVideo();
+//         }
+//         dd( 'end' );
+    }
+
+    /**
      * Check Auth
-     * 
+     *
      * @return bool
      */
     private function checkAuth()
@@ -64,47 +111,6 @@ class BcApiService
             return true;
         }
         return false;
-    }
-    
-    /**
-     * test
-     *
-     * @return mixed
-     */
-    public function test()
-    {
-        /**
-         * test
-         */
-        $this->VideoCloud->setVideoId('5244105250001');
-        
-        $result = $this->VideoCloud->getCustomFields();
-//         $result = $this->VideoCloud->getPlaylists('nhb_slow_motion_drop_hd_stock_video');
-        
-        return response()->json($result);
-        
-        /**
-         * 動画リスト
-         */
-        dd( $this->VideoCloud->getVideos([
-            'limit'   => 20,
-            'offset'  => 0,
-        ]) );
-        
-        /**
-         * 動画削除
-         */
-//         $videoIds = [
-            
-//         ];
-        
-//         foreach ($videoIds as $videoId)
-//         {
-//             $this->VideoCloud->setVideoId($videoId);
-//             $this->VideoCloud->deleteVideo();
-//         }
-        
-//         dd( 'end' );
     }
 
 }
