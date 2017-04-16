@@ -3,8 +3,9 @@
 namespace App\Lib\Api\VideoCloud;
 
 /**
- * VideoCloud Asset Resources
+ * Operation Asset Resources
  *
+ * @see    http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup
  * @author Kuniyasu Wada
  */
 Trait AssetsClient

@@ -3,8 +3,9 @@
 namespace App\Lib\Api\VideoCloud;
 
 /**
- * VideoCloud Folder Resources
+ * Operation Folder Resources
  *
+ * @see    http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-folderGroup
  * @author Kuniyasu Wada
  */
 Trait FoldersClient

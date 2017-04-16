@@ -3,8 +3,9 @@
 namespace App\Lib\Api\VideoCloud;
 
 /**
- * VideoCloud Playlist Resources
+ * Operation Playlist Resources
  *
+ * @see    http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-playlistGroup
  * @author Kuniyasu Wada
  */
 Trait PlaylistsClient

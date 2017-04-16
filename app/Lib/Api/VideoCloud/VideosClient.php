@@ -3,20 +3,15 @@
 namespace App\Lib\Api\VideoCloud;
 
 /**
- * VideoCloud Video Resources
+ * Operation Video Resources
  *
+ * @see    http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-videoGroup
  * @author Kuniyasu Wada
  */
 Trait VideosClient
 {
     /** @var string Video ID */
     private $videoId;
-
-    /** @var string Callback URL */
-    private $callbackUrl;
-
-    /** @var string Video Profile */
-    private $videoProfile;
 
     /**
      * Get Videos
@@ -284,24 +279,6 @@ Trait VideosClient
         return $this->call('GET', $url, $header);
     }
 
-    /**
-     * Request to Dynamic Ingest API for Ingest Video...
-     *
-     * @param  array $param
-     * @return mixed
-     */
-    public function dynamicIngest($param = array())
-    {
-        $url = "{$this->getDiUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$this->getVideoId()}/ingest-requests";
-        $header = [
-            'Content-type: application/json',
-            "Authorization: Bearer {$this->getAccessToken()}",
-        ];
-
-        /** XXX APIから原因不明のInternal Server Errorが返される時は、プロファイル設定を要チェック */
-        return $this->call('POST', $url, $header, $param);
-    }
-
     public function setVideoId($videoId)
     {
         $this->videoId = $videoId;
@@ -311,28 +288,6 @@ Trait VideosClient
     public function getVideoId()
     {
         return $this->videoId;
-    }
-
-    public function setVideoProfile($videoProfile)
-    {
-        $this->videoProfile = $videoProfile;
-        return $this;
-    }
-
-    public function getVideoProfile()
-    {
-        return $this->videoProfile;
-    }
-
-    public function setCallbackUrl($callbackUrl)
-    {
-        $this->callbackUrl = $callbackUrl;
-        return $this;
-    }
-
-    public function getCallbackUrl()
-    {
-        return $this->callbackUrl;
     }
 
 }

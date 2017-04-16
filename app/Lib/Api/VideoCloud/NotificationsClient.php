@@ -3,8 +3,9 @@
 namespace App\Lib\Api\VideoCloud;
 
 /**
- * VideoCloud Notification Resources
+ * Operation Notification Resources
  *
+ * @see    http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-notificationGroup
  * @author Kuniyasu Wada
  */
 Trait NotificationsClient

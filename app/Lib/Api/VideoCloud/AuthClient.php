@@ -3,8 +3,9 @@
 namespace App\Lib\Api\VideoCloud;
 
 /**
- * VideoCloud Authentication
+ * VideoCloud OAuth API Client
  *
+ * @see    http://docs.brightcove.com/en/video-cloud/oauth-api/getting-started/oauth-api-overview.html
  * @author Kuniyasu Wada
  */
 Trait AuthClient
@@ -42,8 +43,7 @@ Trait AuthClient
     {
         $url = "{$this->getAuthUrl()}/v3/access_token?grant_type=client_credentials";
         $header = [
-            'Content-type: application/json',
-//             'Content-type: application/x-www-form-urlencoded',
+            'Content-type: application/x-www-form-urlencoded',
         ];
 
         $result = $this->call('POST', $url, $header);
