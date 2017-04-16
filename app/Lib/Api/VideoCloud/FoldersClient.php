@@ -4,7 +4,7 @@ namespace App\Lib\Api\VideoCloud;
 
 /**
  * VideoCloud Folder Resources
- * 
+ *
  * @author Kuniyasu Wada
  */
 Trait FoldersClient
@@ -28,7 +28,7 @@ Trait FoldersClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('GET', $url, $header, $param);
     }
 
@@ -48,14 +48,14 @@ Trait FoldersClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('GET', $url, $header, $param);
     }
 
     /**
      * Add Video to Folder
      * Add a video to a folder
-     * 
+     *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-folderGroup-Add_Video_to_Folder
      * @example https://cms.api.brightcove.com/v1/accounts/:account_id/folders/:folder_id/videos/:video_id
      * @param   array $param
@@ -68,7 +68,7 @@ Trait FoldersClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('PUT', $url, $header, $param);
     }
 
@@ -87,7 +87,7 @@ Trait FoldersClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('DELETE', $url, $header);
     }
 
@@ -107,7 +107,7 @@ Trait FoldersClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('POST', $url, $header, $param);
     }
 
@@ -127,7 +127,7 @@ Trait FoldersClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('PATCH', $url, $header, $param);
     }
 
@@ -146,7 +146,7 @@ Trait FoldersClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('DELETE', $url, $header);
     }
 
@@ -165,7 +165,7 @@ Trait FoldersClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('GET', $url, $header);
     }
 

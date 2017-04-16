@@ -4,7 +4,7 @@ namespace App\Lib\Api\VideoCloud;
 
 /**
  * VideoCloud Playlist Resources
- * 
+ *
  * @author Kuniyasu Wada
  */
 Trait PlaylistsClient
@@ -28,7 +28,7 @@ Trait PlaylistsClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('GET', $url, $header, $param);
     }
 
@@ -48,7 +48,7 @@ Trait PlaylistsClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('GET', $url, $header, $param);
     }
 
@@ -67,7 +67,7 @@ Trait PlaylistsClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('GET', $url, $header);
     }
 
@@ -86,7 +86,7 @@ Trait PlaylistsClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('GET', $url, $header);
     }
 
@@ -105,7 +105,7 @@ Trait PlaylistsClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('GET', $url, $header);
     }
 
@@ -125,7 +125,7 @@ Trait PlaylistsClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('POST', $url, $header, $param);
     }
 
@@ -145,7 +145,7 @@ Trait PlaylistsClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('PATCH', $url, $header, $param);
     }
 
@@ -164,7 +164,7 @@ Trait PlaylistsClient
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
         ];
-        
+
         return $this->call('DELETE', $url, $header);
     }
 

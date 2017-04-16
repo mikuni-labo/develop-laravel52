@@ -4,15 +4,15 @@ namespace App\Services;
 use App\Services\UserServiceInterface;
 use App\Repositories\UserRepositoryInterface;
 
-class UserService implements UserServiceInterface 
+class UserService implements UserServiceInterface
 {
     protected $UserRepositoryInterface;
-    
+
     public function __construct(UserRepositoryInterface $UserRepositoryInterface)
     {
         $this->UserRepositoryInterface = $UserRepositoryInterface;
     }
-    
+
     /**
      * @param $id
      * @return mixed
@@ -21,7 +21,7 @@ class UserService implements UserServiceInterface
     {
         return $this->UserRepositoryInterface->get($id);
     }
-    
+
     /**
      * @return mixed
      */
@@ -29,7 +29,7 @@ class UserService implements UserServiceInterface
     {
         return $this->UserRepositoryInterface->getList();
     }
-    
+
     /**
      * @param $request
      * @param $id
@@ -42,10 +42,10 @@ class UserService implements UserServiceInterface
         } else {
             $id = $this->UserRepositoryInterface->update($id, $request);
         }
-        
+
         return $id;
     }
-    
+
     /**
      * @param $id
      * @return bool
@@ -55,7 +55,7 @@ class UserService implements UserServiceInterface
         $this->UserRepositoryInterface->delete($id);
         return true;
     }
-    
+
     /**
      * @param $id
      * @return bool
@@ -65,7 +65,7 @@ class UserService implements UserServiceInterface
         $this->UserRepositoryInterface->restore($id);
         return true;
     }
-    
+
     /**
      * @return mixed
      */

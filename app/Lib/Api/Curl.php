@@ -3,58 +3,160 @@
 namespace App\Lib\Api;
 
 /**
- * Curlライブラリ...
- * 
- * @author Shinohara
+ * Curl Client
+ *
+ * @name    Curly
+ * @version 1.0.0
+ * @license MIT
+ * @author  Kuniyasu Wada @mikuni_labo
+ * @link    https://github.com/mikuni-labo
+ * @since   Sun, 16 Apr 2017 08:16:01 +0900
  */
 class Curl
 {
-    /** @var curlインスタンス */
+    /** @var Curl */
     private $ch;
 
-    /** @var 送信するパラメータ */
-    private $parameter = array();
-
-    /** @var 送信方法 */
-    private $method = 'GET';
-
-    /** @var JSON形式で送るか? */
-    private $isJson = false;
-
-    /** @var クエリビルドするかどうか */
-    private $isBuildQuery = true;
-
-    /** @var 接続先 */
+    /** @var string */
     private $url;
 
-    /** @var ユーザーエージェント */
-    private $user_agent;
+    /** @var string */
+    private $method = 'GET';
 
-    /** @var BASIC認証情報 */
+    /** @var string */
+    private $userAgent;
+
+    /** @var string */
     private $userpwd;
 
-    /** @var curl_exec時に返り値を受け取るか？ */
-    private $return_transfer = true;
+    /** @var bool */
+    private $returnTransfer = true;
 
-    /** @var SSLの検証を行うか？ */
-    private $ssl_verifypeer = true;
+    /** @var bool */
+    private $sslVerifypeer = false;
 
-    /** @var curl_exec実行時のエラーメッセージ */
-    private $error_message;
+    /** @var bool */
+    private $jsonTransfer = false;
 
-    /**
-     * Create a new class instance.
-     * 
-     * @return void
-     */
+    /** @var bool */
+    private $buildQuery = true;
+
+    /** @var array */
+    private $header = array();
+
+    /** @var array */
+    private $parameter = array();
+
+    /** @var string */
+    private $errorMessage;
+
     public function __construct()
     {
-        //
+    }
+
+    public function init()
+    {
+        $this->ch = curl_init();
+    }
+
+    public function exec()
+    {
+        try {
+            switch($this->method)
+            {
+                case ('POST'):
+                    if( $this->jsonTransfer ) {
+                        $this->parameter = json_encode($this->parameter);
+                    }
+                    elseif( $this->buildQuery ) {
+                        $this->parameter = http_build_query($this->parameter);
+                    }
+
+                    curl_setopt($this->ch, CURLOPT_POST, true);
+                    curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
+                    break;
+
+                case ('PUT'):
+                    if( $this->jsonTransfer ) {
+                        $this->parameter = json_encode($this->parameter);
+                    }
+                    elseif( $this->buildQuery ) {
+                        $this->parameter = http_build_query($this->parameter);
+                    }
+
+                    curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST , 'PUT');
+                    curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
+                    break;
+
+                case ('PATCH'):
+                    if( $this->jsonTransfer ) {
+                        $this->parameter = json_encode($this->parameter);
+                    }
+                    elseif( $this->buildQuery ) {
+                        $this->parameter = http_build_query($this->parameter);
+                    }
+
+                    curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST , 'PATCH');
+                    curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
+                    break;
+
+                case ('DELETE'):
+                    if( $this->jsonTransfer ) {
+                        $this->parameter = json_encode($this->parameter);
+                    }
+                    elseif( $this->buildQuery ) {
+                        $this->parameter = http_build_query($this->parameter);
+                    }
+
+                    curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST , 'DELETE');
+                    curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
+                    break;
+
+                case ('GET'):
+                default:
+                    curl_setopt($this->ch, CURLOPT_HTTPGET, true);
+                    $this->setUrl($this->url . '?' . http_build_query($this->parameter));
+            }
+
+            if(isset($this->userAgent)) {
+                curl_setopt($this->ch, CURLOPT_USERAGENT, $this->userAgent);
+            }
+
+            if(isset($this->userpwd)) {
+                curl_setopt($this->ch, CURLOPT_USERPWD, $this->userpwd);
+            }
+
+            if(isset($this->header)) {
+                curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->header);
+            }
+
+            curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, $this->returnTransfer);
+            curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, $this->sslVerifypeer);
+            curl_setopt($this->ch, CURLOPT_URL, $this->url);
+
+            return curl_exec($this->ch);
+
+        } catch (\Exception $e) {
+            $this->errorMessage = $e->getMessage();
+        }
+
+        return null;
+    }
+
+    public function close()
+    {
+        curl_close($this->ch);
+    }
+
+    public function reset()
+    {
+        curl_reset($this->ch);
     }
 
     public function setUrl($url)
     {
         $this->url = $url;
+        return $this;
     }
 
     public function getUrl()
@@ -62,59 +164,93 @@ class Curl
         return $this->url;
     }
 
-    public function setIsJson($isJson)
+    public function setMethod($method)
     {
-        $this->isJson = $isJson;
+        $this->method = $method;
+        return $this;
     }
 
-    public function getIsJson()
+    public function getMethod()
     {
-        return $this->isJson;
+        return $this->method;
     }
 
-    public function setIsBuildQuery($isBuildQuery)
+    public function setUserAgent($userAgent)
     {
-        $this->isBuildQuery = $isBuildQuery;
+        $this->userAgent = $userAgent;
+        return $this;
     }
 
-    public function getIsBuildQuery()
+    public function getUserAgent()
     {
-        return $this->isBuildQuery;
-    }
-
-    public function setUserAgent($user_agent)
-    {
-        $this->user_agent = $user_agent;
-    }
-
-    public function setHeader($header)
-    {
-        $this->header = $header;
+        return $this->userAgent;
     }
 
     public function setUserPwd($user, $pwd)
     {
         $this->userpwd = $user. ':'. $pwd;
+        return $this;
     }
 
-    public function setMethod($method) 
+    public function getUserPwd()
     {
-        $this->method = $method;
+        return $this->userpwd;
     }
 
-    public function setReturnTransfer($return_transfer) 
+    public function setReturnTransfer($returnTransfer)
     {
-        $this->return_transfer = $return_transfer;
+        $this->returnTransfer = $returnTransfer;
+        return $this;
     }
 
-    public function setParameterFromArray($parameter)
+    public function getReturnTransfer()
     {
-        $this->parameter = $parameter;
+        return $this->returnTransfer;
+    }
+
+    public function setSslVerifypeer($sslVerifypeer)
+    {
+        $this->sslVerifypeer = $sslVerifypeer;
+        return $this;
+    }
+
+    public function getSslVerifypeer()
+    {
+        return $this->sslVerifypeer;
+    }
+
+    public function setJsonTransfer($jsonTransfer)
+    {
+        $this->jsonTransfer = $jsonTransfer;
+        return $this;
+    }
+
+    public function getJsonTransfer()
+    {
+        return $this->jsonTransfer;
+    }
+
+    public function setBuildQuery($buildQuery)
+    {
+        $this->buildQuery = $buildQuery;
+        return $this;
+    }
+
+    public function getBuildQuery()
+    {
+        return $this->buildQuery;
     }
 
     public function setParameter($key, $value)
     {
         $this->parameter[$key] = $value;
+        return $this;
+    }
+
+    public function setParameterFromArray($parameter)
+    {
+        $this->parameter = $parameter;
+        return $this;
     }
 
     public function getParameter($key)
@@ -122,115 +258,26 @@ class Curl
         return $this->parameter[$key];
     }
 
-    public function setSslVerifypeer($ssl_verifypeer)
+    public function setHeader($header)
     {
-        $this->ssl_verifypeer = $ssl_verifypeer;
+        $this->header[] = $header;
+        return $this;
     }
 
-    public function exec()
+    public function setHeaderFromArray($header)
     {
-        try {
-            $this->init();
-            
-            if(isset($this->user_agent))
-                curl_setopt($this->ch, CURLOPT_USERAGENT, $this->user_agent);
-            
-            if(isset($this->userpwd))
-                curl_setopt($this->ch, CURLOPT_USERPWD, $this->userpwd);
-            
-            if(isset($this->header))
-                curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->header);
-                
-            curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, $this->return_transfer);
-            curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, $this->ssl_verifypeer);
-                
-            switch($this->method) {
-                
-                case 'POST':
-                    if( $this->isJson )
-                        $this->parameter = json_encode($this->parameter);
-                    elseif( $this->isBuildQuery )
-                        $this->parameter = http_build_query($this->parameter);
-                    
-                    curl_setopt($this->ch, CURLOPT_POST, true);
-                    curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
-                    break;
-                    
-                case 'PUT':
-                    if( $this->isJson )
-                        $this->parameter = json_encode($this->parameter);
-                    elseif( $this->isBuildQuery )
-                        $this->parameter = http_build_query($this->parameter);
-                    
-                    curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST , 'PUT');
-                    curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
-                    break;
-                    
-                case 'PATCH':
-                    if( $this->isJson )
-                        $this->parameter = json_encode($this->parameter);
-                    elseif( $this->isBuildQuery )
-                        $this->parameter = http_build_query($this->parameter);
-                            
-                    curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST , 'PATCH');
-                    curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
-                    break;
-                    
-                case 'DELETE':
-                    if( $this->isJson )
-                        $this->parameter = json_encode($this->parameter);
-                    elseif( $this->isBuildQuery )
-                        $this->parameter = http_build_query($this->parameter);
-                            
-                    curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST , 'DELETE');// DELETEの場合はHTTPメソッド名を直接指定する必要があるかもしれない...
-                    curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->parameter);
-                    break;
-                
-                case 'GET':
-                    curl_setopt($this->ch, CURLOPT_HTTPGET, true);
-                    $this->setUrl($this->url . '?' . http_build_query($this->parameter)); 
-                    break;
-                
-                default:
-                    curl_setopt($this->ch, CURLOPT_HTTPGET, true);
-                    $this->setUrl($this->url . '?' . http_build_query($this->parameter)); 
-            }
-            
-            curl_setopt($this->ch, CURLOPT_URL, $this->url);
-            
-            return curl_exec($this->ch);
-            
-        } catch (\Exception $e) {
-            $this->error_message = $e->getMessage();
-        }
-        
-        return null;
+        $this->header = $header;
+        return $this;
     }
 
-    public function getErrorMessage() 
+    public function getHeader()
     {
-        return $this->error_message;
+        return $this->header;
     }
 
-    public function getInfo() 
+    public function getErrorMessage()
     {
-        return curl_getinfo($this->ch);
-    }
-
-    public function init() 
-    {
-        $this->ch = curl_init();
-    }
-
-    public function close() 
-    {
-        curl_close($this->ch);
-        
-    }
-
-    public function reset() 
-    {
-        curl_reset($this->ch);
+        return $this->errorMessage;
     }
 
 }

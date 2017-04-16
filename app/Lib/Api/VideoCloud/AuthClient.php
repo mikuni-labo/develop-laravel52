@@ -4,38 +4,38 @@ namespace App\Lib\Api\VideoCloud;
 
 /**
  * VideoCloud Authentication
- * 
+ *
  * @author Kuniyasu Wada
  */
 Trait AuthClient
 {
     /** @var string CMS URL */
     private $cmsUrl;
-    
+
     /** @var string DI URL */
     private $diUrl;
-    
+
     /** @var string API Auth URL */
     private $authUrl;
-    
+
     /** @var string Videocloud Account ID */
     private $accountId;
-    
+
     /** @var string Videocloud Client ID */
     private $clientId;
-    
+
     /** @var string Videocloud Client Secret */
     private $clientSecret;
-    
+
     /** @var string API Access Token */
     private $accessToken;
-    
+
     /** @var string API Token Expires */
     private $expiresOn;
 
     /**
      * Authentication for access token...
-     * 
+     *
      * @return void
      */
     public function authenticate()
@@ -45,15 +45,15 @@ Trait AuthClient
             'Content-type: application/json',
 //             'Content-type: application/x-www-form-urlencoded',
         ];
-        
+
         $result = $this->call('POST', $url, $header);
-        
+
         if ( !empty($result->access_token) )
         {
             $this->setAccessToken($result->access_token);
             $this->setExpiresOn($result->expires_in + time());
         }
-        
+
         return $result;
     }
 

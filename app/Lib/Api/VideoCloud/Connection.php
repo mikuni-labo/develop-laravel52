@@ -6,7 +6,7 @@ use App\Lib\Api\Curl;
 
 /**
  * Connection for VideoCloud
- * 
+ *
  * @author Kuniyasu Wada
  */
 class Connection
@@ -16,7 +16,7 @@ class Connection
 
     /**
      * Create a new class instance.
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -26,7 +26,7 @@ class Connection
 
     /**
      * cURLライブラリで接続後、JSONをパースして返す
-     * 
+     *
      * @param  string $method
      * @param  string $url
      * @param  array  $header
@@ -37,15 +37,14 @@ class Connection
     {
         $this->ch->init();
         $this->ch->setUrl($url);
-        $this->ch->setIsJson(true);
         $this->ch->setMethod($method);
         $this->ch->setUserPwd($this->getClientId(), $this->getClientSecret());
-        $this->ch->setHeader($header);
+        $this->ch->setHeaderFromArray($header);
         $this->ch->setParameterFromArray($param);
-        $this->ch->setSslVerifypeer(false);
+        $this->ch->setJsonTransfer(true);
         $response = $this->ch->exec();
         $this->ch->close();
-        
+
         return json_decode($response);
     }
 

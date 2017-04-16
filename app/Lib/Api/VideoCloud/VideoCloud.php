@@ -12,11 +12,11 @@ use App\Lib\Api\VideoCloud\VideosClient as Videos;
 
 /**
  * Operation for VideoCloud
- * 
+ *
  * Support OAuth Version: v3
  * Support CMS Version: v1
  * Support Dynamic Injest Version: v1
- * 
+ *
  * @name    VideoCloudy
  * @version 1.0.0
  * @license MIT
@@ -32,10 +32,10 @@ class VideoCloud extends Connection
     use Notifications;
     use Playlists;
     use Videos;
-    
+
     /**
      * Create a new class instance.
-     * 
+     *
      * @return void
      */
     public function __construct()
