@@ -13,6 +13,8 @@ Trait NotificationsClient
     private $subscriptionId;
 
     /**
+     * Get Subscriptions List
+     *
      * Get a list of all notification subscriptions for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-notificationGroup-Get_Subscriptions_List
@@ -32,7 +34,9 @@ Trait NotificationsClient
 
     /**
      * Create Subscription
-     * Establishes up to 10 endpoints that video changes should be sent to. Any change in video metadata will trigger a video change event and a notification
+     *
+     * Establishes up to 10 endpoints that video changes should be sent to.
+     * Any change in video metadata will trigger a video change event and a notification
      * — changes to assets used by the video will not trigger change events.
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-notificationGroup-Create_Subscription
@@ -53,6 +57,7 @@ Trait NotificationsClient
 
     /**
      * Get Subscription
+     *
      * Get a notification subscription for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-notificationGroup-Get_Subscription
@@ -72,6 +77,7 @@ Trait NotificationsClient
 
     /**
      * Delete Subscription
+     *
      * Get a notification subscription for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-notificationGroup-Delete_Subscription

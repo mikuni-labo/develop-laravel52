@@ -14,6 +14,7 @@ Trait PlaylistsClient
 
     /**
      * Get Playlists
+     *
      * Gets a page of playlist objects for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-playlistGroup-Get_Playlists
@@ -34,6 +35,7 @@ Trait PlaylistsClient
 
     /**
      * Get Playlist Count
+     *
      * Gets a count of playlists in the account for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-playlistGroup-Get_Playlist_Count
@@ -54,6 +56,7 @@ Trait PlaylistsClient
 
     /**
      * Get Playlist by ID
+     *
      * Gets a playlist object for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-playlistGroup-Get_Playlist_by_ID
@@ -73,6 +76,7 @@ Trait PlaylistsClient
 
     /**
      * Get Video Count in Playlist
+     *
      * Gets a count of the videos in a playlist for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-playlistGroup-Get_Video_Count_in_Playlist
@@ -92,6 +96,7 @@ Trait PlaylistsClient
 
     /**
      * Get Videos in Playlist
+     *
      * Gets the video objects for videos in a playlist for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-playlistGroup-Get_Videos_in_Playlist
@@ -111,6 +116,7 @@ Trait PlaylistsClient
 
     /**
      * Create Playlist
+     *
      * Creates a new playlist
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-playlistGroup-Create_Playlist
@@ -131,6 +137,7 @@ Trait PlaylistsClient
 
     /**
      * Update Playlist
+     *
      * Updates a playlist for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-playlistGroup-Update_Playlist
@@ -151,6 +158,7 @@ Trait PlaylistsClient
 
     /**
      * Delete Playlist
+     *
      * Deletes a playlist
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-playlistGroup-Delete_Playlists

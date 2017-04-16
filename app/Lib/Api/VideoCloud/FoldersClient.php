@@ -14,6 +14,7 @@ Trait FoldersClient
 
     /**
      * Get Folders
+     *
      * Gets list of folders for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-folderGroup-Get_Folders
@@ -34,6 +35,7 @@ Trait FoldersClient
 
     /**
      * Get Videos in Folder
+     *
      * Gets list of video objects in a folder
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-folderGroup-Get_Videos_in_Folder
@@ -54,6 +56,7 @@ Trait FoldersClient
 
     /**
      * Add Video to Folder
+     *
      * Add a video to a folder
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-folderGroup-Add_Video_to_Folder
@@ -74,6 +77,7 @@ Trait FoldersClient
 
     /**
      * Remove Video from Folder
+     *
      * Remove a video from a folder
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-folderGroup-Remove_Video_from_Folder
@@ -93,6 +97,7 @@ Trait FoldersClient
 
     /**
      * Create Folder
+     *
      * Create a new folder for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-folderGroup-Create_Folder
@@ -113,6 +118,7 @@ Trait FoldersClient
 
     /**
      * Update Folder Name
+     *
      * Update the folder name
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-folderGroup-Update_Folder_Name
@@ -133,6 +139,7 @@ Trait FoldersClient
 
     /**
      * Delete Folder
+     *
      * Delete a folder
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-folderGroup-Delete_Folder
@@ -152,6 +159,7 @@ Trait FoldersClient
 
     /**
      * Get Folder Information
+     *
      * Gets information about a folder
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-folderGroup-Get_FolderInformation
