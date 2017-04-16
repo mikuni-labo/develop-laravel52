@@ -134,8 +134,6 @@ class Curl
             curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, $this->sslVerifypeer);
             curl_setopt($this->ch, CURLOPT_URL, $this->url);
 
-// print_r("{$this->url}: ". \Carbon::now() .PHP_EOL);
-
             return curl_exec($this->ch);
 
         } catch (\Exception $e) {

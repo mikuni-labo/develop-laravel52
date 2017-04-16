@@ -62,12 +62,12 @@ Trait NotificationsClient
      * Get a notification subscription for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-notificationGroup-Get_Subscription
-     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/subscriptions
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/subscriptions/:subscription_id
      * @return  mixed
      */
     public function getSubscription()
     {
-        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/subscriptions";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/subscriptions/{$this->getSubscriptionId()}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",
@@ -82,12 +82,12 @@ Trait NotificationsClient
      * Get a notification subscription for the account
      *
      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-notificationGroup-Delete_Subscription
-     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/subscriptions
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/subscriptions/:subscription_id
      * @return  mixed
      */
     public function deleteSubscription()
     {
-        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/subscriptions";
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/subscriptions/{$this->getSubscriptionId()}";
         $header = [
             'Content-type: application/json',
             "Authorization: Bearer {$this->getAccessToken()}",

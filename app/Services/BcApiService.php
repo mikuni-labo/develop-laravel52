@@ -59,17 +59,27 @@ class BcApiService
         /**
          * test
          */
-//         $this->VideoCloud->setVideoId('5400030363001');
-//         $this->VideoCloud->setFolderId('58f302e9eb8ae3077a8eb366');
+        $this->VideoCloud->setVideoId('5400047085001');
+//         $this->VideoCloud->setFolderId('57a1904ce4b01010036e4137');
 //         $this->VideoCloud->setPlaylistId('5398944324001');
+            $this->VideoCloud->setAssetsId('5400108498001');
+//             $this->VideoCloud->setSubscriptionId('');
 
 //         $result = $this->VideoCloud->getThumbnail('nhb_tablet_02');
 //         $result = $this->VideoCloud->deleteVideo('nhb_tablet_02');
+//             $result = $this->VideoCloud->getRendition('livetest');
 
+        $result = $this->VideoCloud->getIsmcManifestList();
+//         $result = $this->VideoCloud->updateIsmcManifest([
+//             'reference_id' => 'updateIsmcManifestupdateIsmcManifestupdateIsmcManifest',
+//             'remote_url'   => 'updateIsmcManifestupdateIsmcManifestupdateIsmcManifestupdateIsmcManifest',
+//         ]);
+//         print_r($result);exit;
+        dd($result);
 
         $result = $this->VideoCloud->createVideo([
             'reference_id' => \Carbon::now()->format('r'),
-            'name'         => 'test!_12',
+            'name'         => 'test!_18',
         ]);
 
         if( empty($result->id) ) dd($result);
@@ -103,7 +113,8 @@ class BcApiService
 
         $result = $this->VideoCloud->dynamicIngestMediaAsset($param);
 
-        dd($result);
+//         dd('here');
+        print_r($result);exit;
 
 
 //         $result = $this->VideoCloud->getVideos([
