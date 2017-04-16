@@ -21,7 +21,7 @@ class Connection
      */
     public function __construct()
     {
-        $this->setCh(new Curl);
+        $this->ch = new Curl;
     }
 
     /**
@@ -48,18 +48,6 @@ class Connection
         return json_decode($response);
     }
 
-    /**
-     * Setter...
-     */
-    protected function setCh($ch)
-    {
-        $this->ch = $ch;
-        return $this;
-    }
-
-    /**
-     * Getter...
-     */
     public function getCh()
     {
         return $this->ch;
