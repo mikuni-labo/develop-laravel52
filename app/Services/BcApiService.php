@@ -62,17 +62,17 @@ class BcApiService
         $this->VideoCloud->setVideoId('5400047085001');
 //         $this->VideoCloud->setFolderId('57a1904ce4b01010036e4137');
 //         $this->VideoCloud->setPlaylistId('5398944324001');
-            $this->VideoCloud->setAssetsId('5400108498001');
+            $this->VideoCloud->setAssetsId('5400117229001');
 //             $this->VideoCloud->setSubscriptionId('');
 
 //         $result = $this->VideoCloud->getThumbnail('nhb_tablet_02');
 //         $result = $this->VideoCloud->deleteVideo('nhb_tablet_02');
 //             $result = $this->VideoCloud->getRendition('livetest');
 
-        $result = $this->VideoCloud->getIsmcManifestList();
-//         $result = $this->VideoCloud->updateIsmcManifest([
-//             'reference_id' => 'updateIsmcManifestupdateIsmcManifestupdateIsmcManifest',
-//             'remote_url'   => 'updateIsmcManifestupdateIsmcManifestupdateIsmcManifestupdateIsmcManifest',
+        $result = $this->VideoCloud->getCaption();
+//         $result = $this->VideoCloud->updateCaption([
+//             'reference_id' => 'updateCaptionupdateCaptionupdateCaption',
+//             'remote_url'   => 'updateCaptionupdateCaptionupdateCaptionupdateCaption',
 //         ]);
 //         print_r($result);exit;
         dd($result);

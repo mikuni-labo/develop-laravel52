@@ -133,17 +133,6 @@ Trait AssetsClient
         return $this->call('DELETE', $url, $header);
     }
 
-
-
-
-
-
-
-
-    /**
-     * HLS
-     */
-
     /**
      * Get HLS Manifest List
      *
@@ -260,13 +249,6 @@ Trait AssetsClient
 
         return $this->call('DELETE', $url, $header);
     }
-
-
-
-
-    /**
-     * HDS
-     */
 
     /**
      * Get HDS Manifest List
@@ -385,14 +367,6 @@ Trait AssetsClient
         return $this->call('DELETE', $url, $header);
     }
 
-
-
-
-
-    /**
-     * ISM
-     */
-
     /**
      * Get ISM Manifest List
      *
@@ -509,14 +483,6 @@ Trait AssetsClient
 
         return $this->call('DELETE', $url, $header);
     }
-
-
-
-
-
-    /**
-     * ISMC
-     */
 
     /**
      * Get ISMC Manifest List
@@ -635,136 +601,134 @@ Trait AssetsClient
         return $this->call('DELETE', $url, $header);
     }
 
+    /**
+     * Get DASH Manifest List
+     *
+     * Gets the dash_manifests for a given video.
+     * Notes:
+     * 1. you can have multiple dash manifests with profiles;
+     * you can have only one dash manifest without a profile, but one manifest without a profile can be combined with muliple manifests with profiles;
+     * 2. all manifests intended to be used with the CMS API should include a profile
+     * - only DASH manifests with profiles will be returned by the CMS API
+     * — only a single DASH manifest without a profile will be returned by the Media API
+     * 3. you can use /videos/ref:reference_id instead of /videos/video_id
+     *
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Get_DASH_Manifest_List
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/dash_manifests
+     * @param   string $ref_id
+     * @return  mixed
+     */
+    public function getDashManifestList($ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/dash_manifests";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
 
-
+        return $this->call('GET', $url, $header);
+    }
 
     /**
-     * DASH
+     * Get DASH Manifest
+     *
+     * Gets a dash_manifest for a given video.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     *
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Get_DASH_Manifest
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/dash_manifests/:asset_id
+     * @param   string $ref_id
+     * @return  mixed
      */
+    public function getDashManifest($ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/dash_manifests/{$this->getAssetsId()}";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
 
-//     /**
-//      * Get Rendition List
-//      *
-//      * Gets a list of renditions for a given video.
-//      * Note: you can use /videos/ref:reference_id instead of /videos/video_id
-//      *
-//      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Get_Rendition_List
-//      * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/renditions
-//      * @param   string $ref_id
-//      * @return  mixed
-//      */
-//     public function getRenditionList($ref_id = '')
-//     {
-//         $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
-//         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/renditions";
-//         $header = [
-//             'Content-type: application/json',
-//             "Authorization: Bearer {$this->getAccessToken()}",
-//             ];
+        return $this->call('GET', $url, $header);
+    }
 
-//         return $this->call('GET', $url, $header);
-//     }
+    /**
+     * Add DASH Manifest
+     *
+     * Adds a location for a remote DASH manifest
+     * Notes:
+     * 1. you can have multiple dash manifests with profiles;
+     * you can have only one dash manifest without a profile, but one manifest without a profile can be combined with muliple manifests with profiles;
+     * 2. all manifests intended to be used with the CMS API should include a profile
+     * - only DASH manifests with profiles will be returned by the CMS API
+     * — only a single DASH manifest without a profile will be returned by the Media API
+     * 3. you can use /videos/ref:reference_id instead of /videos/video_id
+     *
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Add_DASH_Manifest
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/dash_manifests
+     * @param   array $param
+     * @param   string $ref_id
+     * @return  mixed
+     */
+    public function addDashManifest($param = array(), $ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/dash_manifests";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
 
-//     /**
-//      * Get Rendition
-//      *
-//      * Gets a specified rendition for a video.
-//      * Note: you can use /videos/ref:reference_id instead of /videos/video_id
-//      *
-//      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Get_Rendition
-//      * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/renditions/:asset_id
-//      * @param   string $ref_id
-//      * @return  mixed
-//      */
-//     public function getRendition($ref_id = '')
-//     {
-//         $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
-//         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/renditions/{$this->getAssetsId()}";
-//         $header = [
-//             'Content-type: application/json',
-//             "Authorization: Bearer {$this->getAccessToken()}",
-//             ];
+        return $this->call('POST', $url, $header, $param);
+    }
 
-//         return $this->call('GET', $url, $header);
-//     }
+    /**
+     * Update DASH Manifest
+     *
+     * Updates the location of a remote dash_manifest file for a remote asset.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     *
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Update_DASH_Manifest
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/dash_manifests/:asset_id
+     * @param   array $param
+     * @param   string $ref_id
+     * @return  mixed
+     */
+    public function updateDashManifest($param = array(), $ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/dash_manifests/{$this->getAssetsId()}";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
 
-//     /**
-//      * Add Rendition
-//      *
-//      * Add a rendition to the given video.
-//      * Ingested assets must be added via the Dynamic Ingest API.
-//      * Note: you can use /videos/ref:reference_id instead of /videos/video_id
-//      *
-//      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Add_Rendition
-//      * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/renditions
-//      * @param   array $param
-//      * @param   string $ref_id
-//      * @return  mixed
-//      */
-//     public function addRendition($param = array(), $ref_id = '')
-//     {
-//         $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
-//         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/renditions";
-//         $header = [
-//             'Content-type: application/json',
-//             "Authorization: Bearer {$this->getAccessToken()}",
-//             ];
+        return $this->call('PATCH', $url, $header, $param);
+    }
 
-//         return $this->call('POST', $url, $header, $param);
-//     }
+    /**
+     * Delete DASH Manifest
+     *
+     * Deletes an dash_manifest file for a remote asset.
+     * Note: you can use /videos/ref:reference_id instead of /videos/video_id
+     *
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Delete_DASH_Manifest
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/dash_manifests/:asset_id
+     * @param   string $ref_id
+     * @return  mixed
+     */
+    public function deleteDashManifest($ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/dash_manifests/{$this->getAssetsId()}";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
 
-//     /**
-//      * Update Rendition
-//      *
-//      * Update the location for a remote rendition.
-//      * Ingested renditions must be updated by retranscoding the video via Dynamic Ingest or Studio.
-//      * Note: you can use /videos/ref:reference_id instead of /videos/video_id
-//      *
-//      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Update_Rendition
-//      * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/renditions/:asset_id
-//      * @param   array $param
-//      * @param   string $ref_id
-//      * @return  mixed
-//      */
-//     public function updateRendition($param = array(), $ref_id = '')
-//     {
-//         $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
-//         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/renditions/{$this->getAssetsId()}";
-//         $header = [
-//             'Content-type: application/json',
-//             "Authorization: Bearer {$this->getAccessToken()}",
-//             ];
-
-//         return $this->call('PATCH', $url, $header, $param);
-//     }
-
-//     /**
-//      * Delete Rendition
-//      *
-//      * Deletes a rendition for the given video.
-//      * Note: this operation is only for remote renditions for remote asset videos
-//      * — do not use it for renditions created by Video Cloud for ingested videos
-//      *
-//      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Delete_Rendition
-//      * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/renditions/:asset_id
-//      * @param   string $ref_id
-//      * @return  mixed
-//      */
-//     public function deleteRendition($ref_id = '')
-//     {
-//         $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
-//         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/renditions/{$this->getAssetsId()}";
-//         $header = [
-//             'Content-type: application/json',
-//             "Authorization: Bearer {$this->getAccessToken()}",
-//             ];
-
-//         return $this->call('DELETE', $url, $header);
-//     }
-
-
-
-
+        return $this->call('DELETE', $url, $header);
+    }
 
     /**
      * Get Poster List
@@ -1008,133 +972,134 @@ Trait AssetsClient
         return $this->call('DELETE', $url, $header);
     }
 
+    /**
+     * Get Caption List
+     *
+     * Gets the caption file for a given video (DFXP captions for the Smart Player).
+     * Note:
+     * 1. the caption endpoint is ONLY for working with DFXP captions used in the legacy Smart Player
+     * - WebVTT captions (text_tracks) for the new Brightcove Player are managed using the Update Video operation;
+     * 2. you can use /videos/ref:reference_id instead of /videos/video_id
+     *
+     *
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/caption
+     * @param   string $ref_id
+     * @return  mixed
+     */
+    public function getCaptionList($ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/caption";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
 
-
-
+        return $this->call('GET', $url, $header);
+    }
 
     /**
-     * CAPTION
+     * Get Caption
+     *
+     * Gets a caption file for a given video (DFXP captions for the Smart Player).
+     * Note:
+     * 1. the caption endpoint is ONLY for working with DFXP captions used in the legacy Smart Player - WebVTT captions (text_tracks) for the new Brightcove Player are managed using the Update Video operation;
+     * 2. you can use /videos/ref:reference_id instead of /videos/video_id
+     *
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Get_Caption
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/caption/:asset_id
+     * @param   string $ref_id
+     * @return  mixed
      */
+    public function getCaption($ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/caption/{$this->getAssetsId()}";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
 
-//     /**
-//      * Get Rendition List
-//      *
-//      * Gets a list of renditions for a given video.
-//      * Note: you can use /videos/ref:reference_id instead of /videos/video_id
-//      *
-//      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Get_Rendition_List
-//      * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/renditions
-//      * @param   string $ref_id
-//      * @return  mixed
-//      */
-//     public function getRenditionList($ref_id = '')
-//     {
-//         $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
-//         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/renditions";
-//         $header = [
-//             'Content-type: application/json',
-//             "Authorization: Bearer {$this->getAccessToken()}",
-//             ];
+        return $this->call('GET', $url, $header);
+    }
 
-//         return $this->call('GET', $url, $header);
-//     }
+    /**
+     * Add Caption
+     *
+     * Adds a caption file for a remote asset (DFXP captions for the Smart Player).
+     * Note:
+     * 1. the caption endpoint is ONLY for working with DFXP captions used in the legacy Smart Player
+     * - WebVTT captions (text_tracks) for the new Brightcove Player are managed using the Update Video operation;
+     * 2. you can use /videos/ref:reference_id instead of /videos/video_id
+     *
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Add_Caption
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/caption
+     * @param   array $param
+     * @param   string $ref_id
+     * @return  mixed
+     */
+    public function addCaption($param = array(), $ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/caption";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
 
-//     /**
-//      * Get Rendition
-//      *
-//      * Gets a specified rendition for a video.
-//      * Note: you can use /videos/ref:reference_id instead of /videos/video_id
-//      *
-//      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Get_Rendition
-//      * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/renditions/:asset_id
-//      * @param   string $ref_id
-//      * @return  mixed
-//      */
-//     public function getRendition($ref_id = '')
-//     {
-//         $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
-//         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/renditions/{$this->getAssetsId()}";
-//         $header = [
-//             'Content-type: application/json',
-//             "Authorization: Bearer {$this->getAccessToken()}",
-//             ];
+        return $this->call('POST', $url, $header, $param);
+    }
 
-//         return $this->call('GET', $url, $header);
-//     }
+    /**
+     * Update Caption
+     *
+     * Updates the location of a remote caption file for a remote asset (DFXP captions for the Smart Player).
+     * Note:
+     * 1. the caption endpoint is ONLY for working with DFXP captions used in the legacy Smart Player - WebVTT captions (text_tracks) for the new Brightcove Player are managed using the Update Video operation;
+     * 2. you can use /videos/ref:reference_id instead of /videos/video_id
+     *
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Update_Caption
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/caption/:asset_id
+     * @param   array $param
+     * @param   string $ref_id
+     * @return  mixed
+     */
+    public function updateCaption($param = array(), $ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/caption/{$this->getAssetsId()}";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
 
-//     /**
-//      * Add Rendition
-//      *
-//      * Add a rendition to the given video.
-//      * Ingested assets must be added via the Dynamic Ingest API.
-//      * Note: you can use /videos/ref:reference_id instead of /videos/video_id
-//      *
-//      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Add_Rendition
-//      * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/renditions
-//      * @param   array $param
-//      * @param   string $ref_id
-//      * @return  mixed
-//      */
-//     public function addRendition($param = array(), $ref_id = '')
-//     {
-//         $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
-//         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/renditions";
-//         $header = [
-//             'Content-type: application/json',
-//             "Authorization: Bearer {$this->getAccessToken()}",
-//             ];
+        return $this->call('PATCH', $url, $header, $param);
+    }
 
-//         return $this->call('POST', $url, $header, $param);
-//     }
+    /**
+     * Delete Caption
+     *
+     * Deletes a caption file for a remote asset (DFXP captions for the Smart Player).
+     * Note:
+     * 1. the caption endpoint is ONLY for working with DFXP captions used in the legacy Smart Player - WebVTT captions (text_tracks) for the new Brightcove Player are managed using the Update Video operation;
+     * 2. you can use /videos/ref:reference_id instead of /videos/video_id
+     *
+     * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Delete_Caption
+     * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/caption/:asset_id
+     * @param   string $ref_id
+     * @return  mixed
+     */
+    public function deleteCaption($ref_id = '')
+    {
+        $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
+        $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/caption/{$this->getAssetsId()}";
+        $header = [
+            'Content-type: application/json',
+            "Authorization: Bearer {$this->getAccessToken()}",
+        ];
 
-//     /**
-//      * Update Rendition
-//      *
-//      * Update the location for a remote rendition.
-//      * Ingested renditions must be updated by retranscoding the video via Dynamic Ingest or Studio.
-//      * Note: you can use /videos/ref:reference_id instead of /videos/video_id
-//      *
-//      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Update_Rendition
-//      * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/renditions/:asset_id
-//      * @param   array $param
-//      * @param   string $ref_id
-//      * @return  mixed
-//      */
-//     public function updateRendition($param = array(), $ref_id = '')
-//     {
-//         $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
-//         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/renditions/{$this->getAssetsId()}";
-//         $header = [
-//             'Content-type: application/json',
-//             "Authorization: Bearer {$this->getAccessToken()}",
-//             ];
-
-//         return $this->call('PATCH', $url, $header, $param);
-//     }
-
-//     /**
-//      * Delete Rendition
-//      *
-//      * Deletes a rendition for the given video.
-//      * Note: this operation is only for remote renditions for remote asset videos
-//      * — do not use it for renditions created by Video Cloud for ingested videos
-//      *
-//      * @see     http://docs.brightcove.com/en/video-cloud/cms-api/references/cms-api/versions/v1/index.html#api-assetGroup-Delete_Rendition
-//      * @example https://cms.api.brightcove.com/v1/accounts/:account_id/videos/:video_id/assets/renditions/:asset_id
-//      * @param   string $ref_id
-//      * @return  mixed
-//      */
-//     public function deleteRendition($ref_id = '')
-//     {
-//         $id = !empty($ref_id) ? "ref:{$ref_id}" : $this->getVideoId();
-//         $url = "{$this->getCmsUrl()}/v1/accounts/{$this->getAccountId()}/videos/{$id}/assets/renditions/{$this->getAssetsId()}";
-//         $header = [
-//             'Content-type: application/json',
-//             "Authorization: Bearer {$this->getAccessToken()}",
-//             ];
-
-//         return $this->call('DELETE', $url, $header);
-//     }
+        return $this->call('DELETE', $url, $header);
+    }
 
     public function setAssetsId($assetsId)
     {
