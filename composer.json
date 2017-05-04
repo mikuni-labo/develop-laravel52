@@ -19,7 +19,8 @@
         "zendframework/zendpdf": "dev-master",
         "fabpot/goutte": "2.0.*",
         "gloudemans/shoppingcart": "*",
-        "google/apiclient":"^2.0"
+        "google/apiclient":"^2.0",
+        "mikuni-labo/videocloudy": "1.0.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

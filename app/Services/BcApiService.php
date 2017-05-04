@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Lib\Api\VideoCloud\VideoCloud;
+use MikuniLabo\VideoCloudy\VideoCloudy;
 use App\Traits\Log;
 
 /**
@@ -22,9 +22,9 @@ class BcApiService
      *
      * @return void
      */
-    public function __construct(VideoCloud $VideoCloud)
+    public function __construct(VideoCloudy $VideoCloudy)
     {
-        $this->VideoCloud = $VideoCloud;
+        $this->VideoCloud = $VideoCloudy;
         $this->Log = $this->createLogger('VideoCloud', storage_path('logs/videocloud'));
 
         $this->VideoCloud->setAccountId(    config('api.videocloud.account_id') );
@@ -59,6 +59,10 @@ class BcApiService
         /**
          * test
          */
+        $result = $this->VideoCloud->getVideos();
+        dd($result);
+
+
         $this->VideoCloud->setVideoId('5400047085001');
 //         $this->VideoCloud->setFolderId('57a1904ce4b01010036e4137');
 //         $this->VideoCloud->setPlaylistId('5398944324001');
