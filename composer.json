@@ -20,7 +20,8 @@
         "fabpot/goutte": "2.0.*",
         "gloudemans/shoppingcart": "*",
         "google/apiclient":"^2.0",
-        "mikuni-labo/videocloudy": "1.0.0"
+        "mikuni-labo/videocloudy": "^1.0.0",
+        "mikuni-labo/curly": "^1.0.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
