@@ -32,9 +32,6 @@ class BcApiService
         $this->VideoCloud->setClientSecret( config('api.videocloud.client_secret') );
         $this->VideoCloud->setVideoProfile( config('api.videocloud.video_profile') );
         $this->VideoCloud->setCallbackUrl(  config('api.videocloud.callback_url') );
-        $this->VideoCloud->setAuthUrl(      config('api.videocloud.auth_url') );
-        $this->VideoCloud->setCmsUrl(       config('api.videocloud.cms_url') );
-        $this->VideoCloud->setDIUrl(        config('api.videocloud.di_url') );
 
 //         if( ! $this->checkAuth() )
 //         {
@@ -59,7 +56,8 @@ class BcApiService
         /**
          * test
          */
-        $result = $this->VideoCloud->getVideos();
+        $this->VideoCloud->setFolderId('58f1d9c8d694ee464e122dd3');
+        $result = $this->VideoCloud->deleteFolder();
         dd($result);
 
 
