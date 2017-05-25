@@ -14,33 +14,22 @@ elixir.config.sourcemaps = false;
  */
 
 elixir(function(mix) {
-	// LESS
-	//mix.less('app.less').version('css/app.css');
-	
-	// SASS
-	mix.sass('style.scss').version('css/style.css');
-	//mix.sass('admin.style.scss').version('css/admin.style.css');
-	
-	// JS
-//	mix.scripts([
-//		'jquery-2.1.4.min.js'
-//	],
-//		'jquery.js'
-//	)
-//	mix.scripts([
-//		'jquery.ui.core.min.js',
-//		'jquery.ui.datepicker-ja.min.js',
-//		'jquery.ui.datepicker.min.js',
-//		'jquery.ui.ympicker.js',
-//	],
-//		'public/js/datepicker.js'//datepicker
-//	)
-//	.scripts([
-//		'common.js',
-//		'change.input.color.js',
-//		'log.js',
-//	],
-//		'public/js/main.js'
-//	);
-	
+    // SASS
+    mix.sass([
+            'style.scss',
+        ],
+        'public/css/style.css'
+    );
+    
+    // SASS
+    mix.sass([
+              'toggle.scss',
+          ],
+          'public/css/toggle.css'
+      );
+    
+    // Version
+    mix.version([
+        'css/style.css',
+    ]);
 });
