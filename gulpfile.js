@@ -1,5 +1,6 @@
 require('es6-promise').polyfill();
 var elixir = require('laravel-elixir');
+elixir.config.sourcemaps = false;
 
 /*
  |--------------------------------------------------------------------------
