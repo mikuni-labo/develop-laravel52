@@ -17,10 +17,10 @@ class UserController extends Controller
         $this->middleware('guest:user', ['except' => ['getLogin', 'postLogin']]);
         $this->middleware('role:ADMINISTRATOR', ['except' => ['edit', 'modify']]);
     }
-    
+
     /**
      * Index
-     * 
+     *
      * @method GET
      */
     public function index()
@@ -30,7 +30,7 @@ class UserController extends Controller
         $results = User::searchUsers($search);
         return view('user.index', compact('results', 'search'));
     }
-    
+
     /**
      * Index
      *
@@ -42,14 +42,14 @@ class UserController extends Controller
          * バリデーション
          */
         $this->doValidate($request, 'search');
-        
+
         $request->session()->put('search_user', $request->all());
         return redirect('user/search');
     }
-    
+
     /**
      * Search...
-     * 
+     *
      * @method GET
      */
     public function search()
@@ -58,10 +58,10 @@ class UserController extends Controller
         $results = User::searchUsers($search);
         return view('user.index', compact('results', 'search'));
     }
-    
+
     /**
      * 検索条件クリアボタン
-     * 
+     *
      * @method GET
      */
     public function resetSearch(Request $request)
@@ -69,20 +69,20 @@ class UserController extends Controller
         $request->session()->put('search_user', []);
         return redirect('user/search');
     }
-    
+
     /**
      * add
-     * 
+     *
      * @method GET
      */
     public function add()
     {
         return view('user.add');
     }
-    
+
     /**
      * edit
-     * 
+     *
      * @method GET
      */
     public function edit(Request $request, $id)
@@ -92,7 +92,7 @@ class UserController extends Controller
             \Flash::error('無効なデータが指定されました。');
             return redirect('user/search');
         }
-        
+
         // システム管理者以外は自分のIDのみ編集可能
         if(\Auth::guard('user')->user()->role !== 'ADMINISTRATOR'
             && \Auth::guard('user')->user()->id !== $id)
@@ -100,13 +100,13 @@ class UserController extends Controller
             \Flash::error('権限がありません');
             return redirect('/');
         }
-        
+
         return view('user.edit', compact('row'));
     }
-    
+
     /**
      * 登録・編集
-     * 
+     *
      * @method POST
      */
     public function modify(Request $request, $id = null)
@@ -116,7 +116,7 @@ class UserController extends Controller
             \Flash::error('無効なデータが指定されました。');
             return redirect('user/search');
         }
-        
+
         // システム管理者以外は登録不可、自分のIDのみ編集可能
         if(\Auth::guard('user')->user()->role !== 'ADMINISTRATOR'
                 && ( is_null($id) || \Auth::guard('user')->user()->id !== $id) )
@@ -124,38 +124,38 @@ class UserController extends Controller
             \Flash::error('権限がありません');
             return redirect('/');
         }
-        
+
         $mode = is_null($id) ? 'add' : 'edit';
-        
+
         /**
          * バリデーション
          */
         $this->doValidate($request, $mode, $id);
-        
+
         $inputs = $request->all();
-        
+
         try {
             \DB::beginTransaction();
-            
+
             // Insert
             if(is_null($id))
             {
                 $inputs['password'] = \Hash::make($request->password);
-                
+
                 // 管理画面からの登録時は、認証済みとみなす
                 $inputs['confirmed_at'] = \Util::getDate();
-                
+
                 User::create($inputs);
-                
+
                 \Flash::success('ユーザー情報を登録しました。');
             }
             // Update
             else {
                 if($request->password)
                     $inputs['password'] = \Hash::make($request->password);
-                else 
+                else
                     unset($inputs['password']);
-                
+
                 // システム管理者以外、またはシステム管理者本人の場合は権限・ステータス変更不可
                 if( \Auth::guard('user')->user()->role !== 'ADMINISTRATOR'
                     || \Auth::guard('user')->user()->role === 'ADMINISTRATOR'
@@ -164,22 +164,22 @@ class UserController extends Controller
                     unset($inputs['status']);
                     unset($inputs['role']);
                 }
-                
+
                 $data->update($inputs);
                 \Flash::success('ユーザー情報を更新しました。');
             }
             \DB::commit();
-            
+
         } catch (\Exception $e) {
             \Flash::error($e->getMessage());
         }
-        
+
         return redirect('user/search');
     }
-    
+
     /**
      * delete
-     * 
+     *
      * @method GET
      */
     public function delete(Request $request, $id)
@@ -190,13 +190,13 @@ class UserController extends Controller
             \Flash::error('無効なデータが指定されました。');
             return redirect('user/search');
         }
-        
+
         $User->delete();
-        
+
         \Flash::info('ユーザーデータを1件削除しました。');
         return redirect('user/search');
     }
-    
+
     /**
      * restore
      *
@@ -209,13 +209,33 @@ class UserController extends Controller
             \Flash::error('無効なデータが指定されました。');
             return redirect('user/search');
         }
-        
+
         $User->restore();
         \Flash::info('ユーザーデータを1件復旧しました。');
-        
+
         return redirect('user/search');
     }
-    
+
+    /**
+     * CSV
+     *
+     * @method GET
+     */
+    public function getCsv(Request $request)
+    {
+        return view('user.csv');
+    }
+
+    /**
+     * CSV
+     *
+     * @method GET
+     */
+    public function postCsv(Request $request)
+    {
+        dd('post');
+    }
+
     /**
      * バリデーションオプションをセットしてバリデーションを実行する
      *
@@ -227,7 +247,7 @@ class UserController extends Controller
     private function doValidate($request, $mode = null, $id = null)
     {
         $prefix = ($mode == 'search') ? 'search_' : '';
-        
+
         $customAttributes = [
                 "{$prefix}name1"                 => '姓',
                 "{$prefix}name2"                 => '名',
@@ -238,13 +258,13 @@ class UserController extends Controller
                 "{$prefix}password_confirmation" => 'パスワード(確認用)',
                 "{$prefix}status"                => 'ステータス',
                 "{$prefix}role"                  => '権限',
-                
+
                 // 検索用
                 "{$prefix}user_id"               => 'ユーザID',
                 "{$prefix}user_name"             => 'ユーザ名',
                 "{$prefix}delete_flag"           => '削除フラグ',
         ];
-        
+
         // モードによってルールを切り分ける
         switch ($mode) {
             case ('add'):
@@ -260,7 +280,7 @@ class UserController extends Controller
                     'role'                       => 'required|string|role_name|max:255',
                 ];
                 break;
-                    
+
             case ('edit'):
                 $rules = [
                     'name1'                      => 'required|max:255',
@@ -273,7 +293,7 @@ class UserController extends Controller
                     'role'                       => 'required|string|role_name|max:255',
                 ];
                 break;
-                
+
             case ('search'):
                 $rules = [
                     "{$prefix}user_id"           => 'numeric|digits_between:1,11',
@@ -282,15 +302,15 @@ class UserController extends Controller
                     "{$prefix}delete_flag"       => 'boolean',
                 ];
                 break;
-                
+
             default:
         }
-        
+
         $messages = [
-            
+
         ];
-        
+
         $this->validate($request, $rules, $messages, $customAttributes);
     }
-    
+
 }

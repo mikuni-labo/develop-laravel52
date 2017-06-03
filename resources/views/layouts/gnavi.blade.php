@@ -2,7 +2,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-            
+
                 <!-- Collapsed Hamburger -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
@@ -10,11 +10,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                
+
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="/">{{ $Fixed['info']['SiteName'] }}</a>
             </div>
-            
+
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
@@ -27,21 +27,21 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="/user"><span class="glyphicon glyphicon-user"></span>&nbsp;ユーザ一覧</a></li>
                                     <li><a href="/user/add"><span class="glyphicon glyphicon-plus"></span>&nbsp;ユーザ登録</a></li>
+                                    <li><a href="/user/csv"><span class="glyphicon glyphicon-paperclip"></span>&nbsp;CSV操作</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <span class="glyphicon glyphicon-link"></span>&nbsp;テスト&nbsp;<span class="caret"></span>
+                                    <span class="glyphicon glyphicon-dashboard"></span>&nbsp;テスト&nbsp;<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="/test"><span class="glyphicon glyphicon-user"></span>&nbsp;テスト一覧</a></li>
-                                    @if(false)<li><a href="/test/add"><span class="glyphicon glyphicon-plus"></span>&nbsp;テスト登録</a></li>@endif
+                                    <li><a href="/test"><span class="glyphicon glyphicon-th-list"></span>&nbsp;テスト一覧</a></li>
                                 </ul>
                             </li>
                         @endif
                     @endif
                 </ul>
-                
+
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->

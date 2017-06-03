@@ -21,7 +21,7 @@ Route::group(['middleware' => ['web']], function()
     Route::get( 'auth/resend',                       'Auth\AuthController@getResend');// 確認メール再送信
     Route::post('auth/resend',                       'Auth\AuthController@postResend');
     Route::get( 'auth/resend/{token}',               'Auth\AuthController@getConfirm');// 登録確認メール
-    
+
     /**
      * パスワードリマインダー関連
      */
@@ -29,7 +29,7 @@ Route::group(['middleware' => ['web']], function()
     Route::post('auth/password/email',               'Auth\PasswordController@postEmail');
     Route::get( 'auth/password/reset/{token}',       'Auth\PasswordController@getReset');
     Route::post('auth/password/reset',               'Auth\PasswordController@postReset');
-    
+
     /**
      * ユーザ管理
      */
@@ -41,10 +41,12 @@ Route::group(['middleware' => ['web']], function()
     Route::post('user/edit/{id}',                    'UserController@modify');
     Route::get( 'user/delete/{id}',                  'UserController@delete');
     Route::get( 'user/restore/{id}',                 'UserController@restore');
+    Route::get( 'user/csv',                          'UserController@getCsv');
+    Route::post('user/csv',                          'UserController@postCsv');
     Route::get( 'user/search',                       'UserController@search');
     Route::post('user/search',                       'UserController@postIndex');
     Route::get( 'user/search/reset',                 'UserController@resetSearch');
-    
+
     /**
      * Ajax...
      */
@@ -52,21 +54,21 @@ Route::group(['middleware' => ['web']], function()
     Route::post('ajax/isModifiedData',               'AjaxResponseController@isModifiedData');
     Route::post('ajax/chkExistsImage',               'AjaxResponseController@chkExistsImage');
     Route::get( 'ajax/test',                         'AjaxResponseController@test');
-    
+
     /**
      * API...
      * (API通信時、Tokenを要求されたくない場合は、ミドルウェアのVerifyCsrfTokenクラスにて、Tokenの要求を受けない処理が必要)
      */
     //Route::post('api/{version}/***',               'ApiResponseController@***');
     Route::get('api/echo',                          'ApiResponseController@echoTest');
-    
-    
-    
+
+
+
     /**
      * Cron Test...
      */
     Route::get('cron/sendMailTest',                  'TestController@sendMailTest');
-    
+
     /**
      * Test
      */
@@ -86,23 +88,23 @@ Route::group(['middleware' => ['web']], function()
     Route::get( 'test/response_xml',                 'TestController@responseXML');
     Route::get( 'test/aws_s3',                       'TestController@testAwsS3');
     Route::get( 'test/videocloud',                   'TestController@testVideoCloud');
-    
+
     /**
      * APIテスト
      */
     Route::get( 'api/oanda',                         'TestController@oandaTest');
     Route::get( 'api/currencylayer',                 'TestController@currencyLayerTest');
     Route::get( 'api/openexchangerates',             'TestController@openExchangeRatesTest');
-    
+
     Route::get( 'api/medistock',                     'MedistockApiController@medistockApi');
     Route::get( 'api/setter_getter',                 'MedistockApiController@showSetterAndGetter');
-    
-    
+
+
     /**
      * JSテスト
      */
     Route::get( 'test/javascript/regexp/{number}',   'TestController@javascriptRegExp');  // JavaScript正規表現テスト
-    
+
     /**
      * ドットインストールテスト
      */
