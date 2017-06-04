@@ -19,21 +19,21 @@ class UserCsvRequest extends Request
     public function rules()
     {
         return [
-                "user_import_csv" => 'required|mime_csv|max:1024',// 1MB
+            "user_import_csv" => 'required|mime_csv|max:1024',// 1MB
         ];
     }
 
     public function attributes()
     {
         return [
-                "user_import_csv" => 'ユーザ登録用CSVファイル',
+            "user_import_csv" => 'ユーザ登録用CSVファイル',
         ];
     }
 
     public function messages()
     {
         return [
-                //
+            //
         ];
     }
 
