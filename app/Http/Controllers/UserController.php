@@ -271,10 +271,10 @@ class UserController extends Controller
         $prefix = ($mode == 'search') ? 'search_' : '';
 
         $customAttributes = [
-                "{$prefix}name1"                 => '姓',
-                "{$prefix}name2"                 => '名',
+                "{$prefix}last_name"                 => '姓',
+                "{$prefix}first_name"                 => '名',
                 "{$prefix}company"               => '会社名',
-                "{$prefix}position"              => '部署',
+                "{$prefix}department"              => '部署',
                 "{$prefix}email"                 => 'メールアドレス',
                 "{$prefix}password"              => 'パスワード',
                 "{$prefix}password_confirmation" => 'パスワード(確認用)',
@@ -291,10 +291,10 @@ class UserController extends Controller
         switch ($mode) {
             case ('add'):
                 $rules = [
-                    'name1'                      => 'required|max:255',
-                    'name2'                      => 'required|max:255',
+                    'last_name'                      => 'required|max:255',
+                    'first_name'                      => 'required|max:255',
                     'company'                    => 'max:255',
-                    'position'                   => 'max:255',
+                    'department'                   => 'max:255',
                     'email'                      => 'required|email|unique:users,email|max:255',
                     'password'                   => 'required|min:8|max:16|confirmed',
                     'password_confirmation'      => 'required_with:password',
@@ -305,10 +305,10 @@ class UserController extends Controller
 
             case ('edit'):
                 $rules = [
-                    'name1'                      => 'required|max:255',
-                    'name2'                      => 'required|max:255',
+                    'last_name'                      => 'required|max:255',
+                    'first_name'                      => 'required|max:255',
                     'company'                    => 'max:255',
-                    'position'                   => 'max:255',
+                    'department'                   => 'max:255',
                     'email'                      => "required|email|unique:users,email,{$id},id|max:255",
                     'password'                   => 'min:8|max:16',
                     'status'                     => 'required|numeric|digits:1',

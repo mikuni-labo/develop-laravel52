@@ -14,10 +14,10 @@ use Carbon\Carbon;
  * @property integer $status
  * @property integer $version
  * @property integer $modified_user
- * @property string $name1
- * @property string $name2
+ * @property string $last_name
+ * @property string $first_name
  * @property string $company
- * @property string $position
+ * @property string $department
  * @property string $email
  * @property string $password
  * @property string $remember_token
@@ -57,10 +57,10 @@ class TestUser extends Model
      * @var array
      */
     protected $fillable = [
-            'name1',
-            'name2',
+            'last_name',
+            'first_name',
             'company',
-            'position',
+            'department',
             'email',
             'password',
             'created_at',
@@ -133,7 +133,7 @@ class TestUser extends Model
         
         foreach ($res as $key => $val)
         {
-            $test_users[$val->id] = $val->name1. ' ' .$val->name2;
+            $test_users[$val->id] = $val->last_name. ' ' .$val->first_name;
         }
         
         return $test_users;
@@ -156,8 +156,8 @@ class TestUser extends Model
         
         $query->select( \DB::raw('
                 test_users.id,
-                test_users.name1,
-                test_users.name2,
+                test_users.last_name,
+                test_users.first_name,
                 test_users.email,
                 test_users.role,
                 test_users.status,
@@ -171,8 +171,8 @@ class TestUser extends Model
         // ユーザ名
         if(!empty($search["{$prefix}user_name"]))
         {
-            $query->orWhere("test_users.name1",'like', '%'. $search["{$prefix}user_name"] .'%')
-                  ->orWhere("test_users.name2",'like', '%'. $search["{$prefix}user_name"] .'%');
+            $query->orWhere("test_users.last_name",'like', '%'. $search["{$prefix}user_name"] .'%')
+                  ->orWhere("test_users.first_name",'like', '%'. $search["{$prefix}user_name"] .'%');
         }
         
         // ステータス (公開)

@@ -33,20 +33,20 @@
                         
                             {!! Form::open(['class' => 'form-horizontal']) !!}
                                 
-                                <div class="form-group{{ $errors->has('name1') || $errors->has('name2') ? ' has-error' : '' }}">
+                                <div class="form-group{{ $errors->has('last_name') || $errors->has('first_name') ? ' has-error' : '' }}">
                                     <label class="col-md-4 control-label">お名前<span class="attention">*</span></label>
                                     <div class="col-md-3">
-                                        {!! Form::text('name1', null, ['required', 'class' => 'form-control ckeditor', 'placeholder' => '姓']) !!}
+                                        {!! Form::text('last_name', null, ['required', 'class' => 'form-control ckeditor', 'placeholder' => '姓']) !!}
                                         
-                                        @if ($errors->has('name1'))
-                                            <span class="help-block"><strong>{{ $errors->first('name1') }}</strong></span>
+                                        @if ($errors->has('last_name'))
+                                            <span class="help-block"><strong>{{ $errors->first('last_name') }}</strong></span>
                                         @endif
                                     </div>
                                     <div class="col-md-3">
-                                        {!! Form::text('name2', null, ['required', 'class' => 'form-control ckeditor', 'placeholder' => '名']) !!}
+                                        {!! Form::text('first_name', null, ['required', 'class' => 'form-control ckeditor', 'placeholder' => '名']) !!}
                                     
-                                        @if ($errors->has('name2'))
-                                            <span class="help-block"><strong>{{ $errors->first('name2') }}</strong></span>
+                                        @if ($errors->has('first_name'))
+                                            <span class="help-block"><strong>{{ $errors->first('first_name') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>
@@ -62,13 +62,13 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group{{ $errors->has('position') ? ' has-error' : '' }}">
+                                <div class="form-group{{ $errors->has('department') ? ' has-error' : '' }}">
                                     <label class="col-md-4 control-label">部署名&nbsp;&nbsp;</label>
                                     <div class="col-md-6">
-                                        {!! Form::text('position', null, ['class' => 'form-control ckeditor', 'placeholder' => '']) !!}
+                                        {!! Form::text('department', null, ['class' => 'form-control ckeditor', 'placeholder' => '']) !!}
                                         
-                                        @if ($errors->has('position'))
-                                            <span class="help-block"><strong>{{ $errors->first('position') }}</strong></span>
+                                        @if ($errors->has('department'))
+                                            <span class="help-block"><strong>{{ $errors->first('department') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>

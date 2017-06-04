@@ -48,7 +48,7 @@
                     <li class="dropdown">
                         @if (Auth::guard('user')->check())
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <span class="glyphicon glyphicon-cog"></span>&nbsp;{{ Auth::guard('user')->user()->name1 }}&nbsp;{{ Auth::guard('user')->user()->name2 }}&nbsp;さん
+                                <span class="glyphicon glyphicon-cog"></span>&nbsp;{{ Auth::guard('user')->user()->last_name }}&nbsp;{{ Auth::guard('user')->user()->first_name }}&nbsp;さん
                                 （{{ $Fixed['role'][Auth::guard('user')->user()->role] }}）<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">

@@ -14,10 +14,10 @@ use Carbon\Carbon;
  * @property integer $status
  * @property integer $version
  * @property integer $modified_user
- * @property string $name1
- * @property string $name2
+ * @property string $last_name
+ * @property string $first_name
  * @property string $company
- * @property string $position
+ * @property string $department
  * @property string $email
  * @property string $password
  * @property string $remember_token
@@ -57,10 +57,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-            'name1',
-            'name2',
+            'last_name',
+            'first_name',
             'company',
-            'position',
+            'department',
             'email',
             'password',
             'created_at',
@@ -133,7 +133,7 @@ class User extends Authenticatable
         
         foreach ($res as $key => $val)
         {
-            $users[$val->id] = $val->name1. ' ' .$val->name2;
+            $users[$val->id] = $val->last_name. ' ' .$val->first_name;
         }
         
         return $users;
@@ -156,8 +156,8 @@ class User extends Authenticatable
         
         $query->select( \DB::raw('
                 users.id,
-                users.name1,
-                users.name2,
+                users.last_name,
+                users.first_name,
                 users.email,
                 users.role,
                 users.status,
@@ -171,8 +171,8 @@ class User extends Authenticatable
         // ユーザ名
         if(!empty($search["{$prefix}user_name"]))
         {
-            $query->orWhere("users.name1",'like', '%'. $search["{$prefix}user_name"] .'%')
-                  ->orWhere("users.name2",'like', '%'. $search["{$prefix}user_name"] .'%');
+            $query->orWhere("users.last_name",'like', '%'. $search["{$prefix}user_name"] .'%')
+                  ->orWhere("users.first_name",'like', '%'. $search["{$prefix}user_name"] .'%');
         }
         
         // ステータス (公開)
