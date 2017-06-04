@@ -30,15 +30,15 @@
                     <div class="panel panel-info">
                         <div class="panel-heading">CSV操作</div>
                         <div class="panel-body">
-                            {!! Form::open(['class' => 'form-horizontal']) !!}
+                            {!! Form::open(['files' => true, 'class' => 'form-horizontal']) !!}
 
-                                <div class="form-group{{ $errors->has('csv_user_import') ? ' has-error' : '' }}">
+                                <div class="form-group{{ $errors->has('user_import_csv') ? ' has-error' : '' }}">
                                     <label class="col-md-4 control-label">ユーザ登録CSV</label>
                                     <div class="col-md-6 form-control-static">
-                                        {!! Form::file('csv_user_import', null) !!}
+                                        {!! Form::file('user_import_csv', null) !!}
 
-                                        @if ($errors->has('csv_user_import'))
-                                            <span class="help-block"><strong>{{ $errors->first('csv_user_import') }}</strong></span>
+                                        @if ($errors->has('user_import_csv'))
+                                            <span class="help-block"><strong>{{ $errors->first('user_import_csv') }}</strong></span>
                                         @endif
                                     </div>
                                 </div>

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Http\Requests\Csv\UserCsvRequest;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -231,9 +231,30 @@ class UserController extends Controller
      *
      * @method GET
      */
-    public function postCsv(Request $request)
+    public function postCsv(UserCsvRequest $UserCsvRequest)
     {
-        dd('post');
+        \Flash::error('CSVの取り込み時に何らかのエラーが発生しました。');
+
+        if(request()->hasFile('user_import_csv'))
+        {
+            dd('here');
+
+            $CsvServiceInterface->createReader( request()->file('store_rate_csv')->getRealPath() );
+            $CsvServiceInterface->getReader()->setDelimiter(',');
+            $CsvServiceInterface->setCsv( $CsvServiceInterface->getReader()->fetchAll() );
+
+            if( ! $CsvServiceInterface->validate() )
+            {
+                \Flash::error('ファイル内にレコードが無いか、列の数が合いません。');
+                return redirect()->back();
+            }
+
+            $CsvServiceInterface->proccess();
+
+            \Flash::success('店舗レートCSVを取り込みました。');
+        }
+
+        return redirect()->route('admin.csv.store_rate');
     }
 
     /**
