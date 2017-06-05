@@ -234,28 +234,24 @@ class UserController extends Controller
      */
     public function postCsv(UserCsvRequest $UserCsvRequest, UserCsvService $UserCsvService)
     {
-        \Flash::error('CSVの取り込み時に何らかのエラーが発生しました。');
-
         if(request()->hasFile('user_import_csv'))
         {
-            dd('here');
+            $UserCsvService->createReader( request()->file('user_import_csv')->getRealPath() );
 
-            $UserCsvService->createReader( request()->file('store_rate_csv')->getRealPath() );
-            $UserCsvService->getReader()->setDelimiter(',');
+            $UserCsvService->getReader()->setDelimiter(",");
             $UserCsvService->setCsv( $UserCsvService->getReader()->fetchAll() );
 
-            if( ! $UserCsvService->validate() )
+            if( $UserCsvService->validate() )
             {
-                \Flash::error('ファイル内にレコードが無いか、列の数が合いません。');
                 return redirect()->back();
             }
 
-            $UserCsvService->proccess();
+//             $UserCsvService->proccess();
 
-            \Flash::success('店舗レートCSVを取り込みました。');
+            \Flash::success('CSVを正常に取り込みました。');
         }
 
-        return redirect()->route('admin.csv.store_rate');
+        return redirect('user/csv');
     }
 
     /**

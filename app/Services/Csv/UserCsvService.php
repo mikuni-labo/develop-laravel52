@@ -12,46 +12,17 @@ use App\Services\Csv\CsvServiceInterface;
  */
 class UserCsvService extends Csv implements CsvServiceInterface
 {
+    // フォーマット未定
     const CSV_COLUMNS = [
-            'pos_bill_code',       // 商品コード（紙幣）
-            'column2',             // 商品名称
-            'column3',             // ランク
-            'column4',             // 期首在庫数
-            'column5',             // 期首在庫金額
-            'column6',             // 販売数
-            'column7',             // 販売返品数
-            'column8',             // 実質販売数
-            'column9',             // 販売金額
-            'column10',            // 買取数
-            'column11',            // 買取金額
-            'column12',            // 仕入数
-            'column13',            // 仕入返品数
-            'column14',            // 実質仕入数
-            'column15',            // 仕入金額
-            'column16',            // 委託仕入数
-            'column17',            // 委託仕入金額
-            'column18',            // 委託出荷数
-            'column19',            // 委託出荷金額
-            'column20',            // 粗利
-            'column21',            // 移動入庫数
-            'column22',            // 移動入庫金額
-            'column23',            // 移動出庫数
-            'column24',            // 移動出庫金額
-            'column25',            // 在庫振替数
-            'column26',            // 在庫振替金額
-            'column27',            // 棚卸ロス数
-            'column28',            // 棚卸ロス金額
-            'column29',            // 在庫調整数
-            'column30',            // 在庫調整金額
-            'stock_amount',        // 期末在庫数
-            'stock_price',         // 期末在庫金額
-            'column33',            // 在庫増減数
-            'column34',            // 在庫増減金額
-            'column35',            // 販売在庫単価
-            'column36',            // 販売在庫金額
-            'column37',            // 期末在庫金額(税込)
-            'column38',            // 店舗コード
-            'column39',            // 店舗名称
+        'last_name',        // お名前
+        'company',          // 会社名
+        'department',       // 部署名
+        'position',         // 役職名
+        'postal_code',      // 郵便番号
+        'address',          // 住所
+        'tel',              // 電話番号
+        'fax',              // FAX番号
+        'email',            // Eメール
     ];
 
     /**
@@ -71,10 +42,17 @@ class UserCsvService extends Csv implements CsvServiceInterface
      */
     public function validate()
     {
+        // レコード有無
+        if( parent::validRecordsCount() ) return true;
+
+        // カラム数正当性
+        if( parent::validColumnCount(self::CSV_COLUMNS) ) return true;
+
         /**
-         * バリデートルールを追加するならここで
+         * TODO カラム単位のバリデート必要性と実施場所を決定する必要あり
          */
-        return parent::validColumns(self::CSV_COLUMNS);
+
+        return false;
     }
 
     /**

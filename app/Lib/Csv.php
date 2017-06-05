@@ -47,15 +47,32 @@ class Csv
     }
 
     /**
-     * レコード有無、列数の正当性チェック
+     * レコード有無チェック
+     *
+     * @return bool
+     */
+    protected function validRecordsCount()
+    {
+        if( ! count($this->Csv) )
+        {
+            \Flash::error('ファイル内にデータが存在しません。');
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 列数の正当性チェック
      *
      * @param  array $columns
      * @return bool
      */
-    protected function validColumns($columns)
+    protected function validColumnCount($columns)
     {
-        if( count($this->Csv) && count($this->Csv[0]) === count($columns) )
+        if( count($this->Csv[0]) !== count($columns) )
         {
+            \Flash::error('レコードの列の数が合いません。');
             return true;
         }
 
