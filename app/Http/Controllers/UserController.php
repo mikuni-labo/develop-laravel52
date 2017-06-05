@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Form\Csv\UserCsvRequest;
+use App\Http\Requests\Csv\UserCsvRequest;
 use App\Models\User;
 use App\Services\Csv\UserCsvService;
 use Illuminate\Http\Request;
@@ -230,6 +230,8 @@ class UserController extends Controller
     /**
      * CSV
      *
+     * @param UserCsvRequest $UserCsvRequest
+     * @param UserCsvService $UserCsvService
      * @method GET
      */
     public function postCsv(UserCsvRequest $UserCsvRequest, UserCsvService $UserCsvService)
@@ -241,10 +243,12 @@ class UserController extends Controller
             $UserCsvService->getReader()->setDelimiter(",");
             $UserCsvService->setCsv( $UserCsvService->getReader()->fetchAll() );
 
-            if( $UserCsvService->validate() )
+            if( $UserCsvService->validCsv() )
             {
                 return redirect()->back();
             }
+
+            $UserCsvService->setData();
 
             $UserCsvService->proccess();
 

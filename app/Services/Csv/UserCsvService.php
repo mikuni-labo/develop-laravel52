@@ -2,8 +2,8 @@
 
 namespace App\Services\Csv;
 
+use App\Http\Validator\Csv\UserCsvValidator;
 use App\Lib\Csv;
-use App\Http\Requests\Csv\UserCsvRequest;
 use App\Services\Csv\CsvServiceInterface;
 
 /**
@@ -13,6 +13,9 @@ use App\Services\Csv\CsvServiceInterface;
  */
 class UserCsvService extends Csv implements CsvServiceInterface
 {
+    private $Validator;
+    private $Data;
+
     // フォーマット未定
     const CSV_COLUMNS = [
         'last_name',        // お名前
@@ -31,16 +34,16 @@ class UserCsvService extends Csv implements CsvServiceInterface
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserCsvValidator $UserCsvValidator)
     {
-        //
+        $this->Validator = $UserCsvValidator;
     }
 
     /**
      * {@inheritDoc}
      * @see \App\Services\Csv\CsvServiceInterface::validate()
      */
-    public function validate()
+    public function validCsv()
     {
         // レコード有無
         if( parent::validRecordsCount() ) return true;
@@ -53,13 +56,34 @@ class UserCsvService extends Csv implements CsvServiceInterface
 
     /**
      * {@inheritDoc}
+     * @see \App\Services\Csv\CsvServiceInterface::validParam()
+     */
+    public function validParam()
+    {
+        $this->Validator->setData($this->Data);
+
+        dd( $this->Validator );
+
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \App\Services\Csv\CsvServiceInterface::validParam()
+     */
+    public function setData()
+    {
+        $this->Data = $this->assignColumns(self::CSV_COLUMNS, true);
+        return $this->Data;
+    }
+
+    /**
+     * {@inheritDoc}
      * @see \App\Services\Csv\CsvServiceInterface::proccess()
      */
     public function proccess()
     {
-        $result = $this->assignColumns(self::CSV_COLUMNS, true);
-
-        dd($result);
+        $this->validParam();
 
         $csv = $result->groupBy('pos_bill_code');
 
@@ -93,11 +117,11 @@ class UserCsvService extends Csv implements CsvServiceInterface
      * @param  integer $amount
      * @return integer
      */
-    private function culculateCost($price, $amount)
-    {
-        if( $price === 0 || $amount === 0 ) return 0;
+//     private function culculateCost($price, $amount)
+//     {
+//         if( $price === 0 || $amount === 0 ) return 0;
 
-        return $price / $amount;// 原価 = 合計期末金額 / 額面合計
-    }
+//         return $price / $amount;// 原価 = 合計期末金額 / 額面合計
+//     }
 
 }

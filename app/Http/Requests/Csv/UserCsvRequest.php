@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Csv;
 
-class UserCsvRequest
+use App\Http\Requests\FormRequest;
+
+class UserCsvRequest extends FormRequest
 {
     public function __construct()
     {

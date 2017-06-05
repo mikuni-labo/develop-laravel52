@@ -10,9 +10,14 @@ namespace App\Services\Csv;
 Interface CsvServiceInterface
 {
     /**
-     * バリデート
+     * ファイルバリデート
      */
-    public function validate();
+    public function validCsv();
+
+    /**
+     * パラメータバリデート
+     */
+    public function validParam();
 
     /**
      * メイン処理
