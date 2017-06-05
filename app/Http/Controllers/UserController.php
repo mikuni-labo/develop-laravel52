@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Form\Csv\UserCsvRequest;
 use App\Models\User;
-use App\Http\Requests\Csv\UserCsvRequest;
 use App\Services\Csv\UserCsvService;
 use Illuminate\Http\Request;
 
@@ -246,7 +246,7 @@ class UserController extends Controller
                 return redirect()->back();
             }
 
-//             $UserCsvService->proccess();
+            $UserCsvService->proccess();
 
             \Flash::success('CSVを正常に取り込みました。');
         }

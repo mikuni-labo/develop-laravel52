@@ -3,6 +3,7 @@
 namespace App\Services\Csv;
 
 use App\Lib\Csv;
+use App\Http\Requests\Csv\UserCsvRequest;
 use App\Services\Csv\CsvServiceInterface;
 
 /**
@@ -36,9 +37,8 @@ class UserCsvService extends Csv implements CsvServiceInterface
     }
 
     /**
-     * 各種バリデート
-     *
-     * @return bool
+     * {@inheritDoc}
+     * @see \App\Services\Csv\CsvServiceInterface::validate()
      */
     public function validate()
     {
@@ -48,22 +48,19 @@ class UserCsvService extends Csv implements CsvServiceInterface
         // カラム数正当性
         if( parent::validColumnCount(self::CSV_COLUMNS) ) return true;
 
-        /**
-         * TODO カラム単位のバリデート必要性と実施場所を決定する必要あり
-         */
-
         return false;
     }
 
     /**
-     * メイン処理
-     *
      * {@inheritDoc}
      * @see \App\Services\Csv\CsvServiceInterface::proccess()
      */
     public function proccess()
     {
         $result = $this->assignColumns(self::CSV_COLUMNS, true);
+
+        dd($result);
+
         $csv = $result->groupBy('pos_bill_code');
 
         /**

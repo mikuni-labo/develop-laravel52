@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Csv;
+namespace App\Http\Requests\Form\Csv;
 
-class UserCsvRequest
+use App\Http\Requests\Form\FormRequest;
+
+class UserCsvRequest extends FormRequest
 {
     public function __construct()
     {
