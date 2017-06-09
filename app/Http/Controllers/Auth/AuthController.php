@@ -69,8 +69,8 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name1'    => 'required|max:255',
-            'name2'    => 'required|max:255',
+            'last_name'    => 'required|max:255',
+            'first_name'    => 'required|max:255',
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
@@ -129,8 +129,8 @@ class AuthController extends Controller
         $data = $request->all();
         $app_key = $config->get('app.key');
         
-        $user->name1 = $data['name1'];
-        $user->name2 = $data['name2'];
+        $user->last_name = $data['last_name'];
+        $user->first_name = $data['first_name'];
         $user->email = $data['email'];
         $user->password = bcrypt($data['password']);
         
@@ -291,10 +291,10 @@ class AuthController extends Controller
         {
             case ('register'):
                 $rules = [
-                    'name1'                 => 'required|max:255',
-                    'name2'                 => 'required|max:255',
+                    'last_name'                 => 'required|max:255',
+                    'first_name'                 => 'required|max:255',
                     'company'               => 'max:255',
-                    'position'              => 'max:255',
+                    'department'              => 'max:255',
                     'email'                 => 'required|email|unique:users,email|max:255',
                     'password'              => 'required|min:8|max:16|confirmed',
                     'password_confirmation' => 'required_with:password',
@@ -322,10 +322,10 @@ class AuthController extends Controller
         ];
         
         $customAttributes = [
-                'name1'                 => '姓',
-                'name2'                 => '名',
+                'last_name'                 => '姓',
+                'first_name'                 => '名',
                 'company'               => '会社名',
-                'position'              => '部署',
+                'department'              => '部署',
                 'email'                 => 'メールアドレス',
                 'password'              => 'パスワード',
                 'password_confirmation' => 'パスワード(確認用)',

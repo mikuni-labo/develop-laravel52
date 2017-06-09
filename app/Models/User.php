@@ -14,10 +14,10 @@ use Carbon\Carbon;
  * @property integer $status
  * @property integer $version
  * @property integer $modified_user
- * @property string $name1
- * @property string $name2
+ * @property string $last_name
+ * @property string $first_name
  * @property string $company
- * @property string $position
+ * @property string $department
  * @property string $email
  * @property string $password
  * @property string $remember_token
@@ -50,26 +50,31 @@ use Carbon\Carbon;
 class User extends Authenticatable
 {
     use SoftDeletes;
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-            'name1',
-            'name2',
-            'company',
-            'position',
-            'email',
-            'password',
-            'created_at',
-            'updated_at',
-            'confirmed_at',
-            'confirmation_sent_at',
-            'status',
-            'role',
-        ];
+        'last_name',
+        'first_name',
+        'company',
+        'department',
+        'position',
+        'postal_code',
+        'pref_code',
+        'address',
+        'building',
+        'tel',
+        'fax',
+        'email',
+        'password',
+        'confirmed_at',
+        'confirmation_sent_at',
+        'status',
+        'role',
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -81,7 +86,7 @@ class User extends Authenticatable
             'remember_token',
             'confirmation_token',
     ];
-    
+
 
     /**
      * 日付関連
@@ -91,7 +96,7 @@ class User extends Authenticatable
             'confirmation_sent_at',
             'deleted_at',
     ];
-    
+
     /**
      * 登録確認用トークン生成
      */
@@ -102,10 +107,10 @@ class User extends Authenticatable
                 str_random(40).$this->email,
                 $key
         );
-        
+
         return $this->confirmation_token;
     }
-    
+
     /**
      * ユーザを承認済みにする
      */
@@ -114,7 +119,7 @@ class User extends Authenticatable
         $this->confirmed_at = Carbon::now();
         $this->confirmation_token = '';
     }
-    
+
     /**
      * ユーザが承認済みかチェックする
      */
@@ -122,7 +127,7 @@ class User extends Authenticatable
     {
         return ! empty($this->confirmed_at);
     }
-    
+
     /**
      * ユーザIDをキーにしたユーザ名配列を取得
      */
@@ -130,15 +135,15 @@ class User extends Authenticatable
     {
         $res = self::query()->get();
         $users = [];
-        
+
         foreach ($res as $key => $val)
         {
-            $users[$val->id] = $val->name1. ' ' .$val->name2;
+            $users[$val->id] = $val->last_name. ' ' .$val->first_name;
         }
-        
+
         return $users;
     }
-    
+
     /**
      * ユーザ検索
      *
@@ -153,43 +158,43 @@ class User extends Authenticatable
          */
         $prefix = 'search_';
         $query  = self::query();
-        
+
         $query->select( \DB::raw('
                 users.id,
-                users.name1,
-                users.name2,
+                users.last_name,
+                users.first_name,
                 users.email,
                 users.role,
                 users.status,
                 users.deleted_at'
         ));
-        
+
         // ID
         if(!empty($search["{$prefix}user_id"]))
             $query->where("users.id",'=', $search["{$prefix}user_id"]);
-        
+
         // ユーザ名
         if(!empty($search["{$prefix}user_name"]))
         {
-            $query->orWhere("users.name1",'like', '%'. $search["{$prefix}user_name"] .'%')
-                  ->orWhere("users.name2",'like', '%'. $search["{$prefix}user_name"] .'%');
+            $query->orWhere("users.last_name",'like', '%'. $search["{$prefix}user_name"] .'%')
+                  ->orWhere("users.first_name",'like', '%'. $search["{$prefix}user_name"] .'%');
         }
-        
+
         // ステータス (公開)
         if(!empty($search["{$prefix}status_on"]) && (bool)$search["{$prefix}status_on"] == true)
             $query->where('users.status', '=', 1);
-        
+
         // ステータス (非公開)
         if(!empty($search["{$prefix}status_off"]) && (bool)$search["{$prefix}status_off"] == true)
             $query->where('users.status', '=', 0);
-        
+
         // 削除済みデータ表示
         if(!empty($search["{$prefix}delete_flag"]) && (bool)$search["{$prefix}delete_flag"] == true)
             $query->withTrashed();
-        
+
         // 格納時間の降順
         $query->orderBy('users.created_at', 'DESC');
-        
+
         return $query->paginate(20);
     }
 }

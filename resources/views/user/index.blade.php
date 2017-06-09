@@ -150,7 +150,7 @@
                                 @foreach($results as $result)
                                     <tr class="<?php if($result->status == '0' || !empty($result->deleted_at)):?>gray_out<?php endif;?>">
                                         <td class="text-center">{{ $result->id }}</td>
-                                        <td class="text-center">{{ $result->name1 }} {{ $result->name2 }}</a></td>
+                                        <td class="text-center">{{ $result->last_name }} {{ $result->first_name }}</a></td>
                                         <td class="text-center">{{ $result->email }}</a></td>
                                         <td class="text-center">{{ $Fixed['role'][$result->role] }}</a></td>
                                         <td class="text-center">@if( $result->status == '1' ) <span class="text-success">有効</span> @else <span class="text-danger">無効</span> @endif</td>
