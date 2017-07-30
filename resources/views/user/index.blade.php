@@ -125,8 +125,7 @@
                     {!! $results->render() !!}
                     
                     @if(count($results) > 0)
-                        <div class="table-responsive">
-                            <table class="table table-hover table-condensed">
+                            <table id="user-index-table" class="table table-hover table-condensed">
                                 <colgroup>
                                     <col width="8%">
                                     <col width="21%">
@@ -170,12 +169,66 @@
                                     </tr>
                                 @endforeach
                             </table>
-                        </div>
                     @else
                         <p>条件に一致するデータがありません...</p>
                     @endif
                     
                     {!! $results->render() !!}
+                    
+                    <table id="foo" class="table table-bordered">
+                        <thead>
+                            <tr><th>No</th><th>都道府県</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>北海道</td></tr>
+                            <tr><td>2</td><td>青森県</td></tr>
+                            <tr><td>3</td><td>岩手県</td></tr>
+                            <tr><td>4</td><td>宮城県</td></tr>
+                            <tr><td>5</td><td>秋田県</td></tr>
+                            <tr><td>6</td><td>山形県</td></tr>
+                            <tr><td>7</td><td>福島県</td></tr>
+                            <tr><td>8</td><td>茨城県</td></tr>
+                            <tr><td>9</td><td>栃木県</td></tr>
+                            <tr><td>10</td><td>群馬県</td></tr>
+                            <tr><td>11</td><td>埼玉県</td></tr>
+                            <tr><td>12</td><td>千葉県</td></tr>
+                            <tr><td>13</td><td>東京都</td></tr>
+                            <tr><td>14</td><td>神奈川県</td></tr>
+                            <tr><td>15</td><td>新潟県</td></tr>
+                            <tr><td>16</td><td>富山県</td></tr>
+                            <tr><td>17</td><td>石川県</td></tr>
+                            <tr><td>18</td><td>福井県</td></tr>
+                            <tr><td>19</td><td>山梨県</td></tr>
+                            <tr><td>20</td><td>長野県</td></tr>
+                            <tr><td>21</td><td>岐阜県</td></tr>
+                            <tr><td>22</td><td>静岡県</td></tr>
+                            <tr><td>23</td><td>愛知県</td></tr>
+                            <tr><td>24</td><td>三重県</td></tr>
+                            <tr><td>25</td><td>滋賀県</td></tr>
+                            <tr><td>26</td><td>京都府</td></tr>
+                            <tr><td>27</td><td>大阪府</td></tr>
+                            <tr><td>28</td><td>兵庫県</td></tr>
+                            <tr><td>29</td><td>奈良県</td></tr>
+                            <tr><td>30</td><td>和歌山県</td></tr>
+                            <tr><td>31</td><td>鳥取県</td></tr>
+                            <tr><td>32</td><td>島根県</td></tr>
+                            <tr><td>33</td><td>岡山県</td></tr>
+                            <tr><td>34</td><td>広島県</td></tr>
+                            <tr><td>35</td><td>山口県</td></tr>
+                            <tr><td>36</td><td>徳島県</td></tr>
+                            <tr><td>37</td><td>香川県</td></tr>
+                            <tr><td>38</td><td>愛媛県</td></tr>
+                            <tr><td>39</td><td>高知県</td></tr>
+                            <tr><td>40</td><td>福岡県</td></tr>
+                            <tr><td>41</td><td>佐賀県</td></tr>
+                            <tr><td>42</td><td>長崎県</td></tr>
+                            <tr><td>43</td><td>熊本県</td></tr>
+                            <tr><td>44</td><td>大分県</td></tr>
+                            <tr><td>45</td><td>宮崎県</td></tr>
+                            <tr><td>46</td><td>鹿児島県</td></tr>
+                            <tr><td>47</td><td>沖縄県</td></tr>
+                        </tbody>
+                    </table>
                     
                     <div class="text-center">
                         <a href="/user/add" class="btn btn-primary"><span class="glyphicon glyphicon-import"></span>&nbsp;新規ユーザ登録</a>
@@ -190,6 +243,29 @@
 
 @section('script')
     <script type="text/javascript">
-        // 固有のScripts
+        jQuery(function($){
+            $.extend( $.fn.dataTable.defaults, { 
+                language: {
+                    sProcessing: "処理中...",
+                    sLengthMenu: "_MENU_ 件表示",
+                    sZeroRecords: "データはありません。",
+                    sInfo: " _TOTAL_ 件中 _START_ から _END_ まで表示",
+                    sInfoEmpty: " 0 件中 0 から 0 まで表示",
+                    sInfoFiltered: "（全 _MAX_ 件より抽出）",
+                    sInfoPostFix: "",
+                    sSearch: "検索:",
+                    sUrl: "",
+                    oPaginate: {
+                        sFirst: "先頭",
+                        sPrevious: "前",
+                        sNext: "次",
+                        sLast: "最終"
+                    }
+                } 
+            }); 
+            
+            $("#foo").DataTable();
+            $("#user-index-table").DataTable();
+        });
     </script>
 @endsection
