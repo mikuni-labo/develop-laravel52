@@ -122,11 +122,9 @@
                     
                     <h2 class="h2 page-header animated bounce"><span class="glyphicon glyphicon-user"></span>&nbsp;ユーザ一覧</h2>
                     
-                    {!! $results->render() !!}
-                    
                     @if(count($results) > 0)
-                        <div class="table-responsive">
-                            <table class="table table-hover table-condensed">
+                        <table id="user-index-table" class="table table-hover table-condensed table-striped">
+                            @if(false)
                                 <colgroup>
                                     <col width="8%">
                                     <col width="21%">
@@ -136,7 +134,9 @@
                                     <col width="10%">
                                     <col width="10%">
                                 </colgroup>
-                                
+                            @endif
+                            
+                            <thead>
                                 <tr>
                                     <th class="text-center">ID</td>
                                     <th class="text-center">ユーザー名</td>
@@ -146,7 +146,8 @@
                                     <th class="text-center">編集</td>
                                     <th class="text-center">削除</td>
                                 </tr>
-                                
+                            </thead>
+                            <tbody>
                                 @foreach($results as $result)
                                     <tr class="<?php if($result->status == '0' || !empty($result->deleted_at)):?>gray_out<?php endif;?>">
                                         <td class="text-center">{{ $result->id }}</td>
@@ -169,14 +170,12 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     @else
                         <p>条件に一致するデータがありません...</p>
                     @endif
-                    
-                    {!! $results->render() !!}
-                    
+
                     <div class="text-center">
                         <a href="/user/add" class="btn btn-primary"><span class="glyphicon glyphicon-import"></span>&nbsp;新規ユーザ登録</a>
                     </div>
@@ -190,6 +189,67 @@
 
 @section('script')
     <script type="text/javascript">
-        // 固有のScripts
+        jQuery(function($){
+            $.extend( $.fn.dataTable.defaults, { 
+                language: {
+                    sProcessing: "処理中...",
+                    sLengthMenu: "_MENU_ 件表示",
+                    sZeroRecords: "データはありません。",
+                    sInfo: " _TOTAL_ 件中 _START_ - _END_ まで表示",
+                    sInfoEmpty: " 該当 0 件",
+                    sInfoFiltered: "（全 _MAX_ 件より抽出）",
+                    sInfoPostFix: "",
+                    sSearch: "検索:",
+                    sUrl: "",
+                    oPaginate: {
+                        sFirst: "先頭",
+                        sPrevious: "&lt;",
+                        sNext: "&gt;",
+                        sLast: "最終"
+                    }
+                } 
+            }); 
+            
+            $("#user-index-table").DataTable({
+                // 件数切替機能 無効
+/*                 lengthChange: false, */
+
+                // 検索機能 無効
+/*                 searching: false, */
+
+                // ソート機能 無効
+/*                 ordering: false, */
+
+                // 情報表示 無効
+/*                 info: false, */
+
+                // ページング機能 無効
+/*                 paging: false, */
+
+                // 初期表示時優先並び替え順（[ [ 列番号, 昇順降順 ], ... ] の形式で、指定しない場合は空配列）
+/*                 order: [0, "asc"], */
+                
+                // 横スクロールバーを有効にする (scrollXはtrueかfalseで有効無効を切り替えます)
+/*                 scrollX: true */
+                
+                // 縦スクロールバーを有効にする (scrollYは200, "200px"など「最大の高さ」を指定します)
+/*                 scrollY: true */
+                
+                // 各列デフォルト値
+                columnDefs: [
+/*                     { targets: 0, visible: false },// 非表示 */
+/*                     { targets: 1, width: 150 }// 幅 */
+                ],
+                
+                // 件数切替の値を10～50の10刻みにする
+/*                 lengthMenu: [ 10, 20, 30, 40, 50 ], */
+                
+                // 件数のデフォルトの値を50にする
+/*                 displayLength: 50,  */
+
+                // 状態を保存する機能をつける
+                stateSave: true,
+            });
+        });
     </script>
 @endsection

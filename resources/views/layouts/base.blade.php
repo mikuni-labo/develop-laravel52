@@ -17,6 +17,7 @@
     <link type="text/css" href="/bootstrap/css/bootstrap-umi.min.css" rel="stylesheet">
     <link type="text/css" href="/css/style.css" rel="stylesheet" media="screen">
     <link type="text/css" href="/css/datepicker.css" rel="stylesheet" media="screen">
+    <link type="text/css" href="/Datatables/css/datatables.min.css" rel="stylesheet" media="screen">
     
 </head>
 <body>
@@ -38,6 +39,7 @@
     <script type="text/javascript" src="/bootstrap/js/bootstrap-3.3.6.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap-confirmation.min.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/Datatables/js/datatables.min.js"></script>
     <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
     @yield('script')
     
