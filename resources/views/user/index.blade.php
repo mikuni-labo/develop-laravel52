@@ -202,10 +202,10 @@
                     sSearch: "検索:",
                     sUrl: "",
                     oPaginate: {
-                        sFirst: "先頭",
+                        sFirst: "&lt;",
                         sPrevious: "&lt;",
                         sNext: "&gt;",
-                        sLast: "最終"
+                        sLast: "&gt;&gt;"
                     }
                 } 
             }); 
