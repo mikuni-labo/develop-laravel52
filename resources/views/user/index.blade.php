@@ -205,10 +205,10 @@
                     sSearch: "検索:",
                     sUrl: "",
                     oPaginate: {
-                        sFirst: "&lt;",
-                        sPrevious: "&lt;",
-                        sNext: "&gt;",
-                        sLast: "&gt;&gt;"
+                        sFirst: "<<",
+                        sPrevious: "<",
+                        sNext: ">",
+                        sLast: ">>"
                     }
                 } 
             }); 
@@ -246,13 +246,13 @@
 
                 // 件数切替の値を10～50の10刻みにする
 /*                 lengthMenu: [ 10, 20, 30, 40, 50 ], */
-                lengthMenu: [ 2, 10, 20, 30, 40, 50 ],
+                lengthMenu: [1, 2, 10, 25, 50, 100]
                 
                 // 件数のデフォルトの値を50にする
-                displayLength: 50, 
+/*                 displayLength: 50 */
                 
                 // 状態を保存する機能をつける
-                stateSave: true,
+/*                 stateSave: true, */
             });
         });
     </script>
