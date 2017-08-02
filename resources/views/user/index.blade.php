@@ -122,8 +122,8 @@
                     
                     <h2 class="h2 page-header animated bounce"><span class="glyphicon glyphicon-user"></span>&nbsp;ユーザ一覧</h2>
                     
-                    @if( count($results) )
-                        {!! Form::open(['class' => 'form-horizontal']) !!}
+                    {!! Form::open(['class' => 'form-horizontal']) !!}
+                        @if( count($results) )
                             <table id="user-index-table" class="table table-hover table-condensed table-striped">
                                 <colgroup>
                                     <col width="8%">
@@ -178,10 +178,29 @@
                                 <a href="/user/add" class="btn btn-info"><span class="glyphicon glyphicon-import"></span>&nbsp;ユーザ登録</a>
                                 <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-import"></span>&nbsp;登録</button>
                             </div>
-                        {!! Form::close() !!}
-                    @else
-                        <p>条件に一致するデータがありません...</p>
-                    @endif
+                        @else
+                            <p>条件に一致するデータがありません...</p>
+                        @endif
+                        
+                        <table id="foo-table" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Check</th>
+                                    <th>No.</th>
+                                    <th>都道府県</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach( $Fixed['pref'] as $key => $pref )
+                                    <tr>
+                                        <td>{!! Form::checkbox('test2[]', $key, null, []) !!}</td>
+                                        <td>{{ $key }}</td>
+                                        <td>{{ $pref }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    {!! Form::close() !!}
                 </div><!-- .col -->
             </div><!-- .row -->
         </div><!-- .container -->
@@ -212,6 +231,11 @@
                     }
                 } 
             }); 
+            
+            $("#foo-table").DataTable({
+                lengthMenu: [10]
+            });
+
             
             $("#user-index-table").DataTable({
                 // 件数切替機能 無効
