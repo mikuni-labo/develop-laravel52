@@ -39,6 +39,8 @@ class UserController extends Controller
      */
     public function postIndex(Request $request)
     {
+        dd( request()->all() );
+        
         /**
          * バリデーション
          */

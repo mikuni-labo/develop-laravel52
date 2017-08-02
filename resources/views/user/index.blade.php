@@ -106,7 +106,7 @@
                             </table>
                         </div>
                         <div class="text-center">
-                            <a href="/user/search/reset" class="btn btn-primary"><span class="glyphicon glyphicon-refresh"></span>&nbsp;検索条件クリア</a>
+                            <a href="/user/search/reset" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span>&nbsp;検索条件クリア</a>
                             <button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-search"></span>&nbsp;検索する</button>
                         </div>
                     {!! Form::close() !!}
@@ -122,63 +122,66 @@
                     
                     <h2 class="h2 page-header animated bounce"><span class="glyphicon glyphicon-user"></span>&nbsp;ユーザ一覧</h2>
                     
-                    @if(count($results) > 0)
-                        <table id="user-index-table" class="table table-hover table-condensed table-striped">
-                            @if(false)
+                    @if( count($results) )
+                        {!! Form::open(['class' => 'form-horizontal']) !!}
+                            <table id="user-index-table" class="table table-hover table-condensed table-striped">
                                 <colgroup>
                                     <col width="8%">
+                                    <col width="8%">
                                     <col width="21%">
-                                    <col width="26%">
+                                    <col width="28%">
                                     <col width="15%">
                                     <col width="10%">
-                                    <col width="10%">
-                                    <col width="10%">
+                                    <col width="5%">
+                                    <col width="5%">
                                 </colgroup>
-                            @endif
-                            
-                            <thead>
-                                <tr>
-                                    <th class="text-center">ID</td>
-                                    <th class="text-center">ユーザー名</td>
-                                    <th class="text-center">メールアドレス</td>
-                                    <th class="text-center">権限</td>
-                                    <th class="text-center">ステータス</td>
-                                    <th class="text-center">編集</td>
-                                    <th class="text-center">削除</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($results as $result)
-                                    <tr class="<?php if($result->status == '0' || !empty($result->deleted_at)):?>gray_out<?php endif;?>">
-                                        <td class="text-center">{{ $result->id }}</td>
-                                        <td class="text-center">{{ $result->last_name }} {{ $result->first_name }}</a></td>
-                                        <td class="text-center">{{ $result->email }}</a></td>
-                                        <td class="text-center">{{ $Fixed['role'][$result->role] }}</a></td>
-                                        <td class="text-center">@if( $result->status == '1' ) <span class="text-success">有効</span> @else <span class="text-danger">無効</span> @endif</td>
-                                        
-                                        <td class="text-center"><a href="/user/edit/{{ $result->id }}" class="btn btn-sm btn-success">
-                                            <span class="glyphicon glyphicon-edit"></span>&nbsp;編集</a>
-                                        </td>
-                                        <td class="text-center">
-                                            @if($result->deleted_at)
-                                                <a href="/user/restore/{{ $result->id }}" class="btn btn-sm btn-info" data-toggle="confirmation" onclick="if(!confirm('復旧させますか?')) return false;">
-                                                <span class="glyphicon glyphicon-repeat"></span>&nbsp;復旧</a>
-                                            @else
-                                                <a href="/user/delete/{{ $result->id }}" class="btn btn-sm btn-danger" data-toggle="confirmation" onclick="if(!confirm('本当に削除しますか?')) return false;">
-                                                <span class="glyphicon glyphicon-trash"></span>&nbsp;削除</a>
-                                            @endif
-                                        </td>
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">test</td>
+                                        <th class="text-center">ID</td>
+                                        <th class="text-center">ユーザー名</td>
+                                        <th class="text-center">メールアドレス</td>
+                                        <th class="text-center">権限</td>
+                                        <th class="text-center">ステータス</td>
+                                        <th class="text-center">編集</td>
+                                        <th class="text-center">削除</td>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach( $results as $result )
+                                        <tr class="<?php if($result->status == '0' || !empty($result->deleted_at)):?>gray_out<?php endif;?>">
+                                            <td class="text-center">{!! Form::checkbox('test[]', $result->id, null, []) !!}</td>
+                                            <td class="text-center">{{ $result->id }}</td>
+                                            <td class="text-center">{{ $result->last_name }} {{ $result->first_name }}</a></td>
+                                            <td class="text-center">{{ $result->email }}</a></td>
+                                            <td class="text-center">{{ $Fixed['role'][$result->role] }}</a></td>
+                                            <td class="text-center">@if( $result->status == '1' ) <span class="text-success">有効</span> @else <span class="text-danger">無効</span> @endif</td>
+                                            
+                                            <td class="text-center"><a href="/user/edit/{{ $result->id }}" class="btn btn-sm btn-success">
+                                                <span class="glyphicon glyphicon-pencil"></span></a>
+                                            </td>
+                                            <td class="text-center">
+                                                @if($result->deleted_at)
+                                                    <a href="/user/restore/{{ $result->id }}" class="btn btn-sm btn-info" data-toggle="confirmation" onclick="if(!confirm('復旧させますか?')) return false;">
+                                                    <span class="glyphicon glyphicon-repeat"></span></a>
+                                                @else
+                                                    <a href="/user/delete/{{ $result->id }}" class="btn btn-sm btn-danger" data-toggle="confirmation" onclick="if(!confirm('本当に削除しますか?')) return false;">
+                                                    <span class="glyphicon glyphicon-trash"></span></a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            
+                            <div class="text-center">
+                                <a href="/user/add" class="btn btn-info"><span class="glyphicon glyphicon-import"></span>&nbsp;ユーザ登録</a>
+                                <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-import"></span>&nbsp;登録</button>
+                            </div>
+                        {!! Form::close() !!}
                     @else
                         <p>条件に一致するデータがありません...</p>
                     @endif
-
-                    <div class="text-center">
-                        <a href="/user/add" class="btn btn-primary"><span class="glyphicon glyphicon-import"></span>&nbsp;新規ユーザ登録</a>
-                    </div>
                 </div><!-- .col -->
             </div><!-- .row -->
         </div><!-- .container -->
@@ -240,13 +243,14 @@
 /*                     { targets: 0, visible: false },// 非表示 */
 /*                     { targets: 1, width: 150 }// 幅 */
                 ],
-                
+
                 // 件数切替の値を10～50の10刻みにする
 /*                 lengthMenu: [ 10, 20, 30, 40, 50 ], */
+                lengthMenu: [ 2, 10, 20, 30, 40, 50 ],
                 
                 // 件数のデフォルトの値を50にする
-/*                 displayLength: 50,  */
-
+                displayLength: 50, 
+                
                 // 状態を保存する機能をつける
                 stateSave: true,
             });
