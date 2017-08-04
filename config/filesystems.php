@@ -14,9 +14,9 @@ return [
     | Supported: "local", "ftp", "s3", "rackspace"
     |
     */
-    
+
     'default' => 'local',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Default Cloud Filesystem Disk
@@ -27,9 +27,9 @@ return [
     | will be bound as the Cloud disk implementation in the container.
     |
     */
-    
+
     'cloud' => 's3',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -40,30 +40,54 @@ return [
     | been setup for each driver as an example of the required options.
     |
     */
-    
+
     'disks' => [
-        
+
         'local' => [
             'driver' => 'local',
             'root'   => storage_path('app'),
         ],
-        
+
         'public' => [
             'driver' => 'local',
             'root'   => storage_path('app/public'),
             'visibility' => 'public',
         ],
-        
-        's3' => [
+
+        's3-ndi' => [
             'driver' => 's3',
-            'key'    => env('S3_ACCESS_KEY'),
-            'secret' => env('S3_SECRET_KEY'),
-            'region' => env('S3_REGION'),
-            'bucket' => env('S3_BUCKET'),
+            'key'    => env('NDI_S3_ACCESS_KEY'),
+            'secret' => env('NDI_S3_SECRET_KEY'),
+            'region' => env('NDI_S3_REGION'),
+            'bucket' => env('NDI_S3_BUCKET'),
         ],
-    
+
+        's3-mdas' => [
+            'driver' => 's3',
+            'key'    => env('MDAS_S3_ACCESS_KEY'),
+            'secret' => env('MDAS_S3_SECRET_KEY'),
+            'region' => env('MDAS_S3_REGION'),
+            'bucket' => env('MDAS_S3_BUCKET'),
+        ],
+
+        's3-catchup' => [
+            'driver' => 's3',
+            'key'    => env('CATCHUP_S3_ACCESS_KEY'),
+            'secret' => env('CATCHUP_S3_SECRET_KEY'),
+            'region' => env('CATCHUP_S3_REGION'),
+            'bucket' => env('CATCHUP_S3_BUCKET'),
+        ],
+
+        's3-vr' => [
+            'driver' => 's3',
+            'key'    => env('VR_S3_ACCESS_KEY'),
+            'secret' => env('VR_S3_SECRET_KEY'),
+            'region' => env('VR_S3_REGION'),
+            'bucket' => env('VR_S3_BUCKET'),
+        ],
+
     ],
-    
+
     /*
      * FTP
      */
@@ -73,7 +97,7 @@ return [
             'username' => 'your-username',
             'password' => 'your-password',
     ],
-    
+
     /*
      * Rackspace
      */
