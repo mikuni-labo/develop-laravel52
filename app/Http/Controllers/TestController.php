@@ -694,10 +694,10 @@ if($key == 5){
      */
     public function testAwsS3()
     {
-        $Disk = Storage::disk('s3');
+        $Disk = Storage::disk('s3-catchup');
 
         // 指定ディレクトリのディレクトリ一覧
-//         $Disk->directories();
+//         $res = $Disk->directories();
 
         // ディレクトリ削除
 //         $Disk->makeDirectory($directory_name);
@@ -709,7 +709,7 @@ if($key == 5){
 //         $Disk->directories($directory_name);
 
         // 指定ディレクトリのファイル一覧
-//         $Disk->files('tx');
+        $res = $Disk->files('app');
 
         // 指定ディレクトリの全ファイル一覧（再帰的）※階層は全てスラッシュで表現され、レコード単位で返される
 //         $Disk->allFiles();
@@ -751,16 +751,15 @@ if($key == 5){
 //         $Disk->setVisibility('tx/test.txt', 'private');
 
         // ファイルの削除
-//         $Disk->delete([
-//             'vr/test2.txt',
+//         $res = $Disk->delete([
+//             "app/notification.jsonnotification.json",
 //         ]);
 
-        foreach ($Disk->files('tx') as $file)
-        {
-            $Disk->delete($file);
-        }
+        dd( $res );
 
-        dd('here');
+//         foreach ($Disk->files('tx') as $file) {
+//             $Disk->delete($file);
+//         }
 
         \Flash::success('ok!');
         return redirect()->route('test');
