@@ -694,25 +694,22 @@ if($key == 5){
      */
     public function testAwsS3()
     {
-        $Disk = Storage::disk('s3-catchup');
+        $Disk = Storage::disk('s3-ndi');
 
-        // 指定ディレクトリのディレクトリ一覧
-//         $res = $Disk->directories();
-
-        // ディレクトリ削除
+        // ディレクトリ作成
 //         $Disk->makeDirectory($directory_name);
 
-        // ディレクトリ削除（再帰的）（おそらく -R オプション）
+        // 指定ディレクトリのディレクトリ一覧
+        $res = $Disk->directories();
+
+        // ディレクトリ一覧（再帰的）（おそらく -R オプション）
 //         $Disk->allDirectories($directory_name);
 
-        // ディレクトリ削除
-//         $Disk->directories($directory_name);
-
         // 指定ディレクトリのファイル一覧
-        $res = $Disk->files('app');
+//         $res = $Disk->files('tx');
 
         // 指定ディレクトリの全ファイル一覧（再帰的）※階層は全てスラッシュで表現され、レコード単位で返される
-//         $Disk->allFiles();
+//         $res = $Disk->allFiles();
 
         // ファイルの存在確認
 //         $Disk->has('tx/test.txt');
