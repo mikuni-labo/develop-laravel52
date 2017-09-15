@@ -95,8 +95,8 @@ Route::group(['middleware' => ['web']], function()
     Route::get( 'api/oanda',                         'TestController@oandaTest');
     Route::get( 'api/currencylayer',                 'TestController@currencyLayerTest');
     Route::get( 'api/openexchangerates',             'TestController@openExchangeRatesTest');
+    Route::get( 'api/chatwork',                      'TestController@chatworkTest');
 
-    Route::get( 'api/medistock',                     'MedistockApiController@medistockApi');
     Route::get( 'api/setter_getter',                 'MedistockApiController@showSetterAndGetter');
 
 
