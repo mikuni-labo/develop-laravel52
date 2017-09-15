@@ -684,79 +684,30 @@ class TestController extends Controller
      */
     public function chatworkTest(Request $request)
     {
-        dd('here');
-
         /**
          * 認証
          */
-        $token  = '03ec93074f83e3574d7ebec844a6e79c';
+        $token  = '4595d6bf4c9679ef56f84e393f3ee927';
         $header = [
-            //'Content-type: application/json',
-            'Content-Type: application/x-www-form-urlencoded',
-            //                 'Access-Control-Allow-Methods',
-        //                 "Authorization: Bearer {$token}",
+//             'Content-type: application/json',
+//             'Content-Type: application/x-www-form-urlencoded',
+//             'Access-Control-Allow-Methods',
+            "X-ChatWorkToken: {$token}",
         ];
 
         /**
          * ベース
          */
-        $base = "http://apilayer.net/api";
+        $base = "https://api.chatwork.com/v2";
 
         /**
          * エンドポイント
          */
-        //         $endPoint = '/live';        // 最新の為替レート取得
-        /*
-         ? access_key = YOUR_ACCESS_KEY
-         & source = GBP
-         & currencies = USD,AUD,CAD,PLN,MXN
-         & format = 1
-         */
-
-        $endPoint = '/historical';  // 特定の日の履歴レートをリクエストする
-        /*
-         ? access_key = YOUR_ACCESS_KEY
-         & date = YYYY-MM-DD
-         & source = EUR
-         & currencies = USD,AUD,CAD,PLN,MXN
-         & format = 1
-         */
-
-
-        $endPoint = '/convert';     // リアルタイム為替レートを使用して、1つの通貨から別の通貨に任意の金額を変換する
-        /*
-         ? access_key = YOUR_ACCESS_KEY
-         & from = USD
-         & to = EUR
-         & amount = 25
-         & format = 1
-         */
-
-
-        $endPoint = '/timeframe';   // 特定の期間の為替レートを要求する
-        /*
-         ? access_key = YOUR_ACCESS_KEY
-         & start_date = YYYY-MM-DD
-         & end_date = YYYY-MM-DD
-         & source = EUR
-         & currencies = USD,AUD,CAD,PLN,MXN
-         & format = 1
-         */
-
-
-        $endPoint = '/change';      // 任意の通貨の変更パラメータを要求する（マージンオプションで2つの指定日の間
-        /*
-         ? access_key = YOUR_ACCESS_KEY
-         & source = GBP
-         & currencies = USD,AUD,CAD,PLN,MXN
-         & format = 1
-         */
+        $endPoint = '/my/status';
 
 
         $param = [
-            'access_key' => $token,
-            //                 'source' => 'JPY',
-        //                 'currencies' => '',
+//             'access_key' => $token,
         ];
 
         $ch = new cURL();
@@ -764,21 +715,22 @@ class TestController extends Controller
         $ch->setUrl($base.$endPoint);
         $ch->setUserAgent('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1');
         $ch->setMethod('GET');
-        $ch->setSslVerifypeer(false);
-        //         $ch->setUserPwd($this->authId, $this->authPass);
+//         $ch->setSslVerifypeer(false);
+//         $ch->setUserPwd($this->authId, $this->authPass);
 
         $ch->setParameterFromArray($param);
         $ch->setHeader($header);
 
-        //         $ch->setIsBuildQuery(false);
-        //         $ch->setIsJson(true);
+//         $ch->setIsBuildQuery(false);
+//         $ch->setIsJson(true);
 
         $response = $ch->exec();
-        //         /dd($response);
-        //         \Storage::disk('local')->put('json/oanda.json', $response);
+        dd($response);
 
-        //         $ch->getInfo();
-        //         $ch->getErrorMessage();
+//         dd($ch->getInfo());
+
+//         $ch->getInfo();
+//         $ch->getErrorMessage();
 
         $ch->close();
 
