@@ -4,15 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Lib\BAMP;
-use App\Lib\cURL;
-use App\Models\Program;
-use App\Models\Code;
-use App\Models\Episode;
+use App\Lib\Api\Curl;
 use App\Models\User;
-use App\Models\TxVideo;
-use App\Models\GyaoVideo;
-use App\Models\NicoVideo;
 use App\Services\BcApiService;
 use Illuminate\Contracts\Mail\Mailer;
 use Mail;
@@ -26,93 +19,12 @@ use Cart;
 
 class TestController extends Controller
 {
-    const SAMPLE_PROGRAMS = [
-            'konno_dance' => [
-                    'id'           => 'konno_dance',
-                    'title'        => '紺野、今から踊るってよ',
-                    'overview'     => 'テレビ東京アナウンサー・紺野あさ美が美女と踊るだけの番組！',// 概要
-                    'genre'        => 'バラエティ',
-                    'site_url'     => 'http://www.tv-tokyo.co.jp/konno_dance/',
-                    'keywords'     => 'アナウンサー,ダンス,テレ東,紺野,紺野、今から踊るってよ,美女,踊るってよ,見逃し配信,無料,動画',
-                    'copyright'    => 'Copyright(c)TV TOKYO Corporation All rights reserved.',
-                    'vod_url'      => '',
-                    'vod_title'    => '',
-                    'programImage' => 'http://video.tv-tokyo.co.jp/konno_dance/tver/images/pg.jpg',
-                    'logoImage'    => 'http://video.tv-tokyo.co.jp/konno_dance/tver/images/logo.jpg',
-                    'vodImage'     => '',
-            ],
-            'chimata' => [
-                    'id'           => 'chimata',
-                    'title'        => 'test2',
-                    'overview'     => 'test2',
-                    'genre'        => 'test2',
-                    'site_url'     => 'test2',
-                    'keywords'     => 'test2',
-                    'copyright'    => 'test2',
-                    'vod_url'      => 'test2',
-                    'vod_title'    => 'test2',
-                    'programImage' => 'test2',
-                    'logoImage'    => 'test2',
-                    'vodImage'     => 'test2',
-            ],
-    ];
-
-    const SAMPLE_EPISODES = [
-            'konno_dance' => [// 番組と紐付くキー
-                    '4719976511001' => [
-                            'movie'          => '4719976511001',// 放送回のBC動画ID
-                            'thumbnailImage' => 'http://tool03.tv-tokyo.co.jp/video/konno_dance/images/20160127_konno_dance_01_b.jpg?1453700072',
-                            'episodeTitle'   => '和紙を使った妖艶な灯りの中で電気グルーヴ「Shangri-La」を京都美人と踊ってみた',
-                            'desctiption'    => 'テレビ東京アナウンサー・紺野あさ美が美女と踊るだけの番組！京都らしくて可愛い…和紙を使った照明器具に囲まれながら電気グルーヴ「Shangri-La」を中橋実希と踊ってみた！▽紺野、ドラマに出てきそうな街並みに思わずうっとり…　テレビ東京にて毎週水・木曜深夜1時30分より放送中！',
-                            'cast'           => '',
-                            'staff'          => '',
-                            'broadcastDate'  => '2016-01-27 25:30',// 放送日
-                            'publishDate'    => '2016-01-27 25:35',// 公開日
-                            'endDate'        => '2016-02-03 25:34',// 終了日
-                            'deleteFlg'      => '0',
-                    ],
-                    '000000000001' => [
-                            'movie'          => '000000000001',
-                            'thumbnailImage' => 'test1',
-                            'episodeTitle'   => 'test1',
-                            'desctiption'    => 'test1',
-                            'cast'           => 'test1',
-                            'staff'          => 'test1',
-                            'broadcastDate'  => '0000-00-00 00:00',
-                            'publishDate'    => '0000-00-00 00:00',
-                            'endDate'        => '0000-00-00 00:00',
-                            'deleteFlg'      => '1',
-                    ],
-            ],
-            'chimata' => [
-                    '4840054864001' => [
-                            'movie'          => '4840054864001',
-                            'thumbnailImage' => 'test2',
-                            'episodeTitle'   => 'スポーツ特集',
-                            'desctiption'    => 'test2',
-                            'cast'           => 'K.Wada',
-                            'staff'          => 'K.Wada',
-                            'broadcastDate'  => '0000-00-00 00:00',
-                            'publishDate'    => '0000-00-00 00:00',
-                            'endDate'        => '0000-00-00 00:00',
-                            'deleteFlg'      => '1',
-                    ],
-            ],
-    ];
-
     /**
      * コンストラクタ
      */
     public function __construct()
     {
         $this->middleware('guest:user', ['except' => ['login', 'auth']]);
-
-        $this->imagePath     = base_path() . '/public/uploads/product/';
-        $this->thumbnailPath = base_path() . '/public/uploads/product/thumbnail/';
-        $this->imageMod      = '644';
-        $this->imageNum      = 3;
-        $this->thumbWidth    = 180;
-        $this->prefix        = 'product_';
     }
 
     /**
@@ -232,342 +144,6 @@ class TestController extends Controller
     */
         \Flash::success('Sent!');
         return redirect('test');
-    }
-
-    /**
-     * JSON取得テスト
-     *
-     * @method GET
-     */
-    public function getJSON(Request $request)
-    {
-        /*
-        $ch = new cURL();
-        //dd($request);
-
-        $ch->init();
-        $ch->setUrl('https://bamp.api.tv-tokyo.co.jp/videocms/get.pl');
-        //$ch->setUrl('https://cms:xi9XD5pE@bamp.api.tv-tokyo.co.jp/videocms/get.pl');
-        //$ch->setUrl('http://www.yahoo.co.jp/');
-        // https://cms:xi9XD5pE@bamp.api.tv-tokyo.co.jp/videocms/get.pl?txcms_program_id=82
-        //curl --anyauth --user cms:xi9XD5pE https://bamp.api.tv-tokyo.co.jp/videocms/get.pl?txcms_program_id=82
-
-        $ch->setUserAgent('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1');
-
-        $ch->setMethod('POST');
-
-        $ch->setUserPwd('cms', 'xi9XD5pE');
-        $ch->setParameter('txcms_program_id', '82,1205418');
-        //$ch->setHeader($header);
-
-        $response = $ch->exec();
-
-
-        //print_r(curl_getinfo($ch));
-
-//        if(curl_errno($ch))
-//        {
-//            echo curl_errno('error: '.$ch);exit();
-//        }
-
-        $ch->close();
-
-        $data = json_decode($response);
-
-        //print_r($data);exit();
-        */
-
-
-        /*
-         * cURL通信サンプル
-         */
-//        $username = 'cms';
-//        $password = 'xi9XD5pE';
-
-//        //$url = "https://www.n-di.co.jp/";
-//        $url = "https://bamp.api.tv-tokyo.co.jp/videocms/get.pl";
-
-//        $headers = [
-//                "HTTP/1.0",
-//                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-//                "Accept-Encoding:gzip ,deflate",
-//                "Accept-Language:ja,en-us;q=0.7,en;q=0.3",
-//                "Connection:keep-alive",
-//                "User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:26.0) Gecko/20100101 Firefox/26.0"
-//        ];
-
-
-//        $post_fields = [
-//                'txcms_program_id' => '82',
-//        ];
-
-//        echo phpinfo();exit();
-
-//        $ch = curl_init(); // 宣言
-//        curl_setopt($ch, CURLOPT_URL, $url);
-//        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);// 変数に保存する
-//        curl_setopt($ch, CURLOPT_POST, true);
-//        curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_fields));
-//        curl_setopt($ch, CURLOPT_HEADER, true);
-//        //curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
-//        //curl_setopt($ch, CURLOPT_PROXY, "192.168.0.1");// IPかURL
-
-//        $response = curl_exec($ch);
-
-//        if(curl_errno($ch))
-//        {
-//            echo curl_errno('error: '.$ch);exit();
-//        }
-
-//        //print_r(curl_getinfo($ch));exit();
-
-//        curl_close($ch);
-
-//        //$objRes = json_decode($response);
-
-//        print $response;exit();
-//        //print (mb_detect_encoding($response));exit();
-//        print(htmlentities($response));exit();
-
-
-        /*
-         * ここからJSON取得したと仮定
-         */
-        $json = file_get_contents(base_path('public/data/get.json'));
-
-        $data = json_decode($json);
-
-        try {
-            // 取り込み開始
-            if(count($data->programs) > 0)
-            {
-                $source = array_flip(\Config::get('TX.source'));
-                $mode = 'BAMP';
-
-                \DB::beginTransaction();
-
-                /*
-                 * プログラムループ
-                */
-                foreach ($data->programs as $key => $program)
-                {
-if($key == 5){
-                    /* ここから */
-                    if($program->delete_flag === true)
-                        continue;
-
-                    // 既存データの存在確認
-                    $resultProgram = Program::getProgramWithTxCmsProgramID($program->txcms_program_id, $source[$mode]);
-                    $inputs = [];
-                    $inputs['source'] = $source[$mode];
-                    $objProgram = false;// 後に必要なので定義しておく
-
-                    // INSERT
-                    if(count($resultProgram) == 0)
-                    {
-                        // キーマッピング配列を取得
-                        $keyMap = Program::getInsertKeyMap();
-
-                        foreach ($program as $_k => $_v)
-                        {
-                            // 値があればマッピングしたカラム名で格納
-                            if( !empty($_v) && array_key_exists($_k, $keyMap) )
-                                $inputs[$keyMap[$_k]] = $_v;
-                        }
-
-                        $inputs = BAMP::cleanFormat($inputs, 'program');
-                        $objProgram = Program::create($inputs);
-                    }
-                    // UPDATE
-                    elseif ($program->modified_on != $resultProgram[0]->bamp_modified_on)// BAMP側で更新があったかを判定
-                    {
-                        // 論理削除されていないデータ
-                        if( !empty($objProgram = Program::find($resultProgram[0]->id)) )
-                        {
-                            // キーマッピング配列を取得
-                            $keyMap = Program::getUpdateKeyMap();
-
-                            foreach ($program as $_k => $_v)
-                            {
-                                // 値があればマッピングしたカラム名で格納
-                                if( !empty($_v) && array_key_exists($_k, $keyMap) )
-                                    $inputs[$keyMap[$_k]] = $_v;
-                            }
-                            $inputs = BAMP::cleanFormat($inputs, 'program');
-                            $objProgram->update($inputs);
-                        }
-                    }
-
-                    $mainFlagOnCodes = [];
-
-                    /*
-                     * コードループ
-                    */
-                    foreach ($program->codes as $code)
-                    {
-                        $resultCode = Code::getCodeWithEpgAndTxCmsProgramID($program->txcms_program_id, $code->code, $source[$mode]);
-                        $inputs = [];
-                        $inputs['source'] = $source[$mode];
-
-                        // INSERT
-                        if(count($resultCode) == 0)
-                        {
-                            // キーマッピング配列を取得
-                            $keyMap = Code::getInsertKeyMap();
-
-                            foreach ($code as $_k => $_v)
-                            {
-                                // 値があればマッピングしたカラム名で格納
-                                if( !empty($_v) && array_key_exists($_k, $keyMap) )
-                                    $inputs[$keyMap[$_k]] = $_v;
-                            }
-                            // TXWEB番組マスタID
-                            $inputs['txcms_program_id'] = $program->txcms_program_id;
-                            $objCode = Code::create($inputs);
-                        }
-                        // UPDATE
-                        elseif ($code->modified_on != $resultCode[0]->bamp_modified_on)// BAMP側で更新があったかを判定
-                        {
-                            // 論理削除されていないデータ
-                            if( !empty($objCode = Code::find($resultCode[0]->id)) )
-                            {
-                                // キーマッピング配列を取得
-                                $keyMap = Code::getUpdateKeyMap();
-
-                                foreach ($code as $_k => $_v)
-                                {
-                                    // 値があればマッピングしたカラム名で格納
-                                    if( !empty($_v) && array_key_exists($_k, $keyMap))
-                                        $inputs[$keyMap[$_k]] = $_v;
-                                }
-                                $objCode->update($inputs);
-                            }
-                        }
-
-                        // BSJからのデータはmain_flag が false固定なので、全て取得する
-                        if($mode === 'BSJ')
-                            $mainFlagOnCodes[] = $code->code;
-
-                        // 本編フラグがTRUEのコードを配列へ
-                        elseif( $code->main_flag === true )
-                        $mainFlagOnCodes[] = $code->code;
-                    }
-
-                    /*
-                     * エピソードループ
-                     */
-                    foreach ($program->episodes as $k => $episode)
-                    {
-                        $oa_date = \Carbon::parse($episode->oa_date);
-                        $resultEpisodes = Episode::getEpisode($program->txcms_program_id, $episode->code, $oa_date->format('Y-m-d'), $source[$mode]);
-                        $inputs = [];
-                        $inputs['source'] = $source[$mode];
-
-                        // 本編フラグ がTRUE, かつ再放送フラグ がFALSE, かつ削除フラグがFALSE
-                        if ( in_array( $episode->code, $mainFlagOnCodes )
-                                && $episode->oa_repeat_flag === false
-                                && $episode->delete_flag === false )
-                        {
-                            // INSERT
-                            if(count($resultEpisodes) == 0)
-                            {
-                                // キーマッピング配列を取得
-                                $keyMap = Episode::getInsertKeyMap();
-
-                                foreach ($episode as $_k => $_v)
-                                {
-                                    // 値があればマッピングしたカラム名で格納
-                                    if( !empty($_v) && array_key_exists($_k, $keyMap))
-                                        $inputs[$keyMap[$_k]] = $_v;
-                                }
-                                $inputs = BAMP::cleanFormat($inputs, 'episode');
-
-                                // TXWEB番組マスタID
-                                $inputs['txcms_program_id'] = $program->txcms_program_id;
-                                $objEpisode = Episode::create($inputs);
-
-                                // 各シンジケーションテーブルへ、ユニークIDとともに新規登録
-                                TxVideo::InsertWithTxUniqueID($objEpisode->id);
-                                GyaoVideo::InsertWithGyaoUniqueID($objEpisode->id);
-                                NicoVideo::InsertWithNicoUniqueID($objEpisode->id);
-
-                            }
-                            // UPDATE
-                            elseif ($episode->modified_on == $resultEpisodes[0]->bamp_modified_on)// BAMP側で更新があったかを判定
-                            {
-                                // 論理削除されていないデータ
-                                if( !empty($objEpisode = Episode::find($resultEpisodes[0]->id)) )
-                                {
-                                    // キーマッピング配列を取得
-                                    $keyMap = Episode::getUpdateKeyMap();
-
-                                    foreach ($episode as $_k => $_v)
-                                    {
-                                        // 値があればマッピングしたカラム名で格納
-                                        if( !empty($_v) && array_key_exists($_k, $keyMap))
-                                            $inputs[$keyMap[$_k]] = $_v;
-                                    }
-                                    $inputs = BAMP::cleanFormat($inputs, 'episode');
-
-                                    $objEpisode->update($inputs);
-                                }
-                            }
-                        }
-                        // 削除フラグが立っていて、かつEPGコードがメインフラグでないエピソードは紐付け解除で保留対象データ
-                        elseif ( !in_array( $episode->code, $mainFlagOnCodes)
-                                && $episode->delete_flag === false
-                                && count($resultEpisodes) > 0 )
-                        {
-                            // 論理削除されていないデータ
-                            if( count($objEpisode = Episode::find($resultEpisodes[0]->id)) > 0 )
-                            {
-                                // 各配信先で一箇所でも配信中なら保留フラグを立てる
-                                if( (bool)$objEpisode->tx_provide_status === true
-                                        || (bool)$objEpisode-> gyao_provide_status === true
-                                        || (bool)$objEpisode->nico_provide_status === true
-                                        || (bool)$objEpisode->tver_provide_status === true )
-                                {
-                                    $objEpisode->update(['hold_flag' => true]);
-                                }
-                                else
-                                    $objEpisode->delete();
-                            }
-                        }
-                    }
-                    /* ここまで */
-}
-                }
-                \DB::commit();
-                \Flash::success('EPG情報を取得しました。');
-                //return true;
-            }
-            else {
-                \Flash::error('取得可能なEPG情報がありませんでした。');
-            }
-        }
-        catch (\Exception $e) {
-            \Flash::error($e->getMessage());
-        }
-        return redirect('/test');
-    }
-
-    /**
-     * JSON表示
-     *
-     * @method GET
-     */
-    public function showJSON(Request $request)
-    {
-        $json = file_get_contents(base_path('public/data/get.json'));
-
-        $data = json_decode($json);
-
-        // キーを整列
-        //rsort($data->programs);
-
-        dd($data->programs);
     }
 
     /**
@@ -1091,6 +667,67 @@ if($key == 5){
         $response = $ch->exec();
 //         /dd($response);
 //         \Storage::disk('local')->put('json/oanda.json', $response);
+
+//         $ch->getInfo();
+//         $ch->getErrorMessage();
+
+        $ch->close();
+
+        $result = json_decode($response);
+        dd($result);
+    }
+
+    /**
+     * Chatwork API TEST
+     *
+     * @method GET
+     */
+    public function chatworkTest(Request $request)
+    {
+        /**
+         * 認証
+         */
+        $token  = '4595d6bf4c9679ef56f84e393f3ee927';
+        $header = [
+//             'Content-type: application/json',
+//             'Content-Type: application/x-www-form-urlencoded',
+//             'Access-Control-Allow-Methods',
+            "X-ChatWorkToken: {$token}",
+        ];
+
+        /**
+         * ベース
+         */
+        $base = "https://api.chatwork.com/v2";
+
+        /**
+         * エンドポイント
+         */
+        $endPoint = '/my/status';
+
+
+        $param = [
+//             'access_key' => $token,
+        ];
+
+        $ch = new cURL();
+        $ch->init();
+        $ch->setUrl($base.$endPoint);
+        $ch->setUserAgent('Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1');
+        $ch->setMethod('GET');
+//         $ch->setSslVerifypeer(false);
+//         $ch->setUserPwd($this->authId, $this->authPass);
+
+        $ch->setParameterFromArray($param);
+        $ch->setHeader($header);
+
+//         $ch->setIsBuildQuery(false);
+//         $ch->setIsJson(true);
+
+        $response = $ch->exec();
+        dd($response);
+
+//         dd($ch->getInfo());
 
 //         $ch->getInfo();
 //         $ch->getErrorMessage();
